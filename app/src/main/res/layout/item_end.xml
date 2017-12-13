@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="42dp">
+
+    <TextView android:id="@+id/end_text"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:gravity="center"
+        android:text="已经是最后一条了"
+        android:textColor="@color/login_font_color"
+        android:textSize="18sp"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>

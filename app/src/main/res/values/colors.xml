@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+
+    <color name="tool_background">#229FFF</color>
+    <color name="launch_register_button_bg">#DAF0FA</color>
+
+
+    
+    <color name="tool_font_color">#FAFEFF</color>
+    
+    <color name="login_background">#F3F3F3</color>
+
+    <color name="login_font_color">#838383</color>
+
+    <color name="remind">#6C706F</color>
+
+    <color name="content">#757575</color>
+
+    <color name="login_toolbar_background">#43D384</color>
+    
+    <color name="whitecolor">#FFFFFF</color>
+
+    <color name="blackcolor">#000000</color>
+
+    <color name="login_fail_content_title">#B3892D</color>
+
+    <color name="refuse">#DB5C51</color>
+
+</resources>

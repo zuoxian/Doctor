@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whitecolor"
+    android:orientation="vertical">
+
+        <include layout="@layout/toolbar"/>
+
+        <com.yjm.doctor.ui.view.BannerView
+            android:id="@+id/bannerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.yjm.doctor.ui.view.BannerView>
+
+        <include layout="@layout/main_item_body"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_examine"
+            android:textColor="@color/content"
+            android:drawableLeft="@drawable/examine"
+            android:drawablePadding="5dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            />
+
+
+</LinearLayout>

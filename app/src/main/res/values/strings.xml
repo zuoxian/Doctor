@@ -1,0 +1,118 @@
+<resources>
+    <string name="app_name">Doctor</string>
+    <string name="ACCOUNT_TYPE">com.yjm.doctor.AccountType</string>
+    <string name="ACCOUNT_LABEL">@string/app_name</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+    <string name="login">登录</string>
+    <string name="login_start">开始登录</string>
+    <string name="login_success">登录成功</string>
+    <string name="register">注册</string>
+    <string name="main">医家盟</string>
+    <string name="auth_info">在审核中，请继续等待结果</string>
+
+    
+    <string name="login_password">请输入密码</string>
+    <string name="login_forget_password">忘记密码</string>
+
+    <string name="toast_msg_no_network">网络异常~</string>
+    <string name="login_fail_info">登录失败，请重试~</string>
+    <string name="register_fail_info">确认异常，请重试~</string>
+    <string name="register2_fail_info">注册失败，请重试~</string>
+    <string name="level_fail">级别提取失败</string>
+
+    <string name="register_fail">注册异常，请重试</string>
+
+    <string name="login_fail">核对医生身份失败</string>
+    <string name="login_fail_content_title">尊敬的用户</string>
+    <string name="login_fail_content">医生盟在线医生专用客户端是给医生和实习期的医学生使用的临床工作辅助工具，由于您的使用情况不能确认医生或实习期医学生的身份，医家盟管理员暂时未通过您的申请，您可在客户端填写资料后再次提交审核，感谢您的理解与配合。</string>
+    <string name="login_fail_button">我是医生，重新填写信息</string>
+    <string name="login_fail_help">如有问题，联系医助</string>
+    
+    <string name="register_first">第一步 注册登录用户</string>
+    <string name="login_username">请输入手机号</string>
+    <string name="register_verification">请输入验证码</string>
+    <string name="register_password">请输入密码</string>
+    <string name="register_getverification">获取验证码</string>
+    <string name="register_button">确定</string>
+    <string name="register_verification_fail">验证码请求失败，请重试~</string>
+    
+    <string name="name">您的真实姓名</string>
+    <string name="hospital">您所在的医院名称（全程）</string>
+    <string name="department">您所在的科室名称</string>
+    <string name="positionaltitles">您的职称</string>
+    <string name="register_info">第二部 填写医生信息</string>
+    <string name="register_remind">提示：真实的医生信息能保证您的认证尽快通过</string>
+    <string name="input_register">提交注册</string>
+    <string name="positional">无职称</string>
+    <string name="yourpositional">您的职称</string>
+
+    <string name="finish">完成</string>
+
+    <string name="examine">审核认证中</string>
+    <string name="examine_title">信息提交成功</string>
+    <string name="examine_content">工作人员最迟会在三个工作日内完成您的资料审核认证，请保持电话畅通</string>
+    <string name="examine_button">进入首页</string>
+
+    <string name="main_examine">账号认证中</string>
+    
+    <string name="appointments">我的加号</string>
+    <string name="appointments_reply">加号回复</string>
+    <string name="image_text_consulting">图文咨询</string>
+    <string name="consulting_statistics">咨询统计</string>
+    
+    <string name="information_service">信息服务</string>
+    <string name="contact_us">联系我们</string>
+    
+    <string name="search">搜索姓名</string>
+
+    <string name="empty">无新消息</string>
+
+    <string name="string_loading">Loading&#8230;</string>
+    <string name="string_retry">点击重新加载</string>
+    <string name="string_fail">加载失败</string>
+    <string name="string_null">无新内容</string>
+
+    <string name="head">这里是HeadView</string>
+    <string name="pull_to_refresh">下拉刷新</string>
+    <string name="release_to_refresh">释放立即刷新</string>
+    <string name="refreshing">正在刷新...</string>
+    <string name="refresh_succeed">刷新成功</string>
+    <string name="refresh_fail">刷新失败</string>
+    <string name="pullup_to_load">上拉加载更多</string>
+    <string name="release_to_load">释放立即加载</string>
+    <string name="loading">正在加载...</string>
+    <string name="load_succeed">加载成功</string>
+    <string name="load_fail">加载失败</string>
+
+    <string name="appointment_info_des">病情描述</string>
+    <string name="appointment_info">加号信息</string>
+
+    <string name="appointment_info_money">加号费</string>
+    <string name="appointment_info_time">时间</string>
+    <string name="appointment_info_address">地点</string>
+    
+    <string name="agreen">同意</string>
+    <string name="refuse">拒绝</string>
+    <string name="mail">站内信息</string>
+    <string name="service_close">停诊发布</string>
+    <string name="service_notice">通知公告</string>
+
+    <string name="patient">我的患者</string>
+    <string name="account">我的账户</string>
+    <string name="evaluate">我的评价</string>
+    <string name="business_setting">业务设置</string>
+</resources>

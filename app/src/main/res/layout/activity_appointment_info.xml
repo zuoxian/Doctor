@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:background="@color/login_background"
+    >
+
+    <include layout="@layout/toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bordersquarestyle"
+        >
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/user_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        fresco:actualImageScaleType="fitXY"
+        fresco:placeholderImageScaleType="fitXY"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/check"
+        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+
+            >
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/content"
+                android:gravity="center_vertical"
+                />
+            <TextView
+                android:id="@+id/user_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/login_font_color"
+                android:gravity="center_vertical"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@drawable/bordersquarestyle"
+        android:textStyle="bold"
+        android:textColor="@color/content"
+        android:text="@string/appointment_info_des"
+        android:paddingLeft="20dp"
+        android:gravity="center_vertical"
+        />
+
+    <TextView
+        android:id="@+id/des"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@drawable/bordersquarestyle"
+        android:textColor="@color/login_font_color"
+        android:text="@string/appointment_info_des"
+        android:paddingLeft="20dp"
+        android:gravity="center_vertical"
+        />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@drawable/bordersquarestyle"
+        android:textStyle="bold"
+        android:textColor="@color/content"
+        android:text="@string/appointment_info"
+        android:paddingLeft="20dp"
+        android:gravity="center_vertical"
+        />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/bordersquarestyle"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:textColor="@color/login_font_color"
+        android:text="@string/appointment_info_money"
+        android:paddingLeft="20dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:drawablePadding="20dp"
+        android:drawableLeft="@drawable/money"
+        />
+    <TextView
+        android:id="@+id/money"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+
+        android:textColor="@color/refuse"
+        android:paddingRight="20dp"
+        android:gravity="center_vertical"
+        android:layout_gravity="center"
+        />
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/bordersquarestyle"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:textColor="@color/login_font_color"
+            android:text="@string/appointment_info_time"
+            android:paddingLeft="20dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:drawablePadding="20dp"
+            android:drawableLeft="@drawable/time"
+            />
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+
+            android:textColor="@color/login_font_color"
+            android:paddingRight="20dp"
+            android:gravity="center_vertical"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/bordersquarestyle"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+
+            android:textColor="@color/login_font_color"
+            android:text="@string/appointment_info_address"
+            android:paddingLeft="20dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:drawablePadding="20dp"
+            android:drawableLeft="@drawable/address"
+            />
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:textColor="@color/login_font_color"
+            android:paddingRight="20dp"
+            android:gravity="center_vertical"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        >
+        <TextView
+            android:id="@+id/agree"
+            android:layout_width="84dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/buttonstyle"
+            android:text="@string/agreen"
+            android:gravity="center"
+            android:layout_marginRight="40dp"
+            />
+
+        <TextView
+            android:id="@+id/refuse"
+            android:layout_width="84dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/refusebuttonstyle"
+            android:text="@string/refuse"
+            android:gravity="center"
+
+            />
+
+    </LinearLayout>
+</LinearLayout>

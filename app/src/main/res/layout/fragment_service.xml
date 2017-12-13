@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whitecolor"
+    android:orientation="vertical">
+    <include layout="@layout/toolbar"/>
+
+    <LinearLayout
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/item"
+        android:background="@drawable/bordersquarestyle"
+        android:paddingTop="20dp"
+        android:paddingBottom="5dp"
+        >
+
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/user_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            fresco:actualImageScaleType="fitXY"
+            fresco:placeholderImageScaleType="fitXY"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/check"
+            />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blackcolor"
+                />
+
+            <TextView
+                android:id="@+id/positional"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/login_font_color"
+                />
+            <TextView
+                android:id="@+id/hospital"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/login_font_color"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/comein"
+            android:layout_gravity="right"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/bordersquarestyle"
+        android:drawableLeft="@drawable/mail"
+        android:id="@+id/mail"
+        android:textColor="@color/content"
+        android:padding="20dp"
+        android:gravity="center_vertical"
+        android:text="@string/mail"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/service_close"
+        android:drawableLeft="@drawable/service_close"
+        android:drawablePadding="10dp"
+        android:background="@drawable/bordersquarestyle"
+        android:padding="20dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/content"
+        android:text="@string/service_close"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/service_notice"
+        android:drawableLeft="@drawable/service_close"
+        android:drawablePadding="10dp"
+        android:background="@drawable/bordersquarestyle"
+        android:padding="20dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/content"
+        android:text="@string/service_notice"
+        />
+
+
+</LinearLayout>
