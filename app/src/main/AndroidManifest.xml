@@ -7,14 +7,13 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
-    
-    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
     <application
         android:name=".application.YjmApplication"
@@ -23,10 +22,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".ui.SplashActivity"
-            android:theme="@style/AppTheme.TransparentActivity.FullScreen"
-            android:screenOrientation="portrait">
+        <activity
+            android:name=".ui.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.TransparentActivity.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,7 +35,7 @@
         <activity
             android:name=".ui.LaunchActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.LoginActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -47,51 +46,46 @@
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/register"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".ui.RegisterInfoActivity"
+        <activity
+            android:name=".ui.RegisterInfoActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/register_info"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.LoginFailureActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/login_fail"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".util.auth.AccountAuthenticatorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.TransparentActivity" />
-
         <activity
             android:name=".ui.MainActivity"
             android:configChanges="orientation|keyboardHidden"
-
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.LevelActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/yourpositional"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".ui.ToExamineActivity"
+        <activity
+            android:name=".ui.ToExamineActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/examine"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".ui.MainAppointmentsActivity"
+        <activity
+            android:name=".ui.MainAppointmentsActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/appointments"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".ui.MainConsultationsActivity"
+        <activity
+            android:name=".ui.MainConsultationsActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/image_text_consulting"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".ui.MainAppointmentsInfoActivity"
+        <activity
+            android:name=".ui.MainAppointmentsInfoActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/appointments_reply"
             android:screenOrientation="portrait" />
@@ -107,6 +101,17 @@
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
         </service>
+
+        <activity
+            android:name=".ui.BusinessSettingActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/business_setting"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".ui.MainAccountActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/account"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -287,7 +287,7 @@ public class UserService {
         mAccountManager.setUserData(account, KEY_USER_GROUPID, String.valueOf(userProfile.getGroupid()));
         mAccountManager.setUserData(account, KEY_USER_EMAIL, userProfile.getEmail());
         mAccountManager.setUserData(account, KEY_USER_AMOUNT, String.valueOf(userProfile.getAmount()));
-        mAccountManager.setUserData(account, KEY_USER_PASSWORD, String.valueOf(userProfile.getPassword()));
+        mAccountManager.setUserData(account, KEY_USER_PASSWORD, String.valueOf(userProfile.getTokenId()));
         mAccountManager.setAuthToken(account,KEY_USER_TOKEN,userProfile.getTokenId());
         Log.i("tokenId",userProfile.getTokenId());
 

@@ -4,7 +4,7 @@ apply plugin: 'org.greenrobot.greendao'
 
 
 
-greendao {  
+greendao {
     schemaVersion 1  
     daoPackage 'com.yjm.doctor.dao'
     targetGenDir 'src/main/java' 

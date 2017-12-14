@@ -1,5 +1,6 @@
 package com.yjm.doctor.api;
 
+import com.yjm.doctor.model.BusinessSettingBean;
 import com.yjm.doctor.model.Level;
 import com.yjm.doctor.model.LevelBean;
 import com.yjm.doctor.model.Message;
@@ -34,4 +35,17 @@ public interface UserAPI {
     @POST("/get")
     void getUserInfo(Callback<UserBean> callback);
 
-    }
+    @POST("/getConfig")
+    void getBusinessSetting(
+            @Query("tokenId") String tokenId ,
+            Callback<BusinessSettingBean> callback);
+
+    @POST("/updateConfig")
+    void updateBusinessSetting(
+            @Query("tokenId") String tokenId ,
+            @Query("acceptAppointment") boolean acceptAppointment ,
+            @Query("acceptConsultation") boolean acceptConsultation ,
+            Callback<Message> callback);
+
+
+}

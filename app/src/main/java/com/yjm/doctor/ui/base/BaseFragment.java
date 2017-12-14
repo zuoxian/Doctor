@@ -6,8 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import retrofit.Callback;
 
 /**
@@ -16,11 +18,12 @@ import retrofit.Callback;
 
 public abstract class BaseFragment<T> extends Fragment implements Callback<T>{
 
+    Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutRes(), container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         onLoadData();
         return view;
     }
@@ -29,7 +32,7 @@ public abstract class BaseFragment<T> extends Fragment implements Callback<T>{
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-
+        unbinder.unbind();
     }
 
     protected abstract void onLoadData();

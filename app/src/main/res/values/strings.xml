@@ -24,7 +24,7 @@
     <string name="main">医家盟</string>
     <string name="auth_info">在审核中，请继续等待结果</string>
 
-    
+
     <string name="login_password">请输入密码</string>
     <string name="login_forget_password">忘记密码</string>
 
@@ -41,7 +41,7 @@
     <string name="login_fail_content">医生盟在线医生专用客户端是给医生和实习期的医学生使用的临床工作辅助工具，由于您的使用情况不能确认医生或实习期医学生的身份，医家盟管理员暂时未通过您的申请，您可在客户端填写资料后再次提交审核，感谢您的理解与配合。</string>
     <string name="login_fail_button">我是医生，重新填写信息</string>
     <string name="login_fail_help">如有问题，联系医助</string>
-    
+
     <string name="register_first">第一步 注册登录用户</string>
     <string name="login_username">请输入手机号</string>
     <string name="register_verification">请输入验证码</string>
@@ -49,7 +49,7 @@
     <string name="register_getverification">获取验证码</string>
     <string name="register_button">确定</string>
     <string name="register_verification_fail">验证码请求失败，请重试~</string>
-    
+
     <string name="name">您的真实姓名</string>
     <string name="hospital">您所在的医院名称（全程）</string>
     <string name="department">您所在的科室名称</string>
@@ -68,15 +68,15 @@
     <string name="examine_button">进入首页</string>
 
     <string name="main_examine">账号认证中</string>
-    
+
     <string name="appointments">我的加号</string>
     <string name="appointments_reply">加号回复</string>
     <string name="image_text_consulting">图文咨询</string>
     <string name="consulting_statistics">咨询统计</string>
-    
+
     <string name="information_service">信息服务</string>
     <string name="contact_us">联系我们</string>
-    
+
     <string name="search">搜索姓名</string>
 
     <string name="empty">无新消息</string>
@@ -104,15 +104,28 @@
     <string name="appointment_info_money">加号费</string>
     <string name="appointment_info_time">时间</string>
     <string name="appointment_info_address">地点</string>
-    
+
     <string name="agreen">同意</string>
     <string name="refuse">拒绝</string>
     <string name="mail">站内信息</string>
     <string name="service_close">停诊发布</string>
     <string name="service_notice">通知公告</string>
 
+    <string name="business_setting">业务设置</string>
     <string name="patient">我的患者</string>
     <string name="account">我的账户</string>
     <string name="evaluate">我的评价</string>
-    <string name="business_setting">业务设置</string>
+
+
+    <!--业务设置-->
+    <string name="business_accept_appointments">接受加号</string>
+    <string name="business_appointments_fee">加号服务费</string>
+    <string name="business_accept_image_text_consulting">接受图文咨询</string>
+    <string name="business_image_text_consulting_fee">图文咨询服务费</string>
+
+
+    <!--我的账户-->
+    <string name="account_info">账户信息</string>
+    <string name="account_balance">账户余额</string>
+    <string name="account_withdrawal">账户提现</string>
 </resources>
