@@ -15,7 +15,7 @@ import com.yjm.doctor.model.Customer;
 /** 
  * DAO for table "CUSTOMER".
 */
-public class CustomerDao extends AbstractDao<Customer, Integer> {
+public class CustomerDao extends AbstractDao<Customer, Long> {
 
     public static final String TABLENAME = "CUSTOMER";
 
@@ -24,15 +24,16 @@ public class CustomerDao extends AbstractDao<Customer, Integer> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Age = new Property(0, int.class, "age", false, "AGE");
-        public final static Property Balance = new Property(1, float.class, "balance", false, "BALANCE");
-        public final static Property Birthday = new Property(2, long.class, "birthday", false, "BIRTHDAY");
-        public final static Property GroupId = new Property(3, int.class, "groupId", false, "GROUP_ID");
-        public final static Property Phone = new Property(4, String.class, "phone", false, "PHONE");
-        public final static Property Point = new Property(5, int.class, "point", false, "POINT");
-        public final static Property RealName = new Property(6, String.class, "realName", false, "REAL_NAME");
-        public final static Property Sex = new Property(7, int.class, "sex", false, "SEX");
-        public final static Property UserId = new Property(8, int.class, "userId", true, "USER_ID");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
+        public final static Property Age = new Property(1, int.class, "age", false, "AGE");
+        public final static Property Balance = new Property(2, float.class, "balance", false, "BALANCE");
+        public final static Property Birthday = new Property(3, long.class, "birthday", false, "BIRTHDAY");
+        public final static Property GroupId = new Property(4, int.class, "groupId", false, "GROUP_ID");
+        public final static Property Phone = new Property(5, String.class, "phone", false, "PHONE");
+        public final static Property Point = new Property(6, int.class, "point", false, "POINT");
+        public final static Property RealName = new Property(7, String.class, "realName", false, "REAL_NAME");
+        public final static Property Sex = new Property(8, int.class, "sex", false, "SEX");
+        public final static Property UserId = new Property(9, int.class, "userId", false, "USER_ID");
     }
 
 
@@ -48,15 +49,16 @@ public class CustomerDao extends AbstractDao<Customer, Integer> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"CUSTOMER\" (" + //
-                "\"AGE\" INTEGER NOT NULL ," + // 0: age
-                "\"BALANCE\" REAL NOT NULL ," + // 1: balance
-                "\"BIRTHDAY\" INTEGER NOT NULL ," + // 2: birthday
-                "\"GROUP_ID\" INTEGER NOT NULL ," + // 3: groupId
-                "\"PHONE\" TEXT," + // 4: phone
-                "\"POINT\" INTEGER NOT NULL ," + // 5: point
-                "\"REAL_NAME\" TEXT," + // 6: realName
-                "\"SEX\" INTEGER NOT NULL ," + // 7: sex
-                "\"USER_ID\" INTEGER PRIMARY KEY NOT NULL );"); // 8: userId
+                "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
+                "\"AGE\" INTEGER NOT NULL ," + // 1: age
+                "\"BALANCE\" REAL NOT NULL ," + // 2: balance
+                "\"BIRTHDAY\" INTEGER NOT NULL ," + // 3: birthday
+                "\"GROUP_ID\" INTEGER NOT NULL ," + // 4: groupId
+                "\"PHONE\" TEXT," + // 5: phone
+                "\"POINT\" INTEGER NOT NULL ," + // 6: point
+                "\"REAL_NAME\" TEXT," + // 7: realName
+                "\"SEX\" INTEGER NOT NULL ," + // 8: sex
+                "\"USER_ID\" INTEGER NOT NULL );"); // 9: userId
     }
 
     /** Drops the underlying database table. */
@@ -68,90 +70,103 @@ public class CustomerDao extends AbstractDao<Customer, Integer> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, Customer entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getAge());
-        stmt.bindDouble(2, entity.getBalance());
-        stmt.bindLong(3, entity.getBirthday());
-        stmt.bindLong(4, entity.getGroupId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+        stmt.bindLong(2, entity.getAge());
+        stmt.bindDouble(3, entity.getBalance());
+        stmt.bindLong(4, entity.getBirthday());
+        stmt.bindLong(5, entity.getGroupId());
  
         String phone = entity.getPhone();
         if (phone != null) {
-            stmt.bindString(5, phone);
+            stmt.bindString(6, phone);
         }
-        stmt.bindLong(6, entity.getPoint());
+        stmt.bindLong(7, entity.getPoint());
  
         String realName = entity.getRealName();
         if (realName != null) {
-            stmt.bindString(7, realName);
+            stmt.bindString(8, realName);
         }
-        stmt.bindLong(8, entity.getSex());
-        stmt.bindLong(9, entity.getUserId());
+        stmt.bindLong(9, entity.getSex());
+        stmt.bindLong(10, entity.getUserId());
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, Customer entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getAge());
-        stmt.bindDouble(2, entity.getBalance());
-        stmt.bindLong(3, entity.getBirthday());
-        stmt.bindLong(4, entity.getGroupId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+        stmt.bindLong(2, entity.getAge());
+        stmt.bindDouble(3, entity.getBalance());
+        stmt.bindLong(4, entity.getBirthday());
+        stmt.bindLong(5, entity.getGroupId());
  
         String phone = entity.getPhone();
         if (phone != null) {
-            stmt.bindString(5, phone);
+            stmt.bindString(6, phone);
         }
-        stmt.bindLong(6, entity.getPoint());
+        stmt.bindLong(7, entity.getPoint());
  
         String realName = entity.getRealName();
         if (realName != null) {
-            stmt.bindString(7, realName);
+            stmt.bindString(8, realName);
         }
-        stmt.bindLong(8, entity.getSex());
-        stmt.bindLong(9, entity.getUserId());
+        stmt.bindLong(9, entity.getSex());
+        stmt.bindLong(10, entity.getUserId());
     }
 
     @Override
-    public Integer readKey(Cursor cursor, int offset) {
-        return cursor.getInt(offset + 8);
+    public Long readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public Customer readEntity(Cursor cursor, int offset) {
         Customer entity = new Customer( //
-            cursor.getInt(offset + 0), // age
-            cursor.getFloat(offset + 1), // balance
-            cursor.getLong(offset + 2), // birthday
-            cursor.getInt(offset + 3), // groupId
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // phone
-            cursor.getInt(offset + 5), // point
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // realName
-            cursor.getInt(offset + 7), // sex
-            cursor.getInt(offset + 8) // userId
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
+            cursor.getInt(offset + 1), // age
+            cursor.getFloat(offset + 2), // balance
+            cursor.getLong(offset + 3), // birthday
+            cursor.getInt(offset + 4), // groupId
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // phone
+            cursor.getInt(offset + 6), // point
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // realName
+            cursor.getInt(offset + 8), // sex
+            cursor.getInt(offset + 9) // userId
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, Customer entity, int offset) {
-        entity.setAge(cursor.getInt(offset + 0));
-        entity.setBalance(cursor.getFloat(offset + 1));
-        entity.setBirthday(cursor.getLong(offset + 2));
-        entity.setGroupId(cursor.getInt(offset + 3));
-        entity.setPhone(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setPoint(cursor.getInt(offset + 5));
-        entity.setRealName(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setSex(cursor.getInt(offset + 7));
-        entity.setUserId(cursor.getInt(offset + 8));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setAge(cursor.getInt(offset + 1));
+        entity.setBalance(cursor.getFloat(offset + 2));
+        entity.setBirthday(cursor.getLong(offset + 3));
+        entity.setGroupId(cursor.getInt(offset + 4));
+        entity.setPhone(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setPoint(cursor.getInt(offset + 6));
+        entity.setRealName(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setSex(cursor.getInt(offset + 8));
+        entity.setUserId(cursor.getInt(offset + 9));
      }
     
     @Override
-    protected final Integer updateKeyAfterInsert(Customer entity, long rowId) {
-        return entity.getUserId();
+    protected final Long updateKeyAfterInsert(Customer entity, long rowId) {
+        entity.setId(rowId);
+        return rowId;
     }
     
     @Override
-    public Integer getKey(Customer entity) {
+    public Long getKey(Customer entity) {
         if(entity != null) {
-            return entity.getUserId();
+            return entity.getId();
         } else {
             return null;
         }
@@ -159,7 +174,7 @@ public class CustomerDao extends AbstractDao<Customer, Integer> {
 
     @Override
     public boolean hasKey(Customer entity) {
-        throw new UnsupportedOperationException("Unsupported for entities with a non-null key");
+        return entity.getId() != null;
     }
 
     @Override

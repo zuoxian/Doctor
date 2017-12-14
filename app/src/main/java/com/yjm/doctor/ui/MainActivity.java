@@ -14,6 +14,13 @@ import com.yjm.doctor.Config;
 import com.yjm.doctor.R;
 import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.application.YjmApplication;
+import com.yjm.doctor.dao.CustomerDao;
+import com.yjm.doctor.dao.DaoMaster;
+import com.yjm.doctor.dao.DaoSession;
+import com.yjm.doctor.dao.GreenDaoHelper;
+import com.yjm.doctor.dao.MemberDoctorDao;
+import com.yjm.doctor.dao.UserDao;
+import com.yjm.doctor.model.Customer;
 import com.yjm.doctor.model.EventType;
 import com.yjm.doctor.model.MemberDoctor;
 import com.yjm.doctor.model.User;
@@ -23,8 +30,14 @@ import com.yjm.doctor.ui.fragment.MainFragment;
 import com.yjm.doctor.ui.fragment.ServiceFragment;
 import com.yjm.doctor.ui.fragment.UserFragment;
 import com.yjm.doctor.util.RestAdapterUtils;
+import com.yjm.doctor.util.SharedPreferencesUtil;
 import com.yjm.doctor.util.SystemTools;
 import com.yjm.doctor.util.auth.UserService;
+
+import org.greenrobot.greendao.query.Query;
+import org.greenrobot.greendao.query.QueryBuilder;
+
+import java.util.List;
 
 import butterknife.BindView;
 import de.greenrobot.event.EventBus;
@@ -51,6 +64,8 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
     private UserAPI userAPI;
 
     private UserService  userService;
+
+    UserDao userDao ;
 
 
     @Override
@@ -82,18 +97,7 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        User mUser = UserService.getInstance(this).getActiveAccountInfo();
-        MemberDoctor doctor = mUser.getMemberDoctor();
-        boolean isGetUserInfo = true;
-        if(null != mUser && null != doctor){
-            if(mUser.getId() == doctor.getId()){
-                isGetUserInfo = false;//用户信息存在 不需要重新请求
-            }
-        }
-        if(isGetUserInfo) {
-            userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this);
-            userAPI.getUserInfo(this);
-        }
+
         tabNames = new String[]{"首页", "服务", "个人中心"};
 
         fragmentClss = new Class<?>[]{MainFragment.class, ServiceFragment.class,UserFragment.class};
@@ -103,7 +107,23 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
         initViews();
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        User mUser = UserService.getInstance(this).getActiveAccountInfo();
+        MemberDoctor doctor = mUser.getMemberDoctor();
+        boolean isGetUserInfo = true;
+        if(null != mUser && null != doctor){
+            if(mUser.getId() == doctor.getId()){
+                isGetUserInfo = false;//用户信息存在 不需要重新请求
+            }
+        }
+        Log.i("main","mainactivity "+isGetUserInfo);
+        if(isGetUserInfo) {
+            userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this);
+            userAPI.getUserInfo(this);
+        }
+    }
 
     private void initViews(){
         mLayoutInflater = LayoutInflater.from(this);
@@ -143,6 +163,7 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
 
     @Override
     public void success(UserBean userBean, Response response) {
+        Log.i("serial","mainactivity   userBean="+userBean);
         if(null != userBean && true == userBean.getSuccess() && null != userBean.getObj()){
             finishLogin(userBean.getObj());
         }
@@ -150,18 +171,28 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
 
 
     private void finishLogin(User user) {
+        Log.i("main","mainactivity   user");
 
+        try {
+            SharedPreferencesUtil sharedPreferencesUtil = SharedPreferencesUtil.instance(this);
+            sharedPreferencesUtil.saveObject("user",sharedPreferencesUtil.serialize(user));
 
-        UserService.getInstance(this).signIn(user.getMobile(), userService.getPwd(user.getId()), user);
+//            User user1 = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
+//            Log.d("serial", user1.toString());
 
-        if(!TextUtils.isEmpty(user.getTokenId())) {
-            if(!TextUtils.isEmpty(user.getTokenId()))
-                UserService.getInstance(this).setTokenId(user.getId(),user.getTokenId());
+            UserService.getInstance(this).signIn(user.getMobile(), userService.getPwd(user.getId()), user);
 
+            if (!TextUtils.isEmpty(user.getTokenId())) {
+                if (!TextUtils.isEmpty(user.getTokenId()))
+                    UserService.getInstance(this).setTokenId(user.getId(), user.getTokenId());
+
+            }
+            Config.userId = user.getId();
+            Config.mobile = user.getMobile();
+            setResult(11);
+        }catch (Exception ex){
+            Log.i("main",ex.getMessage());
         }
-        Config.userId = user.getId();
-        Config.mobile = user.getMobile();
-        setResult(11);
     }
 
     @Override

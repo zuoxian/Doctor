@@ -48,7 +48,7 @@ public class SplashActivity extends BaseActivity{
                 Log.e("userlogin","没有登录过");
                 jumper(LaunchActivity.class);
             }
-
+        finish();
 
         }
     };
