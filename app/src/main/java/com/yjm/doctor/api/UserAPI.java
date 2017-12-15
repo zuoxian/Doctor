@@ -5,6 +5,7 @@ import com.yjm.doctor.model.Level;
 import com.yjm.doctor.model.LevelBean;
 import com.yjm.doctor.model.Message;
 import com.yjm.doctor.model.UserBean;
+import com.yjm.doctor.ui.view.layout.BalanceListBean;
 
 import retrofit.Callback;
 import retrofit.http.GET;
@@ -40,7 +41,6 @@ public interface UserAPI {
             @Query("tokenId") String tokenId ,
             Callback<UserBean> callback);
 
-
     @POST("/getConfig")
     void getBusinessSetting(
             @Query("tokenId") String tokenId ,
@@ -53,6 +53,12 @@ public interface UserAPI {
             @Query("acceptConsultation") boolean acceptConsultation ,
             Callback<Message> callback);
 
+    @POST("/dataGrid")
+    void getBalanceList( //@Query("tokenId") String tokenId ,
 
+            @Query("date") String date ,
+            @Query("page") int page ,
+            @Query("rows") int rows ,
+            Callback<BalanceListBean> callback);
 
 }

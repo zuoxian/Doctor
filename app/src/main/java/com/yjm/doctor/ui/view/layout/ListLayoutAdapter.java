@@ -1,6 +1,5 @@
 package com.yjm.doctor.ui.view.layout;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;

@@ -54,6 +54,7 @@ public class User implements Serializable {
 
     private String pic;
 
+    private String picUrl;
     private int regIp;
 
     private long regTime;
@@ -77,12 +78,12 @@ public class User implements Serializable {
     @Transient
     private String pwd;
 
-    @Generated(hash = 1322219668)
+    @Generated(hash = 300147068)
     public User(int id, int amount, String email, int groupid, String hxPassword,
             boolean hxStatus, int isAdmin, int lastLoginIp, int lastLoginTime,
             int login, String mobile, int modelid, String password, String pic,
-            int regIp, long regTime, int score, int status, String tokenId,
-            int updateTime, String username) {
+            String picUrl, int regIp, long regTime, int score, int status,
+            String tokenId, int updateTime, String username) {
         this.id = id;
         this.amount = amount;
         this.email = email;
@@ -97,6 +98,7 @@ public class User implements Serializable {
         this.modelid = modelid;
         this.password = password;
         this.pic = pic;
+        this.picUrl = picUrl;
         this.regIp = regIp;
         this.regTime = regTime;
         this.score = score;
@@ -330,5 +332,13 @@ public class User implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPicUrl() {
+        return this.picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 }

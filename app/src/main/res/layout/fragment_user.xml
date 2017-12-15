@@ -32,7 +32,7 @@
         fresco:actualImageScaleType="fitXY"
         fresco:placeholderImageScaleType="fitXY"
         android:background="@drawable/check"
-        />
+        fresco:roundAsCircle="true" />
     <TextView
         android:id="@+id/username"
         android:layout_width="wrap_content"

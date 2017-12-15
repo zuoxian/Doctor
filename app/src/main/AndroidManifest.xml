@@ -121,6 +121,11 @@
             android:name=".ui.UserInfoActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/user_info"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.AccountBalanceActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/account_balance"
             android:screenOrientation="portrait"/>
     </application>
 

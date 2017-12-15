@@ -1,13 +1,6 @@
 package com.yjm.doctor.ui;
 
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.yjm.doctor.R;
 import com.yjm.doctor.ui.base.BaseActivity;
@@ -17,8 +10,6 @@ import com.yjm.doctor.ui.view.layout.ListLayoutModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class AccountinfoActivity extends BaseActivity {

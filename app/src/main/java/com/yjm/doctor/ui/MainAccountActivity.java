@@ -1,11 +1,7 @@
 package com.yjm.doctor.ui;
 
 import android.content.Intent;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.yjm.doctor.R;
 import com.yjm.doctor.ui.base.BaseActivity;
@@ -65,6 +61,8 @@ public class MainAccountActivity extends BaseActivity {
                         break;
                     }
                     case 1: {
+                        startActivity(new Intent(MainAccountActivity.this,AccountBalanceActivity.class));
+
                         break;
                     }
                     case 2: {

@@ -142,7 +142,7 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
     @Override
     public void success(AppointmentBean subListPage, Response response) {
         stopRefresh();
-        if (subListPage!=null && true == subListPage.getSuccess()) {
+        if (subListPage!=null && subListPage.getSuccess()) {
             if(null == subListPage.getObj() || null == subListPage.getObj().getRows() || !(null != subListPage.getObj().getRows() && subListPage.getObj().getRows().size()>0)){
                 showConnectionRetry("无新消息");
                 return;
@@ -188,9 +188,7 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
     }
 
     @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -203,9 +201,7 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
     }
 
     @Override
-    public void afterTextChanged(Editable s) {
-
-    }
+    public void afterTextChanged(Editable s) { }
 
     class SearchTask implements Runnable{
         @Override

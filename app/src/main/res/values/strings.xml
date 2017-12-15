@@ -112,7 +112,6 @@
     <string name="service_notice">通知公告</string>
 
 
-
     <!--个人中心-->
     <string name="business_setting">业务设置</string>
     <string name="patient">我的患者</string>
@@ -133,7 +132,6 @@
     <string name="user_speciality">特长介绍</string>
 
 
-
     <!--业务设置 二级界面-->
     <string name="business_accept_appointments">接受加号</string>
     <string name="business_appointments_fee">加号服务费</string>
@@ -151,7 +149,6 @@
     <string name="id_card">身份证</string>
     <string name="alipay_account">支付宝账号</string>
     <string name="wechatpay_account">微信账号</string>
-
 
 
 </resources>

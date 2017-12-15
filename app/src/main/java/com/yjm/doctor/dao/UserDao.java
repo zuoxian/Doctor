@@ -38,13 +38,14 @@ public class UserDao extends AbstractDao<User, Integer> {
         public final static Property Modelid = new Property(11, int.class, "modelid", false, "MODELID");
         public final static Property Password = new Property(12, String.class, "password", false, "PASSWORD");
         public final static Property Pic = new Property(13, String.class, "pic", false, "PIC");
-        public final static Property RegIp = new Property(14, int.class, "regIp", false, "REG_IP");
-        public final static Property RegTime = new Property(15, long.class, "regTime", false, "REG_TIME");
-        public final static Property Score = new Property(16, int.class, "score", false, "SCORE");
-        public final static Property Status = new Property(17, int.class, "status", false, "STATUS");
-        public final static Property TokenId = new Property(18, String.class, "tokenId", false, "TOKEN_ID");
-        public final static Property UpdateTime = new Property(19, int.class, "updateTime", false, "UPDATE_TIME");
-        public final static Property Username = new Property(20, String.class, "username", false, "USERNAME");
+        public final static Property PicUrl = new Property(14, String.class, "picUrl", false, "PIC_URL");
+        public final static Property RegIp = new Property(15, int.class, "regIp", false, "REG_IP");
+        public final static Property RegTime = new Property(16, long.class, "regTime", false, "REG_TIME");
+        public final static Property Score = new Property(17, int.class, "score", false, "SCORE");
+        public final static Property Status = new Property(18, int.class, "status", false, "STATUS");
+        public final static Property TokenId = new Property(19, String.class, "tokenId", false, "TOKEN_ID");
+        public final static Property UpdateTime = new Property(20, int.class, "updateTime", false, "UPDATE_TIME");
+        public final static Property Username = new Property(21, String.class, "username", false, "USERNAME");
     }
 
 
@@ -74,13 +75,14 @@ public class UserDao extends AbstractDao<User, Integer> {
                 "\"MODELID\" INTEGER NOT NULL ," + // 11: modelid
                 "\"PASSWORD\" TEXT," + // 12: password
                 "\"PIC\" TEXT," + // 13: pic
-                "\"REG_IP\" INTEGER NOT NULL ," + // 14: regIp
-                "\"REG_TIME\" INTEGER NOT NULL ," + // 15: regTime
-                "\"SCORE\" INTEGER NOT NULL ," + // 16: score
-                "\"STATUS\" INTEGER NOT NULL ," + // 17: status
-                "\"TOKEN_ID\" TEXT," + // 18: tokenId
-                "\"UPDATE_TIME\" INTEGER NOT NULL ," + // 19: updateTime
-                "\"USERNAME\" TEXT);"); // 20: username
+                "\"PIC_URL\" TEXT," + // 14: picUrl
+                "\"REG_IP\" INTEGER NOT NULL ," + // 15: regIp
+                "\"REG_TIME\" INTEGER NOT NULL ," + // 16: regTime
+                "\"SCORE\" INTEGER NOT NULL ," + // 17: score
+                "\"STATUS\" INTEGER NOT NULL ," + // 18: status
+                "\"TOKEN_ID\" TEXT," + // 19: tokenId
+                "\"UPDATE_TIME\" INTEGER NOT NULL ," + // 20: updateTime
+                "\"USERNAME\" TEXT);"); // 21: username
     }
 
     /** Drops the underlying database table. */
@@ -126,20 +128,25 @@ public class UserDao extends AbstractDao<User, Integer> {
         if (pic != null) {
             stmt.bindString(14, pic);
         }
-        stmt.bindLong(15, entity.getRegIp());
-        stmt.bindLong(16, entity.getRegTime());
-        stmt.bindLong(17, entity.getScore());
-        stmt.bindLong(18, entity.getStatus());
+ 
+        String picUrl = entity.getPicUrl();
+        if (picUrl != null) {
+            stmt.bindString(15, picUrl);
+        }
+        stmt.bindLong(16, entity.getRegIp());
+        stmt.bindLong(17, entity.getRegTime());
+        stmt.bindLong(18, entity.getScore());
+        stmt.bindLong(19, entity.getStatus());
  
         String tokenId = entity.getTokenId();
         if (tokenId != null) {
-            stmt.bindString(19, tokenId);
+            stmt.bindString(20, tokenId);
         }
-        stmt.bindLong(20, entity.getUpdateTime());
+        stmt.bindLong(21, entity.getUpdateTime());
  
         String username = entity.getUsername();
         if (username != null) {
-            stmt.bindString(21, username);
+            stmt.bindString(22, username);
         }
     }
 
@@ -180,20 +187,25 @@ public class UserDao extends AbstractDao<User, Integer> {
         if (pic != null) {
             stmt.bindString(14, pic);
         }
-        stmt.bindLong(15, entity.getRegIp());
-        stmt.bindLong(16, entity.getRegTime());
-        stmt.bindLong(17, entity.getScore());
-        stmt.bindLong(18, entity.getStatus());
+ 
+        String picUrl = entity.getPicUrl();
+        if (picUrl != null) {
+            stmt.bindString(15, picUrl);
+        }
+        stmt.bindLong(16, entity.getRegIp());
+        stmt.bindLong(17, entity.getRegTime());
+        stmt.bindLong(18, entity.getScore());
+        stmt.bindLong(19, entity.getStatus());
  
         String tokenId = entity.getTokenId();
         if (tokenId != null) {
-            stmt.bindString(19, tokenId);
+            stmt.bindString(20, tokenId);
         }
-        stmt.bindLong(20, entity.getUpdateTime());
+        stmt.bindLong(21, entity.getUpdateTime());
  
         String username = entity.getUsername();
         if (username != null) {
-            stmt.bindString(21, username);
+            stmt.bindString(22, username);
         }
     }
 
@@ -219,13 +231,14 @@ public class UserDao extends AbstractDao<User, Integer> {
             cursor.getInt(offset + 11), // modelid
             cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // password
             cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // pic
-            cursor.getInt(offset + 14), // regIp
-            cursor.getLong(offset + 15), // regTime
-            cursor.getInt(offset + 16), // score
-            cursor.getInt(offset + 17), // status
-            cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18), // tokenId
-            cursor.getInt(offset + 19), // updateTime
-            cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20) // username
+            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14), // picUrl
+            cursor.getInt(offset + 15), // regIp
+            cursor.getLong(offset + 16), // regTime
+            cursor.getInt(offset + 17), // score
+            cursor.getInt(offset + 18), // status
+            cursor.isNull(offset + 19) ? null : cursor.getString(offset + 19), // tokenId
+            cursor.getInt(offset + 20), // updateTime
+            cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21) // username
         );
         return entity;
     }
@@ -246,13 +259,14 @@ public class UserDao extends AbstractDao<User, Integer> {
         entity.setModelid(cursor.getInt(offset + 11));
         entity.setPassword(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
         entity.setPic(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
-        entity.setRegIp(cursor.getInt(offset + 14));
-        entity.setRegTime(cursor.getLong(offset + 15));
-        entity.setScore(cursor.getInt(offset + 16));
-        entity.setStatus(cursor.getInt(offset + 17));
-        entity.setTokenId(cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18));
-        entity.setUpdateTime(cursor.getInt(offset + 19));
-        entity.setUsername(cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20));
+        entity.setPicUrl(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
+        entity.setRegIp(cursor.getInt(offset + 15));
+        entity.setRegTime(cursor.getLong(offset + 16));
+        entity.setScore(cursor.getInt(offset + 17));
+        entity.setStatus(cursor.getInt(offset + 18));
+        entity.setTokenId(cursor.isNull(offset + 19) ? null : cursor.getString(offset + 19));
+        entity.setUpdateTime(cursor.getInt(offset + 20));
+        entity.setUsername(cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21));
      }
     
     @Override

@@ -1,5 +1,7 @@
 package com.yjm.doctor.ui.base;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.yjm.doctor.application.YjmApplication;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -17,6 +21,8 @@ import retrofit.Callback;
  */
 
 public abstract class BaseFragment<T> extends Fragment implements Callback<T>{
+
+    private Activity activity;
 
     Unbinder unbinder;
 
@@ -37,6 +43,17 @@ public abstract class BaseFragment<T> extends Fragment implements Callback<T>{
 
     protected abstract void onLoadData();
 
+
+
+    public Context getContext() {
+        activity = getActivity();
+
+        if (activity == null) {
+            return YjmApplication.getInstance();
+        }
+
+        return activity;
+    }
 
 
 }

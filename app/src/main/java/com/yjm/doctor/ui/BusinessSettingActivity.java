@@ -1,16 +1,8 @@
 package com.yjm.doctor.ui;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yjm.doctor.Config;
 import com.yjm.doctor.R;
@@ -28,12 +20,10 @@ import com.yjm.doctor.util.auth.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -98,7 +88,7 @@ public class BusinessSettingActivity extends BaseActivity {
 
         showDialog("加载中");
 
-        mUserAPI= RestAdapterUtils.getRestAPI(Config.USE_BUSINESSSETTING,UserAPI.class,this);
+        mUserAPI= RestAdapterUtils.getRestAPI(Config.USER_BUSINESSSETTING,UserAPI.class,this);
         tokenID=UserService.getInstance(this).getTokenId(mUser.getId());
         getSettingInfo();
 

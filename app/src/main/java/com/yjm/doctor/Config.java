@@ -18,7 +18,9 @@ public class Config {
 
     public static final String HOME_APPOINTMENT =  DOMAIN_URL + "/ethealth/api/appointment/doctor";
 
-    public static final String USE_BUSINESSSETTING = DOMAIN_URL + "/ethealth/api/doctor";
+    public static final String USER_BUSINESSSETTING = DOMAIN_URL + "/ethealth/api/doctor";
+
+    public static final String USER_BALANCE = DOMAIN_URL + "/ethealth/api/balance";
 
 
 

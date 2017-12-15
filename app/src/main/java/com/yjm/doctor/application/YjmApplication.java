@@ -11,7 +11,7 @@ import com.yjm.doctor.application.base.ActivityLifecycle;
 
 public class YjmApplication extends Application {
 
-
+    private static YjmApplication instance;
     public static String title;
 
     public static boolean toolBackIcon = true;
@@ -21,9 +21,14 @@ public class YjmApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        instance=this;
         //设置 toolbar
         registerActivityLifecycleCallbacks(new ActivityLifecycle(title));
         Fresco.initialize(this);
+    }
+
+    public static YjmApplication getInstance(){
+        return instance;
     }
 
 }

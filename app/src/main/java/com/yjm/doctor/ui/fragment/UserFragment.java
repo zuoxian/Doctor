@@ -1,12 +1,8 @@
 package com.yjm.doctor.ui.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.net.Uri;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -33,9 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -55,7 +49,6 @@ public class UserFragment extends BaseFragment<UserBean> {
 
     @BindView(R.id.listview_layout)
     ListView mListviewLayout;
-    Unbinder unbinder;
 
     private ListLayoutAdapter mLayoutAdapter;
     private UserAPI mUserAPI;
@@ -72,17 +65,6 @@ public class UserFragment extends BaseFragment<UserBean> {
 
     @Override
     protected void onLoadData() {
-        mUser = UserService.getInstance(getContext()).getActiveAccountInfo();
-        tokenID = UserService.getInstance(getContext()).getTokenId(mUser.getId());
-
-
-        mUserAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, getContext());
-        if (NetworkUtils.isNetworkAvaliable(getContext())) {
-            mUserAPI.getUserInfoByTokenId(tokenID, this);
-        } else {
-            SystemTools.show_msg(getContext(), R.string.toast_msg_no_network);
-        }
-
 
         // TODO: 2017/12/14  这里的图片显示有点错位，图片底部切图空白多大，故增加了 marginTop="5dp"
         List<ListLayoutModel> modelList = new ArrayList<ListLayoutModel>();
@@ -115,14 +97,35 @@ public class UserFragment extends BaseFragment<UserBean> {
                 }
             }
         });
+
+        try {
+            sharedPreferencesUtil = SharedPreferencesUtil.instance(getContext());
+            mUser = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
+            tokenID = UserService.getInstance(getContext()).getTokenId(mUser.getId());
+
+            if (mUser.getCustomer().getUserId() != 0) {
+                updateUI(mUser);
+            }else {
+                mUserAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, getContext());
+                if (NetworkUtils.isNetworkAvaliable(getContext())) {
+                    mUserAPI.getUserInfoByTokenId(tokenID, this);
+                } else {
+                    SystemTools.show_msg(getContext(), R.string.toast_msg_no_network);
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     public void success(UserBean userBean, Response response) {
-        Log.i(TAG, "success: " + userBean.toString());
         if (userBean != null) {
             try {
-                sharedPreferencesUtil = SharedPreferencesUtil.instance(getContext());
                 sharedPreferencesUtil.saveObject("user", sharedPreferencesUtil.serialize(userBean.getObj()));
                 updateUI(userBean.getObj());
             } catch (IOException e) {
@@ -133,22 +136,12 @@ public class UserFragment extends BaseFragment<UserBean> {
 
     @Override
     public void failure(RetrofitError error) {
-        Log.i(TAG, "failure: " + error.getMessage() + "\t\t" + error.getUrl());
-
-        try {
-            User user = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
-            updateUI(user);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
 
     }
 
     private void updateUI(User user){
-        if (!TextUtils.isEmpty(user.getPic())) {
-//                mUserIcon.setImageURI(Uri.parse(userBean.getObj().getPic()));
+        if (!TextUtils.isEmpty(user.getPicUrl())) {
+                mUserIcon.setImageURI(Uri.parse(user.getPicUrl()));
         }
         if (!TextUtils.isEmpty(user.getCustomer().getRealName())) {
             mUsername.setText(user.getCustomer().getRealName());

@@ -33,6 +33,7 @@
         fresco:actualImageScaleType="fitXY"
         fresco:placeholderImageScaleType="fitXY"
         android:layout_gravity="center_vertical"
+        fresco:roundAsCircle="true"
         android:background="@drawable/business_setting"/>
 
     <TextView
