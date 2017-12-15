@@ -22,24 +22,25 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class AccountinfoActivity extends BaseActivity {
-
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-
-    @BindView(R.id.img_operation)
-    ImageView mImgOperation;
-
-    @BindView(R.id.toolicon)
-    RelativeLayout mToolicon;
-
-    @BindView(R.id.tooltitle)
-    TextView mTooltitle;
-
-    @BindView(R.id.toolfinish)
-    TextView mToolfinish;
+    private static final String TAG = "c";
+    
+//    @BindView(R.id.toolbar)
+//    Toolbar mToolbar;
+//
+//    @BindView(R.id.img_operation)
+//    ImageView mImgOperation;
+//
+//    @BindView(R.id.toolicon)
+//    RelativeLayout mToolicon;
+//
+//    @BindView(R.id.tooltitle)
+//    TextView mTooltitle;
+//
+//    @BindView(R.id.toolfinish)
+//    TextView mToolfinish;
 
     private ListView mListviewTop,mListviewBottom;
-    private List<ListLayoutModel> modelListTop=null,modelListBottom;
+    private List<ListLayoutModel> modelListTop,modelListBottom;
     private ListLayoutAdapter mLayoutAdapterTop,mLayoutAdapterBottom;
 
 
@@ -55,13 +56,14 @@ public class AccountinfoActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mListviewTop=(ListView)findViewById(R.id.include_top).findViewById(R.id.listview_layout);
-        mListviewTop=(ListView)findViewById(R.id.include_bottom).findViewById(R.id.listview_layout);
 
-        setSupportActionBar(mToolbar);
-        mTooltitle.setText(R.string.account_info);
-        mToolicon.setVisibility(View.GONE);
-        mToolfinish.setVisibility(View.GONE);
+
+//        setSupportActionBar(mToolbar);
+//        mTooltitle.setText(R.string.account_info);
+//        mToolicon.setVisibility(View.GONE);
+//        mToolfinish.setVisibility(View.GONE);
+        mListviewTop=(ListView)findViewById(R.id.listview_top);
+        mListviewBottom=(ListView)findViewById(R.id.listview_bottom);
 
         modelListTop=new ArrayList<ListLayoutModel>();
         modelListTop.add(new ListLayoutModel(R.string.name,"",R.drawable.comein));

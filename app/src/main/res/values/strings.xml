@@ -111,10 +111,27 @@
     <string name="service_close">停诊发布</string>
     <string name="service_notice">通知公告</string>
 
+
+
+    <!--个人中心-->
     <string name="business_setting">业务设置</string>
     <string name="patient">我的患者</string>
     <string name="account">我的账户</string>
     <string name="evaluate">我的评价</string>
+
+    <!--个人信息-->
+    <string name="user_info">个人信息</string>
+    <string name="user_logo">头像</string>
+    <string name="user_name">姓名</string>
+    <string name="user_sex">性别</string>
+    <string name="user_phone_number">手机号</string>
+    <string name="user_qr_code">二维码</string>
+    <string name="user_email">电子邮箱</string>
+    <string name="user_hospital_name">医院名称</string>
+    <string name="user_department_name">专科</string>
+    <string name="user_level_name">职称</string>
+    <string name="user_speciality">特长介绍</string>
+
 
 
     <!--业务设置 二级界面-->
@@ -129,10 +146,12 @@
     <string name="account_balance">账户余额</string>
     <string name="account_withdrawal">账户提现</string>
 
-     <!--账户信息 二级界面-->
+    <!--账户信息 二级界面-->
     <string name="name">姓名</string>a
     <string name="id_card">身份证</string>
     <string name="alipay_account">支付宝账号</string>
     <string name="wechatpay_account">微信账号</string>
+
+
 
 </resources>

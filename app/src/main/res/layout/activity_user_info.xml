@@ -9,16 +9,9 @@
 
     <include layout="@layout/toolbar"/>
 
-    <ListView
-        android:id="@+id/listview_top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"/>
+    <View android:layout_width="match_parent" android:layout_height="10dp" />
 
-    <ListView
-        android:id="@+id/listview_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"/>
+    <include layout="@layout/list_listlayout" />
 
 </LinearLayout>
+

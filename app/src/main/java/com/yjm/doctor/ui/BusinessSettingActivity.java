@@ -41,20 +41,20 @@ public class BusinessSettingActivity extends BaseActivity {
 
     private static final String TAG = "BusinessSettingActivity";
 
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-
-    @BindView(R.id.img_operation)
-    ImageView mImgOperation;
-
-    @BindView(R.id.toolicon)
-    RelativeLayout mToolicon;
-
-    @BindView(R.id.tooltitle)
-    TextView mTooltitle;
-
-    @BindView(R.id.toolfinish)
-    TextView mToolfinish;
+//    @BindView(R.id.toolbar)
+//    Toolbar mToolbar;
+//
+//    @BindView(R.id.img_operation)
+//    ImageView mImgOperation;
+//
+//    @BindView(R.id.toolicon)
+//    RelativeLayout mToolicon;
+//
+//    @BindView(R.id.tooltitle)
+//    TextView mTooltitle;
+//
+//    @BindView(R.id.toolfinish)
+//    TextView mToolfinish;
 
     @BindView(R.id.listview_layout)
     ListView mListviewLayout;
@@ -76,15 +76,18 @@ public class BusinessSettingActivity extends BaseActivity {
         this.finish();
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
         mUser = UserService.getInstance(this).getActiveAccountInfo();
 
-        setSupportActionBar(mToolbar);
-        mTooltitle.setText(R.string.account);
-        mToolicon.setVisibility(View.GONE);
-        mToolfinish.setVisibility(View.GONE);
+
+//        setSupportActionBar(mToolbar);
+//        mTooltitle.setText(R.string.account);
+//        mToolicon.setVisibility(View.GONE);
+//        mToolfinish.setVisibility(View.GONE);
+
         modelList=new ArrayList<ListLayoutModel>();
         modelList.add(new ListLayoutModel(R.string.business_accept_appointments,"",0,R.drawable.comein));
         modelList.add(new ListLayoutModel(R.string.business_appointments_fee,"￥0.00",R.color.colorAccent,0));
@@ -117,7 +120,7 @@ public class BusinessSettingActivity extends BaseActivity {
     }
 
     private void getSettingInfo(){
-        if(mUser != null && NetworkUtils.isNetworkAvaliable(this)) {
+        if(tokenID != null && NetworkUtils.isNetworkAvaliable(this)) {
             mUserAPI.getBusinessSetting(tokenID, new Callback<BusinessSettingBean>() {
                 @Override
                 public void success(BusinessSettingBean bean, Response response) {
@@ -162,7 +165,7 @@ public class BusinessSettingActivity extends BaseActivity {
     }
 
     private void updateInfo(boolean acceptAppointment,boolean acceptConsultation){
-        if(mUser != null && NetworkUtils.isNetworkAvaliable(this)) {
+        if(tokenID != null && NetworkUtils.isNetworkAvaliable(this)) {
             mUserAPI.updateBusinessSetting(tokenID, acceptAppointment, acceptConsultation, new Callback<Message>() {
                 @Override
                 public void success(Message message, Response response) {

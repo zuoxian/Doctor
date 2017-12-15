@@ -107,10 +107,20 @@
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/business_setting"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".ui.MainAccountActivity"
+        <activity
+            android:name=".ui.MainAccountActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/account"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.AccountinfoActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/account_info"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.UserInfoActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/user_info"
             android:screenOrientation="portrait"/>
     </application>
 

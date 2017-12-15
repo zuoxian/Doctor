@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.yjm.doctor.R;
 import com.yjm.doctor.application.YjmApplication;
 import com.yjm.doctor.model.User;
+import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.ui.base.BaseFragment;
 import com.yjm.doctor.util.auth.UserService;
 
@@ -24,7 +25,7 @@ import retrofit.client.Response;
  * Created by zx on 2017/12/10.
  */
 
-public class ServiceFragment extends BaseFragment {
+public class ServiceFragment extends BaseFragment<UserBean> {
 
     private User user;
 
@@ -75,7 +76,7 @@ public class ServiceFragment extends BaseFragment {
 
 
     @Override
-    public void success(Object o, Response response) {
+    public void success(UserBean userBean, Response response) {
 
     }
 

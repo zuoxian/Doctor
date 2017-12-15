@@ -1,5 +1,6 @@
 package com.yjm.doctor.ui;
 
+import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
@@ -19,15 +20,14 @@ import butterknife.OnClick;
 
 public class MainAccountActivity extends BaseActivity {
 
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-
-    @BindView(R.id.toolicon)
-    RelativeLayout mToolicon;
-    @BindView(R.id.tooltitle)
-    TextView mTooltitle;
-    @BindView(R.id.toolfinish)
-    TextView mToolfinish;
+//    @BindView(R.id.toolbar)
+//    Toolbar mToolbar;
+//    @BindView(R.id.toolicon)
+//    RelativeLayout mToolicon;
+//    @BindView(R.id.tooltitle)
+//    TextView mTooltitle;
+//    @BindView(R.id.toolfinish)
+//    TextView mToolfinish;
 
     @BindView(R.id.listview_layout)
     ListView mListviewLayout;
@@ -46,10 +46,10 @@ public class MainAccountActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-        setSupportActionBar(mToolbar);
-        mTooltitle.setText(R.string.account);
-        mToolicon.setVisibility(View.GONE);
-        mToolfinish.setVisibility(View.GONE);
+//        setSupportActionBar(mToolbar);
+//        mTooltitle.setText(R.string.account);
+//        mToolicon.setVisibility(View.GONE);
+//        mToolfinish.setVisibility(View.GONE);
         List<ListLayoutModel> modelList=new ArrayList<ListLayoutModel>();
         modelList.add(new ListLayoutModel(R.drawable.business_setting,R.string.account_info,R.drawable.comein));
         modelList.add(new ListLayoutModel(R.drawable.patient,R.string.account_balance,R.drawable.comein));
@@ -61,6 +61,7 @@ public class MainAccountActivity extends BaseActivity {
             public void OnItemClick(int position, ListLayoutModel model) {
                 switch (position) {
                     case 0: {
+                        startActivity(new Intent(MainAccountActivity.this,AccountinfoActivity.class));
                         break;
                     }
                     case 1: {

@@ -19,6 +19,17 @@ public class ListLayoutModel {
     public ListLayoutModel() {
     }
 
+    //个人信息
+    public ListLayoutModel(int title, String logo) { //String msg
+        this.title = title;
+        this.logo = logo;
+    }
+
+    public ListLayoutModel(int title, int imgOperaption) {
+        this.title = title;
+        this.imgOperaption = imgOperaption;
+    }
+
     //个人中心、我的账户
     public ListLayoutModel(int icon, int title, int imgOperaption) {
         this.icon = icon;
@@ -31,6 +42,13 @@ public class ListLayoutModel {
         this.title = title;
         this.msg = msg;
         this.msgColor = msgColor;
+        this.imgOperaption = imgOperaption;
+    }
+
+    //个人信息、账户信息
+    public ListLayoutModel(int title, String msg, int imgOperaption) {
+        this.title = title;
+        this.msg = msg;
         this.imgOperaption = imgOperaption;
     }
 

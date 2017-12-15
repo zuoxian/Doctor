@@ -87,10 +87,12 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             }
         }
         if ( toolTitle != null) { //找到 Toolbar 的标题栏并设置标题名
-            if(TextUtils.isEmpty(mTitle))
+            if(TextUtils.isEmpty(mTitle)){
                 toolTitle.setText(activity.getTitle());
-            else
+            Log.i("mTitle", "标题: "+ activity.getTitle() );
+            } else {
                 toolTitle.setText(mTitle);
+            }
         }
 
 

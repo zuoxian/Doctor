@@ -35,6 +35,12 @@ public interface UserAPI {
     @POST("/get")
     void getUserInfo(Callback<UserBean> callback);
 
+    @POST("/get")
+    void getUserInfoByTokenId(
+            @Query("tokenId") String tokenId ,
+            Callback<UserBean> callback);
+
+
     @POST("/getConfig")
     void getBusinessSetting(
             @Query("tokenId") String tokenId ,
@@ -46,6 +52,7 @@ public interface UserAPI {
             @Query("acceptAppointment") boolean acceptAppointment ,
             @Query("acceptConsultation") boolean acceptConsultation ,
             Callback<Message> callback);
+
 
 
 }
