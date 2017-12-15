@@ -27,16 +27,16 @@ import de.greenrobot.event.EventBus;
 
 public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks {
 
-    private String mTitle;
+//    private String mTitle;
 
     View toolbar = null;
     TextView toolTitle = null;
     RelativeLayout toolIcon = null;
     TextView toolFinishButton = null;
 
-    public ActivityLifecycle(String title) {
-        this.mTitle = title;
-    }
+//    public ActivityLifecycle(String title) {
+//        this.mTitle = title;
+//    }
 
     @Override
     public void onActivityCreated(final Activity activity, Bundle savedInstanceState) {
@@ -87,12 +87,12 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             }
         }
         if ( toolTitle != null) { //找到 Toolbar 的标题栏并设置标题名
-            if(TextUtils.isEmpty(mTitle)){
+//            if(TextUtils.isEmpty(mTitle)){
                 toolTitle.setText(activity.getTitle());
             Log.i("mTitle", "标题: "+ activity.getTitle() );
-            } else {
-                toolTitle.setText(mTitle);
-            }
+//            } else {
+//                toolTitle.setText(mTitle);
+//            }
         }
 
 
@@ -120,9 +120,9 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
     @Override
     public void onActivityResumed(Activity activity) {
         Log.i("activity","life onActivityResumed");
-        if(null != toolTitle){
-            toolTitle.setText(mTitle);
-        }
+//        if(null != toolTitle){
+//            toolTitle.setText(mTitle);
+//        }
 
     }
 
