@@ -1,19 +1,13 @@
 package com.yjm.doctor.dao;
 
-import java.util.List;
-import java.util.ArrayList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
 
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.Property;
-import org.greenrobot.greendao.internal.SqlUtils;
 import org.greenrobot.greendao.internal.DaoConfig;
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.database.DatabaseStatement;
-
-import com.yjm.doctor.model.Customer;
-import com.yjm.doctor.model.MemberDoctor;
 
 import com.yjm.doctor.model.User;
 
@@ -30,12 +24,12 @@ public class UserDao extends AbstractDao<User, Integer> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Amount = new Property(0, int.class, "amount", false, "AMOUNT");
-        public final static Property Email = new Property(1, String.class, "email", false, "EMAIL");
-        public final static Property Groupid = new Property(2, int.class, "groupid", false, "GROUPID");
-        public final static Property HxPassword = new Property(3, String.class, "hxPassword", false, "HX_PASSWORD");
-        public final static Property HxStatus = new Property(4, boolean.class, "hxStatus", false, "HX_STATUS");
-        public final static Property Id = new Property(5, int.class, "id", true, "ID");
+        public final static Property Id = new Property(0, int.class, "id", true, "ID");
+        public final static Property Amount = new Property(1, int.class, "amount", false, "AMOUNT");
+        public final static Property Email = new Property(2, String.class, "email", false, "EMAIL");
+        public final static Property Groupid = new Property(3, int.class, "groupid", false, "GROUPID");
+        public final static Property HxPassword = new Property(4, String.class, "hxPassword", false, "HX_PASSWORD");
+        public final static Property HxStatus = new Property(5, boolean.class, "hxStatus", false, "HX_STATUS");
         public final static Property IsAdmin = new Property(6, int.class, "isAdmin", false, "IS_ADMIN");
         public final static Property LastLoginIp = new Property(7, int.class, "lastLoginIp", false, "LAST_LOGIN_IP");
         public final static Property LastLoginTime = new Property(8, int.class, "lastLoginTime", false, "LAST_LOGIN_TIME");
@@ -53,8 +47,6 @@ public class UserDao extends AbstractDao<User, Integer> {
         public final static Property Username = new Property(20, String.class, "username", false, "USERNAME");
     }
 
-    private DaoSession daoSession;
-
 
     public UserDao(DaoConfig config) {
         super(config);
@@ -62,19 +54,18 @@ public class UserDao extends AbstractDao<User, Integer> {
     
     public UserDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
-        this.daoSession = daoSession;
     }
 
     /** Creates the underlying database table. */
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"USER\" (" + //
-                "\"AMOUNT\" INTEGER NOT NULL ," + // 0: amount
-                "\"EMAIL\" TEXT," + // 1: email
-                "\"GROUPID\" INTEGER NOT NULL ," + // 2: groupid
-                "\"HX_PASSWORD\" TEXT," + // 3: hxPassword
-                "\"HX_STATUS\" INTEGER NOT NULL ," + // 4: hxStatus
-                "\"ID\" INTEGER PRIMARY KEY NOT NULL ," + // 5: id
+                "\"ID\" INTEGER PRIMARY KEY NOT NULL ," + // 0: id
+                "\"AMOUNT\" INTEGER NOT NULL ," + // 1: amount
+                "\"EMAIL\" TEXT," + // 2: email
+                "\"GROUPID\" INTEGER NOT NULL ," + // 3: groupid
+                "\"HX_PASSWORD\" TEXT," + // 4: hxPassword
+                "\"HX_STATUS\" INTEGER NOT NULL ," + // 5: hxStatus
                 "\"IS_ADMIN\" INTEGER NOT NULL ," + // 6: isAdmin
                 "\"LAST_LOGIN_IP\" INTEGER NOT NULL ," + // 7: lastLoginIp
                 "\"LAST_LOGIN_TIME\" INTEGER NOT NULL ," + // 8: lastLoginTime
@@ -101,20 +92,20 @@ public class UserDao extends AbstractDao<User, Integer> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, User entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getAmount());
+        stmt.bindLong(1, entity.getId());
+        stmt.bindLong(2, entity.getAmount());
  
         String email = entity.getEmail();
         if (email != null) {
-            stmt.bindString(2, email);
+            stmt.bindString(3, email);
         }
-        stmt.bindLong(3, entity.getGroupid());
+        stmt.bindLong(4, entity.getGroupid());
  
         String hxPassword = entity.getHxPassword();
         if (hxPassword != null) {
-            stmt.bindString(4, hxPassword);
+            stmt.bindString(5, hxPassword);
         }
-        stmt.bindLong(5, entity.getHxStatus() ? 1L: 0L);
-        stmt.bindLong(6, entity.getId());
+        stmt.bindLong(6, entity.getHxStatus() ? 1L: 0L);
         stmt.bindLong(7, entity.getIsAdmin());
         stmt.bindLong(8, entity.getLastLoginIp());
         stmt.bindLong(9, entity.getLastLoginTime());
@@ -155,20 +146,20 @@ public class UserDao extends AbstractDao<User, Integer> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, User entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getAmount());
+        stmt.bindLong(1, entity.getId());
+        stmt.bindLong(2, entity.getAmount());
  
         String email = entity.getEmail();
         if (email != null) {
-            stmt.bindString(2, email);
+            stmt.bindString(3, email);
         }
-        stmt.bindLong(3, entity.getGroupid());
+        stmt.bindLong(4, entity.getGroupid());
  
         String hxPassword = entity.getHxPassword();
         if (hxPassword != null) {
-            stmt.bindString(4, hxPassword);
+            stmt.bindString(5, hxPassword);
         }
-        stmt.bindLong(5, entity.getHxStatus() ? 1L: 0L);
-        stmt.bindLong(6, entity.getId());
+        stmt.bindLong(6, entity.getHxStatus() ? 1L: 0L);
         stmt.bindLong(7, entity.getIsAdmin());
         stmt.bindLong(8, entity.getLastLoginIp());
         stmt.bindLong(9, entity.getLastLoginTime());
@@ -207,25 +198,19 @@ public class UserDao extends AbstractDao<User, Integer> {
     }
 
     @Override
-    protected final void attachEntity(User entity) {
-        super.attachEntity(entity);
-        entity.__setDaoSession(daoSession);
-    }
-
-    @Override
     public Integer readKey(Cursor cursor, int offset) {
-        return cursor.getInt(offset + 5);
+        return cursor.getInt(offset + 0);
     }    
 
     @Override
     public User readEntity(Cursor cursor, int offset) {
         User entity = new User( //
-            cursor.getInt(offset + 0), // amount
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // email
-            cursor.getInt(offset + 2), // groupid
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // hxPassword
-            cursor.getShort(offset + 4) != 0, // hxStatus
-            cursor.getInt(offset + 5), // id
+            cursor.getInt(offset + 0), // id
+            cursor.getInt(offset + 1), // amount
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // email
+            cursor.getInt(offset + 3), // groupid
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // hxPassword
+            cursor.getShort(offset + 5) != 0, // hxStatus
             cursor.getInt(offset + 6), // isAdmin
             cursor.getInt(offset + 7), // lastLoginIp
             cursor.getInt(offset + 8), // lastLoginTime
@@ -247,12 +232,12 @@ public class UserDao extends AbstractDao<User, Integer> {
      
     @Override
     public void readEntity(Cursor cursor, User entity, int offset) {
-        entity.setAmount(cursor.getInt(offset + 0));
-        entity.setEmail(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setGroupid(cursor.getInt(offset + 2));
-        entity.setHxPassword(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setHxStatus(cursor.getShort(offset + 4) != 0);
-        entity.setId(cursor.getInt(offset + 5));
+        entity.setId(cursor.getInt(offset + 0));
+        entity.setAmount(cursor.getInt(offset + 1));
+        entity.setEmail(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setGroupid(cursor.getInt(offset + 3));
+        entity.setHxPassword(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setHxStatus(cursor.getShort(offset + 5) != 0);
         entity.setIsAdmin(cursor.getInt(offset + 6));
         entity.setLastLoginIp(cursor.getInt(offset + 7));
         entity.setLastLoginTime(cursor.getInt(offset + 8));
@@ -294,106 +279,4 @@ public class UserDao extends AbstractDao<User, Integer> {
         return true;
     }
     
-    private String selectDeep;
-
-    protected String getSelectDeep() {
-        if (selectDeep == null) {
-            StringBuilder builder = new StringBuilder("SELECT ");
-            SqlUtils.appendColumns(builder, "T", getAllColumns());
-            builder.append(',');
-            SqlUtils.appendColumns(builder, "T0", daoSession.getCustomerDao().getAllColumns());
-            builder.append(',');
-            SqlUtils.appendColumns(builder, "T1", daoSession.getMemberDoctorDao().getAllColumns());
-            builder.append(" FROM USER T");
-            builder.append(" LEFT JOIN CUSTOMER T0 ON T.\"ID\"=T0.\"USER_ID\"");
-            builder.append(" LEFT JOIN MEMBER_DOCTOR T1 ON T.\"ID\"=T1.\"ID\"");
-            builder.append(' ');
-            selectDeep = builder.toString();
-        }
-        return selectDeep;
-    }
-    
-    protected User loadCurrentDeep(Cursor cursor, boolean lock) {
-        User entity = loadCurrent(cursor, 0, lock);
-        int offset = getAllColumns().length;
-
-        Customer customer = loadCurrentOther(daoSession.getCustomerDao(), cursor, offset);
-         if(customer != null) {
-            entity.setCustomer(customer);
-        }
-        offset += daoSession.getCustomerDao().getAllColumns().length;
-
-        MemberDoctor memberDoctor = loadCurrentOther(daoSession.getMemberDoctorDao(), cursor, offset);
-         if(memberDoctor != null) {
-            entity.setMemberDoctor(memberDoctor);
-        }
-
-        return entity;    
-    }
-
-    public User loadDeep(Long key) {
-        assertSinglePk();
-        if (key == null) {
-            return null;
-        }
-
-        StringBuilder builder = new StringBuilder(getSelectDeep());
-        builder.append("WHERE ");
-        SqlUtils.appendColumnsEqValue(builder, "T", getPkColumns());
-        String sql = builder.toString();
-        
-        String[] keyArray = new String[] { key.toString() };
-        Cursor cursor = db.rawQuery(sql, keyArray);
-        
-        try {
-            boolean available = cursor.moveToFirst();
-            if (!available) {
-                return null;
-            } else if (!cursor.isLast()) {
-                throw new IllegalStateException("Expected unique result, but count was " + cursor.getCount());
-            }
-            return loadCurrentDeep(cursor, true);
-        } finally {
-            cursor.close();
-        }
-    }
-    
-    /** Reads all available rows from the given cursor and returns a list of new ImageTO objects. */
-    public List<User> loadAllDeepFromCursor(Cursor cursor) {
-        int count = cursor.getCount();
-        List<User> list = new ArrayList<User>(count);
-        
-        if (cursor.moveToFirst()) {
-            if (identityScope != null) {
-                identityScope.lock();
-                identityScope.reserveRoom(count);
-            }
-            try {
-                do {
-                    list.add(loadCurrentDeep(cursor, false));
-                } while (cursor.moveToNext());
-            } finally {
-                if (identityScope != null) {
-                    identityScope.unlock();
-                }
-            }
-        }
-        return list;
-    }
-    
-    protected List<User> loadDeepAllAndCloseCursor(Cursor cursor) {
-        try {
-            return loadAllDeepFromCursor(cursor);
-        } finally {
-            cursor.close();
-        }
-    }
-    
-
-    /** A raw-style query where you can pass any WHERE clause and arguments. */
-    public List<User> queryDeep(String where, String... selectionArg) {
-        Cursor cursor = db.rawQuery(getSelectDeep() + where, selectionArg);
-        return loadDeepAllAndCloseCursor(cursor);
-    }
- 
 }

@@ -221,43 +221,6 @@ public class UserService {
         user.setAmount(Integer.parseInt(mAccountManager.getUserData(account, KEY_USER_AMOUNT)));
         user.setTokenId(mAccountManager.getUserData(account, KEY_USER_TOKEN));
 
-        if(!TextUtils.isEmpty(mAccountManager.getUserData(account,USERID))){
-            Customer customer = new Customer(Integer.parseInt(mAccountManager.getUserData(account,AGE)==null ?mAccountManager.getUserData(account,AGE):"0"),
-                    Float.parseFloat(mAccountManager.getUserData(account,BALANCE)),
-                    Long.parseLong(mAccountManager.getUserData(account,BALANCE)),
-                    Integer.parseInt(mAccountManager.getUserData(account,GROUPID)==null?"0":mAccountManager.getUserData(account,GROUPID)),
-                    String.valueOf(mAccountManager.getUserData(account,PHONE)),
-                    Integer.parseInt(mAccountManager.getUserData(account,POINT)==null?"0":mAccountManager.getUserData(account,POINT)),
-                    String.valueOf(mAccountManager.getUserData(account,REALNAME)),
-                    Integer.parseInt(mAccountManager.getUserData(account,SEX)==null?"0":mAccountManager.getUserData(account,SEX)),
-                    Integer.parseInt(mAccountManager.getUserData(account,USERID)==null?"0":mAccountManager.getUserData(account,USERID))
-            );
-            user.setCustomer(customer);
-        }
-
-
-
-        if(!TextUtils.isEmpty(mAccountManager.getUserData(account,ID))) {
-            MemberDoctor memberDoctor = new MemberDoctor(
-                    String.valueOf(mAccountManager.getUserData(account, CREATETIME)),
-                    Integer.parseInt(mAccountManager.getUserData(account, DEPARTMENT)==null?"0":mAccountManager.getUserData(account, DEPARTMENT)),
-                    String.valueOf(mAccountManager.getUserData(account, DEPARTMENTNAME)),
-                    String.valueOf(mAccountManager.getUserData(account, EDUCATION)),
-                    String.valueOf(mAccountManager.getUserData(account, EDUCATIONNAME)),
-                    Integer.parseInt(mAccountManager.getUserData(account, GROUPID)==null?"0":mAccountManager.getUserData(account, GROUPID)),
-                    Integer.parseInt(mAccountManager.getUserData(account, HOSPITAL)==null?"0":mAccountManager.getUserData(account, HOSPITAL)),
-                    String.valueOf(mAccountManager.getUserData(account, HOSPITALNAME)),
-                    Integer.parseInt(mAccountManager.getUserData(account, ID)==null?"0":mAccountManager.getUserData(account, ID)),
-                    String.valueOf(mAccountManager.getUserData(account, INTRODUCE)),
-                    Boolean.valueOf(mAccountManager.getUserData(account, LEADER)),
-                    Integer.parseInt(mAccountManager.getUserData(account, LEVEL)==null?"0":mAccountManager.getUserData(account, LEVEL)),
-                    String.valueOf(mAccountManager.getUserData(account, LEVELNAME)),
-                    Integer.parseInt(mAccountManager.getUserData(account, SORT)==null?"0":mAccountManager.getUserData(account, SORT)),
-                    String.valueOf(mAccountManager.getUserData(account, SPECIALITY)),
-                    String.valueOf(mAccountManager.getUserData(account, UPDATETIME))
-            );
-            user.setMemberDoctor(memberDoctor);
-        }
 
         return user;
     }
@@ -287,35 +250,14 @@ public class UserService {
         mAccountManager.setUserData(account, KEY_USER_GROUPID, String.valueOf(userProfile.getGroupid()));
         mAccountManager.setUserData(account, KEY_USER_EMAIL, userProfile.getEmail());
         mAccountManager.setUserData(account, KEY_USER_AMOUNT, String.valueOf(userProfile.getAmount()));
-        mAccountManager.setUserData(account, KEY_USER_PASSWORD, String.valueOf(userProfile.getTokenId()));
+        mAccountManager.setUserData(account, KEY_USER_PASSWORD, String.valueOf(userProfile.getPassword()));
+
         mAccountManager.setAuthToken(account,KEY_USER_TOKEN,userProfile.getTokenId());
+        mAccountManager.setUserData(account, KEY_USER_TOKEN, userProfile.getTokenId());
         Log.i("tokenId",userProfile.getTokenId());
 
-        mAccountManager.setUserData(account,AGE,String.valueOf(userProfile.getCustomer().getAge()));
-        mAccountManager.setUserData(account,BIRTHDAY,String.valueOf(userProfile.getCustomer().getBirthday()));
-        mAccountManager.setUserData(account,C_GROUPID,String.valueOf(userProfile.getCustomer().getGroupId()));
-        mAccountManager.setUserData(account,PHONE,String.valueOf(userProfile.getCustomer().getPhone()));
-        mAccountManager.setUserData(account,POINT,String.valueOf(userProfile.getCustomer().getPoint()));
-        mAccountManager.setUserData(account,REALNAME,String.valueOf(userProfile.getCustomer().getRealName()));
-        mAccountManager.setUserData(account,SEX,String.valueOf(userProfile.getCustomer().getSex()));
-        mAccountManager.setUserData(account,USERID,String.valueOf(userProfile.getCustomer().getUserId()));
 
-        mAccountManager.setUserData(account,CREATETIME,String.valueOf(userProfile.getMemberDoctor().getCreateTime()));
-        mAccountManager.setUserData(account,DEPARTMENT,String.valueOf(userProfile.getMemberDoctor().getDepartment()));
-        mAccountManager.setUserData(account,DEPARTMENTNAME,String.valueOf(userProfile.getMemberDoctor().getDepartmentName()));
-        mAccountManager.setUserData(account,EDUCATION,String.valueOf(userProfile.getMemberDoctor().getEducation()));
-        mAccountManager.setUserData(account,EDUCATIONNAME,String.valueOf(userProfile.getMemberDoctor().getEducationName()));
-        mAccountManager.setUserData(account,GROUPID,String.valueOf(userProfile.getMemberDoctor().getGroupId()));
-        mAccountManager.setUserData(account,HOSPITAL,String.valueOf(userProfile.getMemberDoctor().getHospital()));
-        mAccountManager.setUserData(account,HOSPITALNAME,String.valueOf(userProfile.getMemberDoctor().getHospitalName()));
-        mAccountManager.setUserData(account, ID,String.valueOf(userProfile.getMemberDoctor().getId()));
-        mAccountManager.setUserData(account,INTRODUCE,String.valueOf(userProfile.getMemberDoctor().getIntroduce()));
-        mAccountManager.setUserData(account,LEADER,String.valueOf(userProfile.getMemberDoctor().getLeader()));
-        mAccountManager.setUserData(account,LEVEL,String.valueOf(userProfile.getMemberDoctor().getLevel()));
-        mAccountManager.setUserData(account,LEVELNAME,String.valueOf(userProfile.getMemberDoctor().getLevelName()));
-        mAccountManager.setUserData(account,SORT,String.valueOf(userProfile.getMemberDoctor().getSort()));
-        mAccountManager.setUserData(account,SPECIALITY,String.valueOf(userProfile.getMemberDoctor().getSpeciality()));
-        mAccountManager.setUserData(account,UPDATETIME,String.valueOf(userProfile.getMemberDoctor().getUpdateTime()));
+
 
     }
 

@@ -24,15 +24,15 @@ public class MemberDoctorDao extends AbstractDao<MemberDoctor, Integer> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property CreateTime = new Property(0, String.class, "createTime", false, "CREATE_TIME");
-        public final static Property Department = new Property(1, int.class, "department", false, "DEPARTMENT");
-        public final static Property DepartmentName = new Property(2, String.class, "departmentName", false, "DEPARTMENT_NAME");
-        public final static Property Education = new Property(3, String.class, "education", false, "EDUCATION");
-        public final static Property EducationName = new Property(4, String.class, "educationName", false, "EDUCATION_NAME");
-        public final static Property GroupId = new Property(5, int.class, "groupId", false, "GROUP_ID");
-        public final static Property Hospital = new Property(6, int.class, "hospital", false, "HOSPITAL");
-        public final static Property HospitalName = new Property(7, String.class, "hospitalName", false, "HOSPITAL_NAME");
-        public final static Property Id = new Property(8, int.class, "id", true, "ID");
+        public final static Property Id = new Property(0, int.class, "id", true, "ID");
+        public final static Property CreateTime = new Property(1, String.class, "createTime", false, "CREATE_TIME");
+        public final static Property Department = new Property(2, int.class, "department", false, "DEPARTMENT");
+        public final static Property DepartmentName = new Property(3, String.class, "departmentName", false, "DEPARTMENT_NAME");
+        public final static Property Education = new Property(4, String.class, "education", false, "EDUCATION");
+        public final static Property EducationName = new Property(5, String.class, "educationName", false, "EDUCATION_NAME");
+        public final static Property GroupId = new Property(6, int.class, "groupId", false, "GROUP_ID");
+        public final static Property Hospital = new Property(7, int.class, "hospital", false, "HOSPITAL");
+        public final static Property HospitalName = new Property(8, String.class, "hospitalName", false, "HOSPITAL_NAME");
         public final static Property Introduce = new Property(9, String.class, "introduce", false, "INTRODUCE");
         public final static Property Leader = new Property(10, boolean.class, "leader", false, "LEADER");
         public final static Property Level = new Property(11, int.class, "level", false, "LEVEL");
@@ -55,15 +55,15 @@ public class MemberDoctorDao extends AbstractDao<MemberDoctor, Integer> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"MEMBER_DOCTOR\" (" + //
-                "\"CREATE_TIME\" TEXT," + // 0: createTime
-                "\"DEPARTMENT\" INTEGER NOT NULL ," + // 1: department
-                "\"DEPARTMENT_NAME\" TEXT," + // 2: departmentName
-                "\"EDUCATION\" TEXT," + // 3: education
-                "\"EDUCATION_NAME\" TEXT," + // 4: educationName
-                "\"GROUP_ID\" INTEGER NOT NULL ," + // 5: groupId
-                "\"HOSPITAL\" INTEGER NOT NULL ," + // 6: hospital
-                "\"HOSPITAL_NAME\" TEXT," + // 7: hospitalName
-                "\"ID\" INTEGER PRIMARY KEY NOT NULL ," + // 8: id
+                "\"ID\" INTEGER PRIMARY KEY NOT NULL ," + // 0: id
+                "\"CREATE_TIME\" TEXT," + // 1: createTime
+                "\"DEPARTMENT\" INTEGER NOT NULL ," + // 2: department
+                "\"DEPARTMENT_NAME\" TEXT," + // 3: departmentName
+                "\"EDUCATION\" TEXT," + // 4: education
+                "\"EDUCATION_NAME\" TEXT," + // 5: educationName
+                "\"GROUP_ID\" INTEGER NOT NULL ," + // 6: groupId
+                "\"HOSPITAL\" INTEGER NOT NULL ," + // 7: hospital
+                "\"HOSPITAL_NAME\" TEXT," + // 8: hospitalName
                 "\"INTRODUCE\" TEXT," + // 9: introduce
                 "\"LEADER\" INTEGER NOT NULL ," + // 10: leader
                 "\"LEVEL\" INTEGER NOT NULL ," + // 11: level
@@ -82,35 +82,35 @@ public class MemberDoctorDao extends AbstractDao<MemberDoctor, Integer> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, MemberDoctor entity) {
         stmt.clearBindings();
+        stmt.bindLong(1, entity.getId());
  
         String createTime = entity.getCreateTime();
         if (createTime != null) {
-            stmt.bindString(1, createTime);
+            stmt.bindString(2, createTime);
         }
-        stmt.bindLong(2, entity.getDepartment());
+        stmt.bindLong(3, entity.getDepartment());
  
         String departmentName = entity.getDepartmentName();
         if (departmentName != null) {
-            stmt.bindString(3, departmentName);
+            stmt.bindString(4, departmentName);
         }
  
         String education = entity.getEducation();
         if (education != null) {
-            stmt.bindString(4, education);
+            stmt.bindString(5, education);
         }
  
         String educationName = entity.getEducationName();
         if (educationName != null) {
-            stmt.bindString(5, educationName);
+            stmt.bindString(6, educationName);
         }
-        stmt.bindLong(6, entity.getGroupId());
-        stmt.bindLong(7, entity.getHospital());
+        stmt.bindLong(7, entity.getGroupId());
+        stmt.bindLong(8, entity.getHospital());
  
         String hospitalName = entity.getHospitalName();
         if (hospitalName != null) {
-            stmt.bindString(8, hospitalName);
+            stmt.bindString(9, hospitalName);
         }
-        stmt.bindLong(9, entity.getId());
  
         String introduce = entity.getIntroduce();
         if (introduce != null) {
@@ -139,35 +139,35 @@ public class MemberDoctorDao extends AbstractDao<MemberDoctor, Integer> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, MemberDoctor entity) {
         stmt.clearBindings();
+        stmt.bindLong(1, entity.getId());
  
         String createTime = entity.getCreateTime();
         if (createTime != null) {
-            stmt.bindString(1, createTime);
+            stmt.bindString(2, createTime);
         }
-        stmt.bindLong(2, entity.getDepartment());
+        stmt.bindLong(3, entity.getDepartment());
  
         String departmentName = entity.getDepartmentName();
         if (departmentName != null) {
-            stmt.bindString(3, departmentName);
+            stmt.bindString(4, departmentName);
         }
  
         String education = entity.getEducation();
         if (education != null) {
-            stmt.bindString(4, education);
+            stmt.bindString(5, education);
         }
  
         String educationName = entity.getEducationName();
         if (educationName != null) {
-            stmt.bindString(5, educationName);
+            stmt.bindString(6, educationName);
         }
-        stmt.bindLong(6, entity.getGroupId());
-        stmt.bindLong(7, entity.getHospital());
+        stmt.bindLong(7, entity.getGroupId());
+        stmt.bindLong(8, entity.getHospital());
  
         String hospitalName = entity.getHospitalName();
         if (hospitalName != null) {
-            stmt.bindString(8, hospitalName);
+            stmt.bindString(9, hospitalName);
         }
-        stmt.bindLong(9, entity.getId());
  
         String introduce = entity.getIntroduce();
         if (introduce != null) {
@@ -195,21 +195,21 @@ public class MemberDoctorDao extends AbstractDao<MemberDoctor, Integer> {
 
     @Override
     public Integer readKey(Cursor cursor, int offset) {
-        return cursor.getInt(offset + 8);
+        return cursor.getInt(offset + 0);
     }    
 
     @Override
     public MemberDoctor readEntity(Cursor cursor, int offset) {
         MemberDoctor entity = new MemberDoctor( //
-            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // createTime
-            cursor.getInt(offset + 1), // department
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // departmentName
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // education
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // educationName
-            cursor.getInt(offset + 5), // groupId
-            cursor.getInt(offset + 6), // hospital
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // hospitalName
-            cursor.getInt(offset + 8), // id
+            cursor.getInt(offset + 0), // id
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // createTime
+            cursor.getInt(offset + 2), // department
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // departmentName
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // education
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // educationName
+            cursor.getInt(offset + 6), // groupId
+            cursor.getInt(offset + 7), // hospital
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // hospitalName
             cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // introduce
             cursor.getShort(offset + 10) != 0, // leader
             cursor.getInt(offset + 11), // level
@@ -223,15 +223,15 @@ public class MemberDoctorDao extends AbstractDao<MemberDoctor, Integer> {
      
     @Override
     public void readEntity(Cursor cursor, MemberDoctor entity, int offset) {
-        entity.setCreateTime(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
-        entity.setDepartment(cursor.getInt(offset + 1));
-        entity.setDepartmentName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setEducation(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setEducationName(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setGroupId(cursor.getInt(offset + 5));
-        entity.setHospital(cursor.getInt(offset + 6));
-        entity.setHospitalName(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setId(cursor.getInt(offset + 8));
+        entity.setId(cursor.getInt(offset + 0));
+        entity.setCreateTime(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setDepartment(cursor.getInt(offset + 2));
+        entity.setDepartmentName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setEducation(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setEducationName(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setGroupId(cursor.getInt(offset + 6));
+        entity.setHospital(cursor.getInt(offset + 7));
+        entity.setHospitalName(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
         entity.setIntroduce(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
         entity.setLeader(cursor.getShort(offset + 10) != 0);
         entity.setLevel(cursor.getInt(offset + 11));

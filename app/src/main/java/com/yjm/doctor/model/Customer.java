@@ -17,6 +17,8 @@ import org.greenrobot.greendao.annotation.Generated;
 public class Customer implements Serializable {
 
     private static final long serialVersionUID = 2146657448481966306L;
+    @Id(autoincrement = false)
+    private Long id;
     private int age;
     private float balance;
     private long birthday;
@@ -25,12 +27,15 @@ public class Customer implements Serializable {
     private int point;
     private String realName;
     private int sex;
-    @Id(autoincrement = false)
+
     private int userId;
 
-    @Generated(hash = 1900924186)
-    public Customer(int age, float balance, long birthday, int groupId,
+
+
+    @Generated(hash = 962974678)
+    public Customer(Long id, int age, float balance, long birthday, int groupId,
             String phone, int point, String realName, int sex, int userId) {
+        this.id = id;
         this.age = age;
         this.balance = balance;
         this.birthday = birthday;
@@ -42,78 +47,145 @@ public class Customer implements Serializable {
         this.userId = userId;
     }
 
+
+
     @Generated(hash = 60841032)
     public Customer() {
     }
 
 
-    public int getAge() {
-        return age;
+    
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", age=" + age +
+                ", balance=" + balance +
+                ", birthday=" + birthday +
+                ", groupId=" + groupId +
+                ", phone='" + phone + '\'' +
+                ", point=" + point +
+                ", realName='" + realName + '\'' +
+                ", sex=" + sex +
+                ", userId=" + userId +
+                '}';
     }
+
+
+
+    public Long getId() {
+        return this.id;
+    }
+
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+
+    public int getAge() {
+        return this.age;
+    }
+
+
 
     public void setAge(int age) {
         this.age = age;
     }
 
+
+
     public float getBalance() {
-        return balance;
+        return this.balance;
     }
+
+
 
     public void setBalance(float balance) {
         this.balance = balance;
     }
 
+
+
     public long getBirthday() {
-        return birthday;
+        return this.birthday;
     }
+
+
 
     public void setBirthday(long birthday) {
         this.birthday = birthday;
     }
 
+
+
     public int getGroupId() {
-        return groupId;
+        return this.groupId;
     }
+
+
 
     public void setGroupId(int groupId) {
         this.groupId = groupId;
     }
 
+
+
     public String getPhone() {
-        return phone;
+        return this.phone;
     }
+
+
 
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
+
+
     public int getPoint() {
-        return point;
+        return this.point;
     }
+
+
 
     public void setPoint(int point) {
         this.point = point;
     }
 
+
+
     public String getRealName() {
-        return realName;
+        return this.realName;
     }
+
+
 
     public void setRealName(String realName) {
         this.realName = realName;
     }
 
+
+
     public int getSex() {
-        return sex;
+        return this.sex;
     }
+
+
 
     public void setSex(int sex) {
         this.sex = sex;
     }
 
+
+
     public int getUserId() {
-        return userId;
+        return this.userId;
     }
+
+
 
     public void setUserId(int userId) {
         this.userId = userId;
