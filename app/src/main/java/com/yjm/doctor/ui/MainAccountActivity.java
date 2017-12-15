@@ -1,14 +1,10 @@
 package com.yjm.doctor.ui;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yjm.doctor.R;
 import com.yjm.doctor.ui.base.BaseActivity;
@@ -39,7 +35,12 @@ public class MainAccountActivity extends BaseActivity {
     ListLayoutAdapter mLayoutAdapter;
 
     @Override
-    public int initView() { return R.layout.activity_account; }
+    public int initView() { return R.layout.activity_main_account; }
+    //返回上一级界面
+    @OnClick(R.id.img_operation)
+    public void onViewClicked() {
+        this.finish();
+    }
 
     @Override
     protected void onResume() {
@@ -73,11 +74,6 @@ public class MainAccountActivity extends BaseActivity {
         });
     }
 
-    //返回上一级界面
-    @OnClick(R.id.img_operation)
-    public void onViewClicked() {
-
-    }
 
     @Override
     public void finishButton() {

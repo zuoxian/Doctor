@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,10 +44,15 @@ public class BusinessSettingActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
+    @BindView(R.id.img_operation)
+    ImageView mImgOperation;
+
     @BindView(R.id.toolicon)
     RelativeLayout mToolicon;
+
     @BindView(R.id.tooltitle)
     TextView mTooltitle;
+
     @BindView(R.id.toolfinish)
     TextView mToolfinish;
 
@@ -67,7 +73,7 @@ public class BusinessSettingActivity extends BaseActivity {
     //返回上一级界面
     @OnClick(R.id.img_operation)
     public void onViewClicked() {
-
+        this.finish();
     }
 
     @Override
@@ -138,6 +144,7 @@ public class BusinessSettingActivity extends BaseActivity {
                     } else {
                         Log.i(TAG, "为null: ");
                     }
+                    mLayoutAdapter.notifyDataSetChanged();
                     closeDialog();
                 }
 

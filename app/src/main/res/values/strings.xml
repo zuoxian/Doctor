@@ -50,7 +50,7 @@
     <string name="register_button">确定</string>
     <string name="register_verification_fail">验证码请求失败，请重试~</string>
 
-    <string name="name">您的真实姓名</string>
+    <string name="realname">您的真实姓名</string>
     <string name="hospital">您所在的医院名称（全程）</string>
     <string name="department">您所在的科室名称</string>
     <string name="positionaltitles">您的职称</string>
@@ -117,15 +117,22 @@
     <string name="evaluate">我的评价</string>
 
 
-    <!--业务设置-->
+    <!--业务设置 二级界面-->
     <string name="business_accept_appointments">接受加号</string>
     <string name="business_appointments_fee">加号服务费</string>
     <string name="business_accept_image_text_consulting">接受图文咨询</string>
     <string name="business_image_text_consulting_fee">图文咨询服务费</string>
 
 
-    <!--我的账户-->
+    <!--我的账户 二级界面-->
     <string name="account_info">账户信息</string>
     <string name="account_balance">账户余额</string>
     <string name="account_withdrawal">账户提现</string>
+
+     <!--账户信息 二级界面-->
+    <string name="name">姓名</string>a
+    <string name="id_card">身份证</string>
+    <string name="alipay_account">支付宝账号</string>
+    <string name="wechatpay_account">微信账号</string>
+
 </resources>
