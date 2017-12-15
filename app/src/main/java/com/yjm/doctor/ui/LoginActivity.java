@@ -18,6 +18,8 @@ import com.yjm.doctor.util.SystemTools;
 import com.yjm.doctor.util.auth.AccountAuthenticatorActivity;
 import com.yjm.doctor.util.auth.UserService;
 
+import java.net.URL;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import retrofit.Callback;
@@ -31,6 +33,7 @@ import retrofit.client.Response;
 public class LoginActivity extends AccountAuthenticatorActivity implements Callback<UserBean>{
 
 
+    //测试提交
     @BindView(R.id.username)
     EditText mUserName;
 
