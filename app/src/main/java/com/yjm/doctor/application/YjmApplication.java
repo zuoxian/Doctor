@@ -66,7 +66,7 @@ public class YjmApplication extends Application {
         //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
         EMClient.getInstance().setDebugMode(true);
 
-        EMClient.getInstance().login("2-13661611623", "123456", new EMCallBack() {
+        EMClient.getInstance().login("2-18964025491", "7C97A82686944C8E8D15328F3DA27511", new EMCallBack() {
             @Override
             public void onSuccess() {
 

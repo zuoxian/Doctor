@@ -100,8 +100,13 @@ public class UserFragment extends BaseFragment<UserBean> {
 
         try {
             sharedPreferencesUtil = SharedPreferencesUtil.instance(getContext());
-            mUser = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
-            tokenID = UserService.getInstance(getContext()).getTokenId(mUser.getId());
+            String u = sharedPreferencesUtil.getObject("user");
+            if(!TextUtils.isEmpty(u)) {
+                mUser = (User) sharedPreferencesUtil.deSerialization(u);
+                if(0 < mUser.getId())
+                    tokenID = UserService.getInstance(getContext()).getTokenId(mUser.getId());
+            }
+
 
             if (null != mUser && null != mUser.getCustomer() && mUser.getCustomer().getUserId() != 0) {
                 updateUI(mUser);
@@ -124,10 +129,12 @@ public class UserFragment extends BaseFragment<UserBean> {
 
     @Override
     public void success(UserBean userBean, Response response) {
-        if (userBean != null) {
+        if (userBean != null && null != userBean.getObj()) {
             try {
                 sharedPreferencesUtil.saveObject("user", sharedPreferencesUtil.serialize(userBean.getObj()));
-                updateUI(userBean.getObj());
+                if(null != userBean.getObj()) {
+                    updateUI(userBean.getObj());
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -143,10 +150,10 @@ public class UserFragment extends BaseFragment<UserBean> {
         if (!TextUtils.isEmpty(user.getPicUrl())) {
                 mUserIcon.setImageURI(Uri.parse(user.getPicUrl()));
         }
-        if (!TextUtils.isEmpty(user.getCustomer().getRealName())) {
+        if (null != user.getCustomer() && !TextUtils.isEmpty(user.getCustomer().getRealName())) {
             mUsername.setText(user.getCustomer().getRealName());
         }
-        if (!TextUtils.isEmpty(user.getMemberDoctor().getHospitalName())) {
+        if (null != user.getMemberDoctor() && !TextUtils.isEmpty(user.getMemberDoctor().getHospitalName())) {
             String info = user.getMemberDoctor().getLevelName() + "\t\t" + user.getMemberDoctor().getHospitalName();
             mPositionalHospital.setText(info);
         }

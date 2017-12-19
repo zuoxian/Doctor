@@ -78,7 +78,7 @@ public class UserInfoActivity extends BaseActivity implements ListLayoutAdapter.
             mUser = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
             tokenID = UserService.getInstance(this).getTokenId(mUser.getId());
 
-            if (mUser.getCustomer().getUserId() != 0) {
+            if (null != mUser && null != mUser.getCustomer() && mUser.getCustomer().getUserId() != 0) {
                 UpdateUI(mUser);
             }else {
                 mUserAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this);
@@ -121,7 +121,7 @@ public class UserInfoActivity extends BaseActivity implements ListLayoutAdapter.
             });
 
         }
-        if (userBean != null){
+        if (userBean != null && null != userBean.getObj()){
             try {
                 sharedPreferencesUtil.saveObject("user", sharedPreferencesUtil.serialize(userBean.getObj()));
                 UpdateUI(userBean.getObj());
@@ -133,18 +133,22 @@ public class UserInfoActivity extends BaseActivity implements ListLayoutAdapter.
 
     private void UpdateUI(User user){
         modelList.set(0,new ListLayoutModel(R.string.user_logo,user.getPicUrl()));
-        modelList.set(1,new ListLayoutModel(R.string.user_name,user.getCustomer().getRealName(),R.drawable.comein));
-        if (user.getCustomer().getSex() == 1 ) {
+        if(null != user && null !=user.getCustomer() )
+            modelList.set(1,new ListLayoutModel(R.string.user_name,user.getCustomer().getRealName(),R.drawable.comein));
+        if (null != user.getCustomer() && user.getCustomer().getSex() == 1 ) {
             modelList.set(2, new ListLayoutModel(R.string.user_sex, "男", R.drawable.comein));
-        }else if (user.getCustomer().getSex() == 2 ) {
+        }else if (null != user.getCustomer() && user.getCustomer().getSex() == 2 ) {
             modelList.set(2, new ListLayoutModel(R.string.user_sex, "女", R.drawable.comein));
         }
         modelList.set(3,new ListLayoutModel(R.string.user_phone_number,user.getMobile(),0));
         modelList.set(5,new ListLayoutModel(R.string.user_email,user.getEmail(),R.drawable.comein));
-        modelList.set(6,new ListLayoutModel(R.string.user_hospital_name,user.getMemberDoctor().getHospitalName(),R.drawable.comein));
-        modelList.set(7,new ListLayoutModel(R.string.user_department_name,user.getMemberDoctor().getDepartmentName(),R.drawable.comein));
-        modelList.set(8,new ListLayoutModel(R.string.user_level_name,user.getMemberDoctor().getLevelName(),R.drawable.comein));
-        modelList.set(9,new ListLayoutModel(R.string.user_speciality,user.getMemberDoctor().getSpeciality(),R.drawable.comein));
+        if(null != user.getMemberDoctor()) {
+            modelList.set(6, new ListLayoutModel(R.string.user_hospital_name, user.getMemberDoctor().getHospitalName(), R.drawable.comein));
+
+            modelList.set(7, new ListLayoutModel(R.string.user_department_name, user.getMemberDoctor().getDepartmentName(), R.drawable.comein));
+            modelList.set(8, new ListLayoutModel(R.string.user_level_name, user.getMemberDoctor().getLevelName(), R.drawable.comein));
+            modelList.set(9, new ListLayoutModel(R.string.user_speciality, user.getMemberDoctor().getSpeciality(), R.drawable.comein));
+        }
         mLayoutAdapter.notifyDataSetChanged();
         closeDialog();
     }

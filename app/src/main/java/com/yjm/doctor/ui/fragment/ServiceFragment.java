@@ -83,8 +83,14 @@ public class ServiceFragment extends BaseFragment<UserBean> {
     protected void onLoadData() {
         try {
             sharedPreferencesUtil = SharedPreferencesUtil.instance(getContext());
-            mUser = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
-            tokenID = UserService.getInstance(getContext()).getTokenId(mUser.getId());
+            String u = sharedPreferencesUtil.getObject("user");
+            if(null != u) {
+                mUser = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
+                if(0 < mUser.getId()) {
+                    tokenID = UserService.getInstance(getContext()).getTokenId(mUser.getId());
+                }
+            }
+
 
             if (null != mUser && null != mUser.getCustomer() && mUser.getCustomer().getUserId() != 0) {
                 updateUI(mUser);
@@ -131,8 +137,11 @@ public class ServiceFragment extends BaseFragment<UserBean> {
 
                 }
             }
-            if (userBean != null) {
-                sharedPreferencesUtil.saveObject("user", sharedPreferencesUtil.serialize(userBean.getObj()));
+            if (null != userBean && null != userBean.getObj()) {
+                String u = sharedPreferencesUtil.serialize(userBean.getObj());
+                if(!TextUtils.isEmpty(u)) {
+                    sharedPreferencesUtil.saveObject("user", u);
+                }
                 updateUI(userBean.getObj());
             }
         } catch (IOException e) {
@@ -150,14 +159,14 @@ public class ServiceFragment extends BaseFragment<UserBean> {
         if (!TextUtils.isEmpty(user.getPicUrl())) {
             userLogo.setImageURI(Uri.parse(user.getPicUrl()));
         }
-        if (!TextUtils.isEmpty(user.getCustomer().getRealName())) {
+        if (null != user.getCustomer() && !TextUtils.isEmpty(user.getCustomer().getRealName())) {
             mUserName.setText(user.getCustomer().getRealName());
         }
-        if (!TextUtils.isEmpty(user.getMemberDoctor().getLevelName()) || !TextUtils.isEmpty(user.getMemberDoctor().getEducationName())) {
+        if (null != user.getMemberDoctor() && (!TextUtils.isEmpty(user.getMemberDoctor().getLevelName()) || !TextUtils.isEmpty(user.getMemberDoctor().getEducationName()))) {
             String info=user.getMemberDoctor().getLevelName()+"\t\t"+user.getMemberDoctor().getEducationName();
             mPositional.setText(info);
         }
-        if (!TextUtils.isEmpty(user.getMemberDoctor().getHospitalName()) || !TextUtils.isEmpty(user.getMemberDoctor().getDepartmentName())) {
+        if (null != user.getMemberDoctor() && (!TextUtils.isEmpty(user.getMemberDoctor().getHospitalName()) || !TextUtils.isEmpty(user.getMemberDoctor().getDepartmentName()))) {
             String info=user.getMemberDoctor().getHospitalName()+"\t\t"+user.getMemberDoctor().getDepartmentName();
             mHospital.setText(info);
         }

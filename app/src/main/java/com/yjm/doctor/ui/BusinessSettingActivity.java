@@ -116,21 +116,21 @@ public class BusinessSettingActivity extends BaseActivity {
                 public void success(BusinessSettingBean bean, Response response) {
                     if (bean != null) {
                         mSettingBean=bean;
-                        if (bean.getObj().isAcceptAppointment()){
+                        if (null != bean.getObj() && bean.getObj().isAcceptAppointment()){
                             modelList.set(0,new ListLayoutModel(R.string.business_accept_appointments,"",0,R.drawable.comein));
                         }else {
                             modelList.set(0,new ListLayoutModel(R.string.business_accept_appointments,"",0,R.drawable.comein));
                         }
-                        if (!TextUtils.isEmpty(bean.getObj().getAppointmentFee())) {
+                        if (null != bean.getObj() && !TextUtils.isEmpty(bean.getObj().getAppointmentFee())) {
                             modelList.set(1, new ListLayoutModel(R.string.business_appointments_fee, "￥" + bean.getObj().getAppointmentFee(), R.color.colorAccent, 0));
                         }
-                        if (bean.getObj().isAcceptConsultation()) {
+                        if (null != bean.getObj() && bean.getObj().isAcceptConsultation()) {
                             modelList.set(2, new ListLayoutModel(R.string.business_accept_image_text_consulting, "", 0, R.drawable.comein));
                         }else {
                             modelList.set(2, new ListLayoutModel(R.string.business_accept_image_text_consulting, "", 0, R.drawable.comein));
                         }
 
-                        if (!TextUtils.isEmpty(bean.getObj().getConsultationFee())) {
+                        if (null != bean.getObj() && !TextUtils.isEmpty(bean.getObj().getConsultationFee())) {
                             modelList.set(3, new ListLayoutModel(R.string.business_image_text_consulting_fee, "￥" + bean.getObj().getConsultationFee(), R.color.colorAccent, 0));
                         }
                         Log.i(TAG, "获取成功: " + bean.toString());
