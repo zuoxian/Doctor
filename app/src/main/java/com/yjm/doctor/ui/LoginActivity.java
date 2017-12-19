@@ -4,6 +4,9 @@ package com.yjm.doctor.ui;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
+
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 import com.yjm.doctor.Config;
 import com.yjm.doctor.R;
 import com.yjm.doctor.api.UserAPI;
@@ -95,6 +98,25 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Callb
 
         if(NetworkUtils.isNetworkAvaliable(this)){
             userAPI.login(mUserName.getText().toString(),mPassword.getText().toString(),Config.DOCTOR,this);
+            EMClient.getInstance().login("2-"+mUserName.getText().toString(), mPassword.getText().toString(), new EMCallBack() {
+                @Override
+                public void onSuccess() {
+
+                    EMClient.getInstance().groupManager().loadAllGroups();
+                    EMClient.getInstance().chatManager().loadAllConversations();
+                    Log.i("EMClient","login is success");
+                }
+
+                @Override
+                public void onError(int i, String s) {
+                    Log.i("EMClient","login error i="+i+",s="+s);
+                }
+
+                @Override
+                public void onProgress(int i, String s) {
+                    Log.i("EMClient","login onProgress i="+i+",s="+s);
+                }
+            });
             showDialog("正在登录中~");
         }else{
             SystemTools.show_msg(this, R.string.toast_msg_no_network);
@@ -156,6 +178,8 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Callb
         Config.userId = user.getId();
         Config.mobile = user.getMobile();
         setResult(11);
+
+
     }
 
     private void jumpMainActivity(){

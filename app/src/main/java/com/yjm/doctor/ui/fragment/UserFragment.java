@@ -103,7 +103,7 @@ public class UserFragment extends BaseFragment<UserBean> {
             mUser = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
             tokenID = UserService.getInstance(getContext()).getTokenId(mUser.getId());
 
-            if (mUser.getCustomer().getUserId() != 0) {
+            if (null != mUser && null != mUser.getCustomer() && mUser.getCustomer().getUserId() != 0) {
                 updateUI(mUser);
             }else {
                 mUserAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, getContext());

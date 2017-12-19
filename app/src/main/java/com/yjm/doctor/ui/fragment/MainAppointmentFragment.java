@@ -17,8 +17,11 @@ import android.widget.ProgressBar;
 import com.yjm.doctor.Config;
 import com.yjm.doctor.R;
 import com.yjm.doctor.api.MainAPI;
+import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.model.AppointmentBean;
 import com.yjm.doctor.model.AppointmentInfo;
+import com.yjm.doctor.model.User;
+import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.ui.MainAppointmentsInfoActivity;
 import com.yjm.doctor.ui.adapter.MainAppointmentInfoAdapter;
 import com.yjm.doctor.ui.base.BaseLoadFragment;
@@ -28,6 +31,7 @@ import com.yjm.doctor.util.auth.UserService;
 import java.util.List;
 
 import butterknife.BindView;
+import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -142,7 +146,29 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
     @Override
     public void success(AppointmentBean subListPage, Response response) {
         stopRefresh();
-        if (subListPage!=null && subListPage.getSuccess()) {
+        if(null != subListPage && !TextUtils.isEmpty(subListPage.getMsg()) && subListPage.getMsg().contains("token")){
+            if(null != getActivity()) {
+                UserAPI userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, getActivity());
+                final UserService userService = UserService.getInstance(getActivity());
+                final User user = userService.getActiveAccountInfo();
+                userAPI.login(user.getMobile(),userService.getPwd(user.getId()),2,new Callback<UserBean>(){
+
+                    @Override
+                    public void success(UserBean userBean, Response response) {
+                        if(null != userBean && null != userBean.getObj() && !TextUtils.isEmpty(userBean.getObj().getTokenId())){
+                            userService.setTokenId(user.getId(),userBean.getObj().getTokenId());
+                            mainAPI.appointments(UserService.getInstance(getActivity()).getTokenId(Config.userId),mType,"",mPage,10, MainAppointmentFragment.this);
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                });
+            }
+        }
+        if (null != subListPage && subListPage.getSuccess()) {
             if(null == subListPage.getObj() || null == subListPage.getObj().getRows() || !(null != subListPage.getObj().getRows() && subListPage.getObj().getRows().size()>0)){
                 showConnectionRetry("无新消息");
                 return;

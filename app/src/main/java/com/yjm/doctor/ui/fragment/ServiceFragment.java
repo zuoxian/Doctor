@@ -28,6 +28,7 @@ import com.yjm.doctor.util.auth.UserService;
 import java.io.IOException;
 
 import butterknife.BindView;
+import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -85,7 +86,7 @@ public class ServiceFragment extends BaseFragment<UserBean> {
             mUser = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
             tokenID = UserService.getInstance(getContext()).getTokenId(mUser.getId());
 
-            if (mUser.getCustomer().getUserId() != 0) {
+            if (null != mUser && null != mUser.getCustomer() && mUser.getCustomer().getUserId() != 0) {
                 updateUI(mUser);
             }else {
                 mUserAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, getContext());
@@ -107,6 +108,29 @@ public class ServiceFragment extends BaseFragment<UserBean> {
     @Override
     public void success(UserBean userBean, Response response) {
         try {
+            if(null != getActivity()) {
+                if (null != userBean && !TextUtils.isEmpty(userBean.getMsg()) && userBean.getMsg().contains("token")) {
+
+                    final UserService userService = UserService.getInstance(getActivity());
+                    final User user = userService.getActiveAccountInfo();
+                    mUserAPI.login(user.getMobile(), userService.getPwd(user.getId()), 2, new Callback<UserBean>() {
+
+                        @Override
+                        public void success(UserBean userBean, Response response) {
+                            if (null != userBean && null != userBean.getObj() && !TextUtils.isEmpty(userBean.getObj().getTokenId())) {
+                                userService.setTokenId(user.getId(), userBean.getObj().getTokenId());
+                                mUserAPI.getUserInfoByTokenId(tokenID, this);
+                            }
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+
+                        }
+                    });
+
+                }
+            }
             if (userBean != null) {
                 sharedPreferencesUtil.saveObject("user", sharedPreferencesUtil.serialize(userBean.getObj()));
                 updateUI(userBean.getObj());

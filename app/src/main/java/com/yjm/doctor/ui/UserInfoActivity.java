@@ -1,5 +1,6 @@
 package com.yjm.doctor.ui;
 
+import android.text.TextUtils;
 import android.widget.ListView;
 
 import com.yjm.doctor.Config;
@@ -99,6 +100,27 @@ public class UserInfoActivity extends BaseActivity implements ListLayoutAdapter.
 
     @Override
     public void success(UserBean userBean, Response response) {
+        if(null != userBean && !TextUtils.isEmpty(userBean.getMsg()) && userBean.getMsg().contains("token")){
+
+            final UserService userService = UserService.getInstance(this);
+            final User user = userService.getActiveAccountInfo();
+            mUserAPI.login(user.getMobile(),userService.getPwd(user.getId()),2,new Callback<UserBean>(){
+
+                @Override
+                public void success(UserBean userBean, Response response) {
+                    if(null != userBean && null != userBean.getObj() && !TextUtils.isEmpty(userBean.getObj().getTokenId())){
+                        userService.setTokenId(user.getId(),userBean.getObj().getTokenId());
+                        mUserAPI.getUserInfoByTokenId(tokenID, this);
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+
+                }
+            });
+
+        }
         if (userBean != null){
             try {
                 sharedPreferencesUtil.saveObject("user", sharedPreferencesUtil.serialize(userBean.getObj()));

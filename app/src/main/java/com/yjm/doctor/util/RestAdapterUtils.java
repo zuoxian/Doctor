@@ -60,7 +60,7 @@ public class RestAdapterUtils {
                 .setRequestInterceptor(new RequestInterceptor() {
                     @Override
                     public void intercept(RequestFacade request) {
-                        Log.i("main","request  ======"+request.toString());
+                        Log.i("main","request  ======"+request);
                         if (NetworkUtils.isNetworkAvaliable(ctx)) {
                             int maxAge = 600; // read from cache for 10 minute
                             request.addHeader("Cache-Control", "public, max-age=" + maxAge);

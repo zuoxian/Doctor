@@ -12,6 +12,8 @@ public class Message implements Serializable {
 
     private boolean success;
 
+
+
     public String getMsg() {
         return msg;
     }
@@ -27,6 +29,8 @@ public class Message implements Serializable {
     public void setSuccess(boolean success) {
         this.success = success;
     }
+
+
 
     @Override
     public String toString() {

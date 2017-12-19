@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 import com.yjm.doctor.Config;
 import com.yjm.doctor.R;
 import com.yjm.doctor.api.UserAPI;
@@ -192,6 +195,26 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
         Config.userId = user.getId();
         Config.mobile = user.getMobile();
         setResult(11);
+
+        EMClient.getInstance().login("2-"+user.getUsername(), userBasicInfo.getPwd(), new EMCallBack() {
+            @Override
+            public void onSuccess() {
+
+                EMClient.getInstance().groupManager().loadAllGroups();
+                EMClient.getInstance().chatManager().loadAllConversations();
+                Log.i("EMClient","login is success");
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                Log.i("EMClient","login error i="+i+",s="+s);
+            }
+
+            @Override
+            public void onProgress(int i, String s) {
+                Log.i("EMClient","login onProgress i="+i+",s="+s);
+            }
+        });
     }
 
     @Override

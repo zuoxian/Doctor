@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.yjm.doctor.Config;
 import com.yjm.doctor.R;
 import com.yjm.doctor.ui.adapter.MainAppointmentAdapter;
@@ -37,10 +40,12 @@ public class MainConsultationsActivity extends BaseActivity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.i("EMClient",EMClient.getInstance().isLoggedInBefore()+"");
         List<Fragment> fragments = new ArrayList<>();
         Bundle bundle = new Bundle();
         bundle.putInt(Config.APPOINTMENT_TYPE, Config.APPOINTMENT_MAKE);//未回复
-        Fragment fragment1 = new MainConsultationFragment();
+        Fragment fragment1 = new EaseConversationListFragment();
         fragment1.setArguments(bundle);
         Bundle bundle1 = new Bundle();
         bundle.putInt(Config.APPOINTMENT_TYPE, Config.APPOINTMENT_REPLY);//已回复

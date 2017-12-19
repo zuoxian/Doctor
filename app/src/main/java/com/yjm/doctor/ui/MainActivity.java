@@ -26,6 +26,7 @@ import com.yjm.doctor.model.MemberDoctor;
 import com.yjm.doctor.model.User;
 import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.ui.base.BaseActivity;
+import com.yjm.doctor.ui.fragment.MainAppointmentFragment;
 import com.yjm.doctor.ui.fragment.MainFragment;
 import com.yjm.doctor.ui.fragment.ServiceFragment;
 import com.yjm.doctor.ui.fragment.UserFragment;
@@ -164,6 +165,27 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
     @Override
     public void success(UserBean userBean, Response response) {
         Log.i("serial","mainactivity   userBean="+userBean);
+        if(null != userBean && !TextUtils.isEmpty(userBean.getMsg()) && userBean.getMsg().contains("token")){
+
+                final UserService userService = UserService.getInstance(this);
+                final User user = userService.getActiveAccountInfo();
+                userAPI.login(user.getMobile(),userService.getPwd(user.getId()),2,new Callback<UserBean>(){
+
+                    @Override
+                    public void success(UserBean userBean, Response response) {
+                        if(null != userBean && null != userBean.getObj() && !TextUtils.isEmpty(userBean.getObj().getTokenId())){
+                            userService.setTokenId(user.getId(),userBean.getObj().getTokenId());
+                            userAPI.getUserInfo(this);
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                });
+
+        }
         if(null != userBean && true == userBean.getSuccess() && null != userBean.getObj()){
             finishLogin(userBean.getObj());
         }
