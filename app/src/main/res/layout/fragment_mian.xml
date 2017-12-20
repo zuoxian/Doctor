@@ -17,6 +17,7 @@
         <include layout="@layout/main_item_body"/>
 
         <TextView
+            android:id="@+id/ischeck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/main_examine"

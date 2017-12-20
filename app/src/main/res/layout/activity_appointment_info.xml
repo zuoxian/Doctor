@@ -70,12 +70,12 @@
         android:layout_height="42dp"
         android:background="@drawable/bordersquarestyle"
         android:textColor="@color/login_font_color"
-        android:text="@string/appointment_info_des"
         android:paddingLeft="20dp"
         android:gravity="center_vertical"
         />
 
     <TextView
+        android:id="@+id/info_status"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="42dp"
@@ -172,6 +172,15 @@
             android:layout_gravity="center"
             />
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/reason"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:maxLength="50"
+        android:hint="请输入拒绝理由"
+        android:visibility="gone"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="42dp"

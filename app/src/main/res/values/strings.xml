@@ -26,6 +26,7 @@
 
 
     <string name="login_password">请输入密码</string>
+    <string name="login_new_password">请输入新密码</string>
     <string name="login_forget_password">忘记密码</string>
 
     <string name="toast_msg_no_network">网络异常~</string>
@@ -149,6 +150,8 @@
     <string name="id_card">身份证</string>
     <string name="alipay_account">支付宝账号</string>
     <string name="wechatpay_account">微信账号</string>
+
+    <string name="forget_password">找回密码</string>
 
 
 </resources>

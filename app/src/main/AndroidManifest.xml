@@ -114,6 +114,12 @@
             android:label="@string/appointments_reply"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".ui.ForgetPwdActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/forget_password"
+            android:screenOrientation="portrait" />
+
         <service
             android:name=".util.auth.UserAccountService"
             tools:ignore="ExportedService">

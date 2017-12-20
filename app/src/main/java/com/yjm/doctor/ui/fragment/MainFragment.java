@@ -19,6 +19,7 @@ import com.yjm.doctor.application.baseInterface.IActivity;
 import com.yjm.doctor.model.Banner;
 import com.yjm.doctor.model.BannerBean;
 import com.yjm.doctor.model.EventType;
+import com.yjm.doctor.model.User;
 import com.yjm.doctor.ui.MainAppointmentsActivity;
 import com.yjm.doctor.ui.MainConsultationsActivity;
 import com.yjm.doctor.ui.MainConsultationsInfoActivity;
@@ -28,6 +29,7 @@ import com.yjm.doctor.util.ActivityJumper;
 import com.yjm.doctor.util.NetworkUtils;
 import com.yjm.doctor.util.RestAdapterUtils;
 import com.yjm.doctor.util.SystemTools;
+import com.yjm.doctor.util.auth.UserService;
 
 import java.util.List;
 
@@ -57,6 +59,9 @@ public class MainFragment extends BaseFragment<BannerBean> implements IActivity{
     @BindView(R.id.toolfinish)
     TextView mToolFinish;
 
+    @BindView(R.id.ischeck)
+    TextView mIscheck;
+
     @Override
     protected int getLayoutRes() {
         return R.layout.fragment_mian;
@@ -73,6 +78,11 @@ public class MainFragment extends BaseFragment<BannerBean> implements IActivity{
 
     @Override
     protected void onLoadData() {
+        if(null != mIscheck){
+            User user = UserService.getInstance().getActiveAccountInfo();
+            if(null != user && 2 == user.getStatus())
+                mIscheck.setVisibility(View.VISIBLE);
+        }
         if(null != getActivity())
             mainAPI = RestAdapterUtils.getRestAPI(Config.HOME_BANNERS,MainAPI.class,getActivity());
 

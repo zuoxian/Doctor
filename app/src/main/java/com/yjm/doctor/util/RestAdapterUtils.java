@@ -7,6 +7,7 @@ import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.yjm.doctor.BuildConfig;
 import com.yjm.doctor.Config;
+import com.yjm.doctor.model.User;
 import com.yjm.doctor.util.auth.UserService;
 
 import java.util.concurrent.TimeUnit;
@@ -71,8 +72,9 @@ public class RestAdapterUtils {
                         }
                         request.addHeader("Transfer-Encoding","chunked");
                         UserService userService = UserService.getInstance();
-                        if(Config.userId > 0) {
-                            request.addQueryParam("tokenId", userService.getTokenId(Config.userId));
+                        User user = userService.getActiveAccountInfo();
+                        if(null != user && 0 < user.getId()) {
+                            request.addQueryParam("tokenId", userService.getTokenId(user.getId()));
                         }
 
                     }
@@ -104,8 +106,9 @@ public class RestAdapterUtils {
                         Log.i("main","request  ======"+request.toString());
                         request.addHeader("Transfer-Encoding","chunked");
                         UserService userService = UserService.getInstance();
-                        if(Config.userId > 0) {
-                            request.addHeader("tokenId", userService.getTokenId(Config.userId));
+                        User user = userService.getActiveAccountInfo();
+                        if(null != user && 0 < user.getId()) {
+                            request.addQueryParam("tokenId", userService.getTokenId(user.getId()));
                         }
 
                     }

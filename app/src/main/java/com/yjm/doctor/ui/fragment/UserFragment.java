@@ -147,13 +147,13 @@ public class UserFragment extends BaseFragment<UserBean> {
     }
 
     private void updateUI(User user){
-        if (!TextUtils.isEmpty(user.getPicUrl())) {
+        if (null != mUserIcon && !TextUtils.isEmpty(user.getPicUrl())) {
                 mUserIcon.setImageURI(Uri.parse(user.getPicUrl()));
         }
-        if (null != user.getCustomer() && !TextUtils.isEmpty(user.getCustomer().getRealName())) {
+        if (null != mUsername && null != user.getCustomer() && !TextUtils.isEmpty(user.getCustomer().getRealName())) {
             mUsername.setText(user.getCustomer().getRealName());
         }
-        if (null != user.getMemberDoctor() && !TextUtils.isEmpty(user.getMemberDoctor().getHospitalName())) {
+        if (null != mPositionalHospital && null != user.getMemberDoctor() && !TextUtils.isEmpty(user.getMemberDoctor().getHospitalName())) {
             String info = user.getMemberDoctor().getLevelName() + "\t\t" + user.getMemberDoctor().getHospitalName();
             mPositionalHospital.setText(info);
         }

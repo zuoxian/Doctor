@@ -156,17 +156,17 @@ public class ServiceFragment extends BaseFragment<UserBean> {
     }
 
     private void updateUI(User user){
-        if (!TextUtils.isEmpty(user.getPicUrl())) {
+        if (null != userLogo && !TextUtils.isEmpty(user.getPicUrl())) {
             userLogo.setImageURI(Uri.parse(user.getPicUrl()));
         }
-        if (null != user.getCustomer() && !TextUtils.isEmpty(user.getCustomer().getRealName())) {
+        if (null != mUserName && null != user.getCustomer() && !TextUtils.isEmpty(user.getCustomer().getRealName())) {
             mUserName.setText(user.getCustomer().getRealName());
         }
-        if (null != user.getMemberDoctor() && (!TextUtils.isEmpty(user.getMemberDoctor().getLevelName()) || !TextUtils.isEmpty(user.getMemberDoctor().getEducationName()))) {
+        if (null != mPositional && null != user.getMemberDoctor() && (!TextUtils.isEmpty(user.getMemberDoctor().getLevelName()) || !TextUtils.isEmpty(user.getMemberDoctor().getEducationName()))) {
             String info=user.getMemberDoctor().getLevelName()+"\t\t"+user.getMemberDoctor().getEducationName();
             mPositional.setText(info);
         }
-        if (null != user.getMemberDoctor() && (!TextUtils.isEmpty(user.getMemberDoctor().getHospitalName()) || !TextUtils.isEmpty(user.getMemberDoctor().getDepartmentName()))) {
+        if (null != mHospital && null != user.getMemberDoctor() && (!TextUtils.isEmpty(user.getMemberDoctor().getHospitalName()) || !TextUtils.isEmpty(user.getMemberDoctor().getDepartmentName()))) {
             String info=user.getMemberDoctor().getHospitalName()+"\t\t"+user.getMemberDoctor().getDepartmentName();
             mHospital.setText(info);
         }

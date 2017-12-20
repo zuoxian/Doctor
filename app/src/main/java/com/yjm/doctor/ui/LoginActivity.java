@@ -64,7 +64,8 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Callb
 
     @OnClick(R.id.forget_password)
     void forgetPassword(){
-
+        ActivityJumper.getInstance().buttonJumpTo(this,ForgetPwdActivity.class);
+        finish();
     }
 
     @OnClick(R.id.register)

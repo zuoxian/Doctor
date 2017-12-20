@@ -68,6 +68,8 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
 
     UserDao userDao ;
 
+    private SharedPreferencesUtil sharedPreferencesUtil = null;
+
 
     @Override
     public int initView() {
@@ -99,6 +101,8 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        sharedPreferencesUtil = SharedPreferencesUtil.instance(this);
+
         tabNames = new String[]{"首页", "服务", "个人中心"};
 
         fragmentClss = new Class<?>[]{MainFragment.class, ServiceFragment.class,UserFragment.class};
@@ -107,22 +111,37 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
         EventBus.getDefault().register(this);
         initViews();
     }
+    private static User mUser = null;
 
     @Override
     protected void onResume() {
         super.onResume();
-        User mUser = UserService.getInstance(this).getActiveAccountInfo();
-        MemberDoctor doctor = mUser.getMemberDoctor();
         boolean isGetUserInfo = true;
-        if(null != mUser && null != doctor){
-            if(mUser.getId() == doctor.getId()){
-                isGetUserInfo = false;//用户信息存在 不需要重新请求
+        try {
+            String u = sharedPreferencesUtil.getObject("user");
+            if(null != u) {
+                mUser = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
+                if (null != mUser)
+                    Log.d("serial", "share3   =" + mUser.toString());
+                MemberDoctor doctor = mUser.getMemberDoctor();
+
+                if (null != mUser && null != doctor) {
+                    if (mUser.getId() == doctor.getId()) {
+                        isGetUserInfo = false;//用户信息存在 不需要重新请求
+                    }
+                }
             }
-        }
-        Log.i("main","mainactivity "+isGetUserInfo);
-        if(isGetUserInfo) {
-            userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this);
-            userAPI.getUserInfo(this);
+
+
+//            User mUser = UserService.getInstance(this).getActiveAccountInfo();
+
+            Log.i("main", "mainactivity " + isGetUserInfo);
+            if (isGetUserInfo) {
+                userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this);
+                userAPI.getUserInfo(this);
+            }
+        }catch (Exception e){
+            Log.e("main",e.getMessage());
         }
     }
 
@@ -164,7 +183,7 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
 
     @Override
     public void success(UserBean userBean, Response response) {
-        Log.i("serial","mainactivity   userBean="+userBean);
+        Log.i("serial","share1   ="+userBean);
         if(null != userBean && !TextUtils.isEmpty(userBean.getMsg()) && userBean.getMsg().contains("token")){
 
                 final UserService userService = UserService.getInstance(this);
@@ -196,13 +215,13 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
         Log.i("main","mainactivity   user");
 
         try {
-            SharedPreferencesUtil sharedPreferencesUtil = SharedPreferencesUtil.instance(this);
+
             sharedPreferencesUtil.saveObject("user",sharedPreferencesUtil.serialize(user));
 
-//            User user1 = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
-//            Log.d("serial", user1.toString());
+            User user1 = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
+            Log.d("serial", "share2   ="+user1.toString());
 
-            UserService.getInstance(this).signIn(user.getMobile(), userService.getPwd(user.getId()), user);
+            UserService.getInstance(this).signIn(user.getMobile(), user.getHxPassword(), user);
 
             if (!TextUtils.isEmpty(user.getTokenId())) {
                 if (!TextUtils.isEmpty(user.getTokenId()))

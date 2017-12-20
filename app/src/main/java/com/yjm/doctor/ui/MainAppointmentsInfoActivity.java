@@ -8,24 +8,38 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yjm.doctor.Config;
 import com.yjm.doctor.R;
+import com.yjm.doctor.api.MainAPI;
+import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.model.AppointmentInfo;
 import com.yjm.doctor.model.Customer;
 import com.yjm.doctor.model.User;
+import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.ui.base.BaseActivity;
+import com.yjm.doctor.util.RestAdapterUtils;
+import com.yjm.doctor.util.SystemTools;
+import com.yjm.doctor.util.auth.UserService;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by zx on 2017/12/11.
  */
 
-public class MainAppointmentsInfoActivity extends BaseActivity{
+public class MainAppointmentsInfoActivity extends BaseActivity implements Callback<UserBean>{
+
+    MainAPI mainAPI;
+
+    UserAPI userAPI;
 
     @BindView(R.id.user_icon)
     SimpleDraweeView mUserIcon;
@@ -48,22 +62,58 @@ public class MainAppointmentsInfoActivity extends BaseActivity{
     @BindView(R.id.address)
     TextView mAddress;
 
+
+    @BindView(R.id.info_status)
+    TextView mInfoStatus;
+
+    @BindView(R.id.reason)
+    EditText mReason;
+
+
+    private AppointmentInfo item;
+
+    private User user;
+
+    private int requestType = 0;
+
+    private boolean reason = false;
+
     @OnClick(R.id.agree)
     void agree(){
-
+        requestType = 0;
+        if(null != user && 0 < user.getId())
+            mainAPI.updateAppointmentStatus(user.getId(),1,"",this);
     }
 
     @OnClick(R.id.refuse)
     void refuse(){
+        requestType = 1;
+        if(null == mReason) return;
+        if(false == reason) {
+            mReason.setVisibility(View.VISIBLE);
+            reason = true;
+        }else{
+            if(!TextUtils.isEmpty(mReason.getText().toString())){
+
+                if(null != user && 0 < user.getId())
+                    mainAPI.updateAppointmentStatus(user.getId(),3,mReason.getText().toString(),this);
+            }else{
+                SystemTools.show_msg(this,"拒绝理由不能为空~");
+            }
+
+
+        }
 
     }
 
-    private AppointmentInfo item;
+
 
     @Override
     public int initView() {
         item = (AppointmentInfo) this.getIntent().getSerializableExtra("object");
         Log.i("app","app info :"+item.toString());
+        mainAPI = RestAdapterUtils.getRestAPI(Config.HOME_APPOINTMENT_INFO, MainAPI.class);
+
         return R.layout.activity_appointment_info;
     }
 
@@ -75,10 +125,12 @@ public class MainAppointmentsInfoActivity extends BaseActivity{
 
         if(null == item.getUser())return ;
 
-        User user = item.getUser();
+        user = item.getUser();
+
+
 
         if(null != mUserIcon && user != null && !TextUtils.isEmpty(user.getPic()))
-            mUserIcon.setImageURI(Uri.parse(user.getPic()));
+            mUserIcon.setImageURI(Uri.parse(user.getPicUrl()));
 
         Customer customer = user.getCustomer();
 
@@ -116,15 +168,59 @@ public class MainAppointmentsInfoActivity extends BaseActivity{
                 mTime.setText(item.getAppointAddress());
             }
         }
-
-
-
-
-
     }
 
     @Override
     public void finishButton() {
 
+    }
+
+    @Override
+    public void success(UserBean userBean, Response response) {
+        if(null != userBean && !TextUtils.isEmpty(userBean.getMsg()) && userBean.getMsg().contains("token")){
+            userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this);
+            final UserService userService = UserService.getInstance(this);
+            final User user = userService.getActiveAccountInfo();
+            userAPI.login(user.getMobile(),userService.getPwd(user.getId()),2,new Callback<UserBean>(){
+
+                @Override
+                public void success(UserBean userBean, Response response) {
+                    if(null != userBean && null != userBean.getObj() && !TextUtils.isEmpty(userBean.getObj().getTokenId())){
+                        userService.setTokenId(user.getId(),userBean.getObj().getTokenId());
+                        userAPI.getUserInfo(this);
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+
+                }
+            });
+
+        }
+
+
+        if (null != userBean && true == userBean.getSuccess()) {
+            if (null != mInfoStatus && 1 == requestType) {//同意
+                mInfoStatus.setText("加号信息（已同意）");
+
+            } else {//拒绝
+                mReason.setVisibility(View.GONE);
+                mInfoStatus.setText("加号信息（已拒绝）");
+                reason = false;
+                finish();
+            }
+            mInfoStatus.setTextColor(getResources().getColor(R.color.btn_logout_normal));
+        }else if(null != userBean && !TextUtils.isEmpty(userBean.getMsg())){
+            SystemTools.show_msg(this,userBean.getMsg());
+        }
+
+    }
+
+
+
+    @Override
+    public void failure(RetrofitError error) {
+        SystemTools.show_msg(this,"请求失败,请重试");
     }
 }

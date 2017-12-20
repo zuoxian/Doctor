@@ -4,9 +4,11 @@ import com.yjm.doctor.model.Appointment;
 import com.yjm.doctor.model.AppointmentBean;
 import com.yjm.doctor.model.BannerBean;
 import com.yjm.doctor.model.ConsultationBean;
+import com.yjm.doctor.model.UserBean;
 
 import retrofit.Callback;
 import retrofit.http.GET;
+import retrofit.http.POST;
 import retrofit.http.Query;
 
 /**
@@ -26,4 +28,8 @@ public interface MainAPI {
 
     @GET("/consultations")
     void consultations(@Query("tokenId") String tokenId, @Query("isReply") int isReply, @Query("query") String query, @Query("page") int page, @Query("rows") int rows, Callback<ConsultationBean> callback);
+
+
+    @POST("/updateAppointmentStatus")
+    void updateAppointmentStatus(@Query("id") int id, @Query("appointStatus") int appointStatus, @Query("refuseReason") String refuseReason, Callback<UserBean> callback);
 }

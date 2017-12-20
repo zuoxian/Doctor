@@ -61,4 +61,8 @@ public interface UserAPI {
             @Query("rows") int rows ,
             Callback<BalanceListBean> callback);
 
+    @POST("/forgetPwd")
+    void forgetPwd(@Query("username") String username, @Query("password") String password, @Query("isAdmin") int isAdmin, @Query("vcode") String vcode, @Query("tokenId") String tokenId, Callback<UserBean> callback);
+
+
 }
