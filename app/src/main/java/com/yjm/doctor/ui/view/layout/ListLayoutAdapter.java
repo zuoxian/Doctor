@@ -1,6 +1,7 @@
 package com.yjm.doctor.ui.view.layout;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -53,7 +55,7 @@ public class ListLayoutAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup viewGroup) {
         ViewHolder holder = null;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_listlayout, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_list_user_info_layout, null);
             holder=new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {

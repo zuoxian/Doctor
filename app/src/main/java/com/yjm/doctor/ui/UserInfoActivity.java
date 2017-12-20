@@ -76,7 +76,9 @@ public class UserInfoActivity extends BaseActivity implements ListLayoutAdapter.
         try {
             sharedPreferencesUtil = SharedPreferencesUtil.instance(this);
             mUser = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
-            tokenID = UserService.getInstance(this).getTokenId(mUser.getId());
+            if(null != mUser) {
+                tokenID = UserService.getInstance(this).getTokenId(mUser.getId());
+            }
 
             if (null != mUser && null != mUser.getCustomer() && mUser.getCustomer().getUserId() != 0) {
                 UpdateUI(mUser);
