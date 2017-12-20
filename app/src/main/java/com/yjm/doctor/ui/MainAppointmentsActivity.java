@@ -40,12 +40,11 @@ public class MainAppointmentsActivity extends BaseActivity{
         bundle.putInt(Config.APPOINTMENT_TYPE, Config.APPOINTMENT_MAKE);//未回复
         Fragment fragment1 = new MainAppointmentFragment();
         fragment1.setArguments(bundle);
+        fragments.add((Fragment)(fragment1));
         Bundle bundle1 = new Bundle();
-        bundle.putInt(Config.APPOINTMENT_TYPE, Config.APPOINTMENT_REPLY);//已回复
+        bundle1.putInt(Config.APPOINTMENT_TYPE, Config.APPOINTMENT_REPLY);//已回复
         Fragment fragment2 = new MainAppointmentFragment();
         fragment2.setArguments(bundle1);
-
-        fragments.add((Fragment)(fragment1));
         fragments.add((Fragment)(fragment2));
 
         MainAppointmentAdapter adapter = new MainAppointmentAdapter(getSupportFragmentManager(), fragments, new String[]{"未回复", "已回复"});

@@ -86,7 +86,7 @@ public class MainAppointmentInfoAdapter extends BaseLoadRecyclerAdapter<Appointm
         TextView address = (TextView) view.findViewById(R.id.address);
         User user = item.getUser();
         if(user!= null ) {
-            if (!TextUtils.isEmpty(user.getPic()))
+            if (!TextUtils.isEmpty(user.getPicUrl()))
                     sdvImage.setImageURI(Uri.parse(user.getPicUrl()));
             Customer customer = user.getCustomer();
             Log.i("log",username+"");

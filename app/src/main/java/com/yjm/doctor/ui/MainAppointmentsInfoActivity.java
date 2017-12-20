@@ -129,7 +129,7 @@ public class MainAppointmentsInfoActivity extends BaseActivity implements Callba
 
 
 
-        if(null != mUserIcon && user != null && !TextUtils.isEmpty(user.getPic()))
+        if(null != mUserIcon && user != null && !TextUtils.isEmpty(user.getPicUrl()))
             mUserIcon.setImageURI(Uri.parse(user.getPicUrl()));
 
         Customer customer = user.getCustomer();

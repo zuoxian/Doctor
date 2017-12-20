@@ -77,6 +77,7 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
         if(null ==search)
             return;
         search.addTextChangedListener(this);
+        search.setFocusable(false);
         initData();
     }
 
