@@ -18,7 +18,9 @@ import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.application.YjmApplication;
 import com.yjm.doctor.model.User;
 import com.yjm.doctor.model.UserBean;
+import com.yjm.doctor.ui.UserInfoActivity;
 import com.yjm.doctor.ui.base.BaseFragment;
+import com.yjm.doctor.util.ActivityJumper;
 import com.yjm.doctor.util.NetworkUtils;
 import com.yjm.doctor.util.RestAdapterUtils;
 import com.yjm.doctor.util.SharedPreferencesUtil;
@@ -28,6 +30,7 @@ import com.yjm.doctor.util.auth.UserService;
 import java.io.IOException;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -66,6 +69,12 @@ public class ServiceFragment extends BaseFragment<UserBean> {
     private UserAPI mUserAPI;
     private String tokenID;
 
+
+    @OnClick(R.id.item)
+    void OnClickItem(){
+        if(null != getActivity())
+            ActivityJumper.getInstance().buttonJumpTo(getActivity(), UserInfoActivity.class);
+    }
 
     @Override
     protected int getLayoutRes() { return R.layout.fragment_service; }

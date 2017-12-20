@@ -67,10 +67,13 @@
     <TextView
         android:id="@+id/des"
         android:layout_width="match_parent"
-        android:layout_height="42dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/bordersquarestyle"
         android:textColor="@color/login_font_color"
         android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:gravity="center_vertical"
         />
 
@@ -180,9 +183,11 @@
         android:maxLength="50"
         android:hint="请输入拒绝理由"
         android:visibility="gone"
-        android:textColorHint="@color/login_background"
+        android:textColorHint="@color/login_font_color"
         android:background="@color/whitecolor"
         android:textColor="@color/login_font_color"
+        android:paddingLeft="20dp"
+        android:textCursorDrawable="@null"
         />
     <LinearLayout
         android:layout_width="match_parent"

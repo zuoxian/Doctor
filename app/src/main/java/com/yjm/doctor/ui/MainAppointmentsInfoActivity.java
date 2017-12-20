@@ -81,8 +81,8 @@ public class MainAppointmentsInfoActivity extends BaseActivity implements Callba
     @OnClick(R.id.agree)
     void agree(){
         requestType = 0;
-        if(null != user && 0 < user.getId())
-            mainAPI.updateAppointmentStatus(user.getId(),1,"",this);
+        if(null != item && 0 < item.getId())
+            mainAPI.updateAppointmentStatus(item.getId(),1,"",this);
     }
 
     @OnClick(R.id.refuse)
@@ -95,8 +95,8 @@ public class MainAppointmentsInfoActivity extends BaseActivity implements Callba
         }else{
             if(!TextUtils.isEmpty(mReason.getText().toString())){
 
-                if(null != user && 0 < user.getId())
-                    mainAPI.updateAppointmentStatus(user.getId(),3,mReason.getText().toString(),this);
+                if(null != item && 0 < item.getId())
+                    mainAPI.updateAppointmentStatus(item.getId(),3,mReason.getText().toString(),this);
             }else{
                 SystemTools.show_msg(this,"拒绝理由不能为空~");
             }
@@ -187,7 +187,16 @@ public class MainAppointmentsInfoActivity extends BaseActivity implements Callba
                 public void success(UserBean userBean, Response response) {
                     if(null != userBean && null != userBean.getObj() && !TextUtils.isEmpty(userBean.getObj().getTokenId())){
                         userService.setTokenId(user.getId(),userBean.getObj().getTokenId());
-                        userAPI.getUserInfo(this);
+                        if (1 == requestType) {//同意
+                            if(null != item && 0 < item.getId())
+                                mainAPI.updateAppointmentStatus(item.getId(),1,"",this);
+                        }else{
+                            if(!TextUtils.isEmpty(mReason.getText().toString())){
+
+                                if(null != item && 0 < item.getId())
+                                    mainAPI.updateAppointmentStatus(item.getId(),3,mReason.getText().toString(),this);
+                            }
+                        }
                     }
                 }
 
@@ -201,7 +210,7 @@ public class MainAppointmentsInfoActivity extends BaseActivity implements Callba
 
 
         if (null != userBean && true == userBean.getSuccess()) {
-            if (null != mInfoStatus && 1 == requestType) {//同意
+            if (null != mInfoStatus && 0 == requestType) {//同意
                 mInfoStatus.setText("加号信息（已同意）");
 
             } else {//拒绝
