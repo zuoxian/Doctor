@@ -18,6 +18,7 @@ import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.application.YjmApplication;
 import com.yjm.doctor.model.User;
 import com.yjm.doctor.model.UserBean;
+import com.yjm.doctor.ui.GridActivity;
 import com.yjm.doctor.ui.UserInfoActivity;
 import com.yjm.doctor.ui.base.BaseFragment;
 import com.yjm.doctor.util.ActivityJumper;
@@ -74,6 +75,12 @@ public class ServiceFragment extends BaseFragment<UserBean> {
     void OnClickItem(){
         if(null != getActivity())
             ActivityJumper.getInstance().buttonJumpTo(getActivity(), UserInfoActivity.class);
+    }
+
+    @OnClick(R.id.service_close)
+    void serviceClose(){
+        if(null != getActivity())
+            ActivityJumper.getInstance().buttonJumpTo(getActivity(), GridActivity.class);
     }
 
     @Override

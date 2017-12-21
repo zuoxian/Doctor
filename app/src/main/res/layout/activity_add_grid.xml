@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whitecolor"
+    >
+
+    <include layout="@layout/toolbar"/>
+
+
+    <RelativeLayout
+        android:id="@+id/selectDate"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bordersquarestyle"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+
+        >
+    <TextView
+        android:id="@+id/currentDate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:gravity="center"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp"
+        android:textColor="@color/color5"
+        android:paddingLeft="10dp"
+        android:textSize="15sp"
+        android:drawableRight="@drawable/calendar"
+        android:drawablePadding="10dp"
+
+        />
+
+    </RelativeLayout>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_margin="20dp"
+            android:id="@+id/doctor_time"
+            >
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/all"
+            android:text="不限"
+            android:textColor="@color/content"
+            android:layout_weight="1"
+            android:checked="true"
+
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/am"
+            android:text="上午"
+            android:textColor="@color/content"
+            android:layout_weight="1"
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pm"
+            android:text="下午"
+            android:textColor="@color/content"
+            android:layout_weight="1"
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/night"
+            android:text="夜班"
+            android:textColor="@color/content"
+            android:layout_weight="1"
+            />
+        </RadioGroup>
+
+</LinearLayout>

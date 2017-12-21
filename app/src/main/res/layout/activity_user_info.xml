@@ -7,11 +7,25 @@
     android:orientation="vertical"
     android:background="@color/login_background">
 
+
+
+
     <include layout="@layout/toolbar"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:id="@+id/empty"
+        android:visibility="gone"
+        android:textColor="@color/login_font_color"
+        />
 
     <View android:layout_width="match_parent" android:layout_height="10dp" />
 
     <include layout="@layout/list_listlayout" />
+
+
 
 </LinearLayout>
 

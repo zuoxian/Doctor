@@ -27,6 +27,8 @@ public class YjmApplication extends Application {
 
     public static boolean toolFinish = false;
 
+    public static boolean tooAdd =false;
+
     @Override
     public void onCreate() {
         super.onCreate();

@@ -16,6 +16,7 @@ import com.yjm.doctor.Config;
 import com.yjm.doctor.R;
 import com.yjm.doctor.application.YjmApplication;
 import com.yjm.doctor.application.baseInterface.IActivity;
+import com.yjm.doctor.application.baseInterface.IAdd;
 import com.yjm.doctor.model.EventType;
 import com.yjm.doctor.ui.base.BaseActivity;
 
@@ -33,6 +34,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
     TextView toolTitle = null;
     RelativeLayout toolIcon = null;
     TextView toolFinishButton = null;
+    TextView toolAdd = null ;
 
 //    public ActivityLifecycle(String title) {
 //        this.mTitle = title;
@@ -50,6 +52,17 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         toolTitle = (TextView)activity.findViewById(R.id.tooltitle);
         toolIcon = (RelativeLayout)activity.findViewById(R.id.toolicon);
         toolFinishButton = (TextView)activity.findViewById(R.id.toolfinish);
+        toolAdd = (TextView)activity.findViewById(R.id.tool_add);
+
+        if(null != toolAdd) {
+            toolAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    ((IAdd) activity).add();
+                }
+            });
+        }
 
         if(null != toolFinishButton) {
             toolFinishButton.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +77,12 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             if(null != toolIcon)toolIcon.setVisibility(View.VISIBLE);
         }else{
             if(null != toolIcon)toolIcon.setVisibility(View.GONE);
+        }
+
+        if(YjmApplication.tooAdd){
+            if(null != toolAdd)toolAdd.setVisibility(View.VISIBLE);
+        }else{
+            if(null != toolAdd)toolAdd.setVisibility(View.GONE);
         }
 
         if(null != toolFinishButton) {

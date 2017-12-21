@@ -100,4 +100,6 @@ public class AccountAuthenticatorActivity extends BaseActivity{
     public void finishButton() {
 
     }
+
+
 }

@@ -24,7 +24,9 @@ public class Config {
 
 
 
-    public static final String HOME_APPOINTMENT_INFO = DOMAIN_URL +"/ethealth/api/appointment/";
+    public static final String HOME_APPOINTMENT_INFO = DOMAIN_URL +"/ethealth/api/appointment";
+
+    public static final String SERVICE_GRID = DOMAIN_URL +"/ethealth/api/doctorCloseTime";
 
     public static String DEFAULT_TOKENID = "1D96DACB84F21890ED9F4928FA8B352B";
 

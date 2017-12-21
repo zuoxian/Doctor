@@ -158,6 +158,18 @@
             android:label="@string/account_balance"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".ui.GridActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/grid"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".ui.AddGridActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/add_grid"
+            android:screenOrientation="portrait"/>
+
 
         <activity
             android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
