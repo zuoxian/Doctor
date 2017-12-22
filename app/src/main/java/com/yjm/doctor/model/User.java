@@ -31,12 +31,13 @@ public class User implements Serializable {
     private int amount;
     private String email;
 
-    private int groupid;
+    private String headImage;
 
     private String hxPassword;
 
     private boolean hxStatus;
 
+    private int groupid;
 
     private int isAdmin;
 
@@ -78,18 +79,25 @@ public class User implements Serializable {
     @Transient
     private String pwd;
 
-    @Generated(hash = 300147068)
-    public User(int id, int amount, String email, int groupid, String hxPassword,
-            boolean hxStatus, int isAdmin, int lastLoginIp, int lastLoginTime,
-            int login, String mobile, int modelid, String password, String pic,
-            String picUrl, int regIp, long regTime, int score, int status,
-            String tokenId, int updateTime, String username) {
+    @Transient
+    private Patient patient;
+
+
+
+    @Generated(hash = 317224063)
+    public User(int id, int amount, String email, String headImage,
+            String hxPassword, boolean hxStatus, int groupid, int isAdmin,
+            int lastLoginIp, int lastLoginTime, int login, String mobile,
+            int modelid, String password, String pic, String picUrl, int regIp,
+            long regTime, int score, int status, String tokenId, int updateTime,
+            String username) {
         this.id = id;
         this.amount = amount;
         this.email = email;
-        this.groupid = groupid;
+        this.headImage = headImage;
         this.hxPassword = hxPassword;
         this.hxStatus = hxStatus;
+        this.groupid = groupid;
         this.isAdmin = isAdmin;
         this.lastLoginIp = lastLoginIp;
         this.lastLoginTime = lastLoginTime;
@@ -340,5 +348,13 @@ public class User implements Serializable {
 
     public void setPicUrl(String picUrl) {
         this.picUrl = picUrl;
+    }
+
+    public String getHeadImage() {
+        return this.headImage;
+    }
+
+    public void setHeadImage(String headImage) {
+        this.headImage = headImage;
     }
 }

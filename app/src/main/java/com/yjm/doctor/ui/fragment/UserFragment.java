@@ -14,10 +14,12 @@ import com.yjm.doctor.model.User;
 import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.ui.BusinessSettingActivity;
 import com.yjm.doctor.ui.MainAccountActivity;
+import com.yjm.doctor.ui.PatientsActivity;
 import com.yjm.doctor.ui.UserInfoActivity;
 import com.yjm.doctor.ui.base.BaseFragment;
 import com.yjm.doctor.ui.view.layout.ListLayoutAdapter;
 import com.yjm.doctor.ui.view.layout.ListLayoutModel;
+import com.yjm.doctor.util.ActivityJumper;
 import com.yjm.doctor.util.NetworkUtils;
 import com.yjm.doctor.util.RestAdapterUtils;
 import com.yjm.doctor.util.SharedPreferencesUtil;
@@ -83,7 +85,8 @@ public class UserFragment extends BaseFragment<UserBean> {
                         break;
                     }
                     case 1: {
-
+                        if(null != getActivity())
+                            ActivityJumper.getInstance().buttonJumpTo(getActivity(), PatientsActivity.class);
                         break;
                     }
                     case 2: {

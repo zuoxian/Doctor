@@ -155,6 +155,8 @@
     <string name="grid">停诊发布</string>
     <string name="add_grid">添加停诊发布</string>
 
+    <string name="my_patients">我的患者</string>
+
     <string name="cancle">取消</string>
     <string name="title">请选择时间</string>
     <string name="commit">确定</string>

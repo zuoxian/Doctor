@@ -4,6 +4,7 @@ import com.yjm.doctor.model.BusinessSettingBean;
 import com.yjm.doctor.model.Level;
 import com.yjm.doctor.model.LevelBean;
 import com.yjm.doctor.model.Message;
+import com.yjm.doctor.model.PatientBean;
 import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.ui.view.layout.BalanceListBean;
 
@@ -64,5 +65,8 @@ public interface UserAPI {
     @POST("/forgetPwd")
     void forgetPwd(@Query("username") String username, @Query("password") String password, @Query("isAdmin") int isAdmin, @Query("vcode") String vcode, @Query("tokenId") String tokenId, Callback<UserBean> callback);
 
+
+    @POST("/myPatients")
+    void getPatients(@Query("query") String query, @Query("page") int page, @Query("rows") int rows,Callback<PatientBean> callback);
 
 }

@@ -27,25 +27,26 @@ public class UserDao extends AbstractDao<User, Integer> {
         public final static Property Id = new Property(0, int.class, "id", true, "ID");
         public final static Property Amount = new Property(1, int.class, "amount", false, "AMOUNT");
         public final static Property Email = new Property(2, String.class, "email", false, "EMAIL");
-        public final static Property Groupid = new Property(3, int.class, "groupid", false, "GROUPID");
+        public final static Property HeadImage = new Property(3, String.class, "headImage", false, "HEAD_IMAGE");
         public final static Property HxPassword = new Property(4, String.class, "hxPassword", false, "HX_PASSWORD");
         public final static Property HxStatus = new Property(5, boolean.class, "hxStatus", false, "HX_STATUS");
-        public final static Property IsAdmin = new Property(6, int.class, "isAdmin", false, "IS_ADMIN");
-        public final static Property LastLoginIp = new Property(7, int.class, "lastLoginIp", false, "LAST_LOGIN_IP");
-        public final static Property LastLoginTime = new Property(8, int.class, "lastLoginTime", false, "LAST_LOGIN_TIME");
-        public final static Property Login = new Property(9, int.class, "login", false, "LOGIN");
-        public final static Property Mobile = new Property(10, String.class, "mobile", false, "MOBILE");
-        public final static Property Modelid = new Property(11, int.class, "modelid", false, "MODELID");
-        public final static Property Password = new Property(12, String.class, "password", false, "PASSWORD");
-        public final static Property Pic = new Property(13, String.class, "pic", false, "PIC");
-        public final static Property PicUrl = new Property(14, String.class, "picUrl", false, "PIC_URL");
-        public final static Property RegIp = new Property(15, int.class, "regIp", false, "REG_IP");
-        public final static Property RegTime = new Property(16, long.class, "regTime", false, "REG_TIME");
-        public final static Property Score = new Property(17, int.class, "score", false, "SCORE");
-        public final static Property Status = new Property(18, int.class, "status", false, "STATUS");
-        public final static Property TokenId = new Property(19, String.class, "tokenId", false, "TOKEN_ID");
-        public final static Property UpdateTime = new Property(20, int.class, "updateTime", false, "UPDATE_TIME");
-        public final static Property Username = new Property(21, String.class, "username", false, "USERNAME");
+        public final static Property Groupid = new Property(6, int.class, "groupid", false, "GROUPID");
+        public final static Property IsAdmin = new Property(7, int.class, "isAdmin", false, "IS_ADMIN");
+        public final static Property LastLoginIp = new Property(8, int.class, "lastLoginIp", false, "LAST_LOGIN_IP");
+        public final static Property LastLoginTime = new Property(9, int.class, "lastLoginTime", false, "LAST_LOGIN_TIME");
+        public final static Property Login = new Property(10, int.class, "login", false, "LOGIN");
+        public final static Property Mobile = new Property(11, String.class, "mobile", false, "MOBILE");
+        public final static Property Modelid = new Property(12, int.class, "modelid", false, "MODELID");
+        public final static Property Password = new Property(13, String.class, "password", false, "PASSWORD");
+        public final static Property Pic = new Property(14, String.class, "pic", false, "PIC");
+        public final static Property PicUrl = new Property(15, String.class, "picUrl", false, "PIC_URL");
+        public final static Property RegIp = new Property(16, int.class, "regIp", false, "REG_IP");
+        public final static Property RegTime = new Property(17, long.class, "regTime", false, "REG_TIME");
+        public final static Property Score = new Property(18, int.class, "score", false, "SCORE");
+        public final static Property Status = new Property(19, int.class, "status", false, "STATUS");
+        public final static Property TokenId = new Property(20, String.class, "tokenId", false, "TOKEN_ID");
+        public final static Property UpdateTime = new Property(21, int.class, "updateTime", false, "UPDATE_TIME");
+        public final static Property Username = new Property(22, String.class, "username", false, "USERNAME");
     }
 
 
@@ -64,25 +65,26 @@ public class UserDao extends AbstractDao<User, Integer> {
                 "\"ID\" INTEGER PRIMARY KEY NOT NULL ," + // 0: id
                 "\"AMOUNT\" INTEGER NOT NULL ," + // 1: amount
                 "\"EMAIL\" TEXT," + // 2: email
-                "\"GROUPID\" INTEGER NOT NULL ," + // 3: groupid
+                "\"HEAD_IMAGE\" TEXT," + // 3: headImage
                 "\"HX_PASSWORD\" TEXT," + // 4: hxPassword
                 "\"HX_STATUS\" INTEGER NOT NULL ," + // 5: hxStatus
-                "\"IS_ADMIN\" INTEGER NOT NULL ," + // 6: isAdmin
-                "\"LAST_LOGIN_IP\" INTEGER NOT NULL ," + // 7: lastLoginIp
-                "\"LAST_LOGIN_TIME\" INTEGER NOT NULL ," + // 8: lastLoginTime
-                "\"LOGIN\" INTEGER NOT NULL ," + // 9: login
-                "\"MOBILE\" TEXT," + // 10: mobile
-                "\"MODELID\" INTEGER NOT NULL ," + // 11: modelid
-                "\"PASSWORD\" TEXT," + // 12: password
-                "\"PIC\" TEXT," + // 13: pic
-                "\"PIC_URL\" TEXT," + // 14: picUrl
-                "\"REG_IP\" INTEGER NOT NULL ," + // 15: regIp
-                "\"REG_TIME\" INTEGER NOT NULL ," + // 16: regTime
-                "\"SCORE\" INTEGER NOT NULL ," + // 17: score
-                "\"STATUS\" INTEGER NOT NULL ," + // 18: status
-                "\"TOKEN_ID\" TEXT," + // 19: tokenId
-                "\"UPDATE_TIME\" INTEGER NOT NULL ," + // 20: updateTime
-                "\"USERNAME\" TEXT);"); // 21: username
+                "\"GROUPID\" INTEGER NOT NULL ," + // 6: groupid
+                "\"IS_ADMIN\" INTEGER NOT NULL ," + // 7: isAdmin
+                "\"LAST_LOGIN_IP\" INTEGER NOT NULL ," + // 8: lastLoginIp
+                "\"LAST_LOGIN_TIME\" INTEGER NOT NULL ," + // 9: lastLoginTime
+                "\"LOGIN\" INTEGER NOT NULL ," + // 10: login
+                "\"MOBILE\" TEXT," + // 11: mobile
+                "\"MODELID\" INTEGER NOT NULL ," + // 12: modelid
+                "\"PASSWORD\" TEXT," + // 13: password
+                "\"PIC\" TEXT," + // 14: pic
+                "\"PIC_URL\" TEXT," + // 15: picUrl
+                "\"REG_IP\" INTEGER NOT NULL ," + // 16: regIp
+                "\"REG_TIME\" INTEGER NOT NULL ," + // 17: regTime
+                "\"SCORE\" INTEGER NOT NULL ," + // 18: score
+                "\"STATUS\" INTEGER NOT NULL ," + // 19: status
+                "\"TOKEN_ID\" TEXT," + // 20: tokenId
+                "\"UPDATE_TIME\" INTEGER NOT NULL ," + // 21: updateTime
+                "\"USERNAME\" TEXT);"); // 22: username
     }
 
     /** Drops the underlying database table. */
@@ -101,52 +103,57 @@ public class UserDao extends AbstractDao<User, Integer> {
         if (email != null) {
             stmt.bindString(3, email);
         }
-        stmt.bindLong(4, entity.getGroupid());
+ 
+        String headImage = entity.getHeadImage();
+        if (headImage != null) {
+            stmt.bindString(4, headImage);
+        }
  
         String hxPassword = entity.getHxPassword();
         if (hxPassword != null) {
             stmt.bindString(5, hxPassword);
         }
         stmt.bindLong(6, entity.getHxStatus() ? 1L: 0L);
-        stmt.bindLong(7, entity.getIsAdmin());
-        stmt.bindLong(8, entity.getLastLoginIp());
-        stmt.bindLong(9, entity.getLastLoginTime());
-        stmt.bindLong(10, entity.getLogin());
+        stmt.bindLong(7, entity.getGroupid());
+        stmt.bindLong(8, entity.getIsAdmin());
+        stmt.bindLong(9, entity.getLastLoginIp());
+        stmt.bindLong(10, entity.getLastLoginTime());
+        stmt.bindLong(11, entity.getLogin());
  
         String mobile = entity.getMobile();
         if (mobile != null) {
-            stmt.bindString(11, mobile);
+            stmt.bindString(12, mobile);
         }
-        stmt.bindLong(12, entity.getModelid());
+        stmt.bindLong(13, entity.getModelid());
  
         String password = entity.getPassword();
         if (password != null) {
-            stmt.bindString(13, password);
+            stmt.bindString(14, password);
         }
  
         String pic = entity.getPic();
         if (pic != null) {
-            stmt.bindString(14, pic);
+            stmt.bindString(15, pic);
         }
  
         String picUrl = entity.getPicUrl();
         if (picUrl != null) {
-            stmt.bindString(15, picUrl);
+            stmt.bindString(16, picUrl);
         }
-        stmt.bindLong(16, entity.getRegIp());
-        stmt.bindLong(17, entity.getRegTime());
-        stmt.bindLong(18, entity.getScore());
-        stmt.bindLong(19, entity.getStatus());
+        stmt.bindLong(17, entity.getRegIp());
+        stmt.bindLong(18, entity.getRegTime());
+        stmt.bindLong(19, entity.getScore());
+        stmt.bindLong(20, entity.getStatus());
  
         String tokenId = entity.getTokenId();
         if (tokenId != null) {
-            stmt.bindString(20, tokenId);
+            stmt.bindString(21, tokenId);
         }
-        stmt.bindLong(21, entity.getUpdateTime());
+        stmt.bindLong(22, entity.getUpdateTime());
  
         String username = entity.getUsername();
         if (username != null) {
-            stmt.bindString(22, username);
+            stmt.bindString(23, username);
         }
     }
 
@@ -160,52 +167,57 @@ public class UserDao extends AbstractDao<User, Integer> {
         if (email != null) {
             stmt.bindString(3, email);
         }
-        stmt.bindLong(4, entity.getGroupid());
+ 
+        String headImage = entity.getHeadImage();
+        if (headImage != null) {
+            stmt.bindString(4, headImage);
+        }
  
         String hxPassword = entity.getHxPassword();
         if (hxPassword != null) {
             stmt.bindString(5, hxPassword);
         }
         stmt.bindLong(6, entity.getHxStatus() ? 1L: 0L);
-        stmt.bindLong(7, entity.getIsAdmin());
-        stmt.bindLong(8, entity.getLastLoginIp());
-        stmt.bindLong(9, entity.getLastLoginTime());
-        stmt.bindLong(10, entity.getLogin());
+        stmt.bindLong(7, entity.getGroupid());
+        stmt.bindLong(8, entity.getIsAdmin());
+        stmt.bindLong(9, entity.getLastLoginIp());
+        stmt.bindLong(10, entity.getLastLoginTime());
+        stmt.bindLong(11, entity.getLogin());
  
         String mobile = entity.getMobile();
         if (mobile != null) {
-            stmt.bindString(11, mobile);
+            stmt.bindString(12, mobile);
         }
-        stmt.bindLong(12, entity.getModelid());
+        stmt.bindLong(13, entity.getModelid());
  
         String password = entity.getPassword();
         if (password != null) {
-            stmt.bindString(13, password);
+            stmt.bindString(14, password);
         }
  
         String pic = entity.getPic();
         if (pic != null) {
-            stmt.bindString(14, pic);
+            stmt.bindString(15, pic);
         }
  
         String picUrl = entity.getPicUrl();
         if (picUrl != null) {
-            stmt.bindString(15, picUrl);
+            stmt.bindString(16, picUrl);
         }
-        stmt.bindLong(16, entity.getRegIp());
-        stmt.bindLong(17, entity.getRegTime());
-        stmt.bindLong(18, entity.getScore());
-        stmt.bindLong(19, entity.getStatus());
+        stmt.bindLong(17, entity.getRegIp());
+        stmt.bindLong(18, entity.getRegTime());
+        stmt.bindLong(19, entity.getScore());
+        stmt.bindLong(20, entity.getStatus());
  
         String tokenId = entity.getTokenId();
         if (tokenId != null) {
-            stmt.bindString(20, tokenId);
+            stmt.bindString(21, tokenId);
         }
-        stmt.bindLong(21, entity.getUpdateTime());
+        stmt.bindLong(22, entity.getUpdateTime());
  
         String username = entity.getUsername();
         if (username != null) {
-            stmt.bindString(22, username);
+            stmt.bindString(23, username);
         }
     }
 
@@ -220,25 +232,26 @@ public class UserDao extends AbstractDao<User, Integer> {
             cursor.getInt(offset + 0), // id
             cursor.getInt(offset + 1), // amount
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // email
-            cursor.getInt(offset + 3), // groupid
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // headImage
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // hxPassword
             cursor.getShort(offset + 5) != 0, // hxStatus
-            cursor.getInt(offset + 6), // isAdmin
-            cursor.getInt(offset + 7), // lastLoginIp
-            cursor.getInt(offset + 8), // lastLoginTime
-            cursor.getInt(offset + 9), // login
-            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // mobile
-            cursor.getInt(offset + 11), // modelid
-            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // password
-            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // pic
-            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14), // picUrl
-            cursor.getInt(offset + 15), // regIp
-            cursor.getLong(offset + 16), // regTime
-            cursor.getInt(offset + 17), // score
-            cursor.getInt(offset + 18), // status
-            cursor.isNull(offset + 19) ? null : cursor.getString(offset + 19), // tokenId
-            cursor.getInt(offset + 20), // updateTime
-            cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21) // username
+            cursor.getInt(offset + 6), // groupid
+            cursor.getInt(offset + 7), // isAdmin
+            cursor.getInt(offset + 8), // lastLoginIp
+            cursor.getInt(offset + 9), // lastLoginTime
+            cursor.getInt(offset + 10), // login
+            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // mobile
+            cursor.getInt(offset + 12), // modelid
+            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // password
+            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14), // pic
+            cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15), // picUrl
+            cursor.getInt(offset + 16), // regIp
+            cursor.getLong(offset + 17), // regTime
+            cursor.getInt(offset + 18), // score
+            cursor.getInt(offset + 19), // status
+            cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20), // tokenId
+            cursor.getInt(offset + 21), // updateTime
+            cursor.isNull(offset + 22) ? null : cursor.getString(offset + 22) // username
         );
         return entity;
     }
@@ -248,25 +261,26 @@ public class UserDao extends AbstractDao<User, Integer> {
         entity.setId(cursor.getInt(offset + 0));
         entity.setAmount(cursor.getInt(offset + 1));
         entity.setEmail(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setGroupid(cursor.getInt(offset + 3));
+        entity.setHeadImage(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setHxPassword(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setHxStatus(cursor.getShort(offset + 5) != 0);
-        entity.setIsAdmin(cursor.getInt(offset + 6));
-        entity.setLastLoginIp(cursor.getInt(offset + 7));
-        entity.setLastLoginTime(cursor.getInt(offset + 8));
-        entity.setLogin(cursor.getInt(offset + 9));
-        entity.setMobile(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
-        entity.setModelid(cursor.getInt(offset + 11));
-        entity.setPassword(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
-        entity.setPic(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
-        entity.setPicUrl(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
-        entity.setRegIp(cursor.getInt(offset + 15));
-        entity.setRegTime(cursor.getLong(offset + 16));
-        entity.setScore(cursor.getInt(offset + 17));
-        entity.setStatus(cursor.getInt(offset + 18));
-        entity.setTokenId(cursor.isNull(offset + 19) ? null : cursor.getString(offset + 19));
-        entity.setUpdateTime(cursor.getInt(offset + 20));
-        entity.setUsername(cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21));
+        entity.setGroupid(cursor.getInt(offset + 6));
+        entity.setIsAdmin(cursor.getInt(offset + 7));
+        entity.setLastLoginIp(cursor.getInt(offset + 8));
+        entity.setLastLoginTime(cursor.getInt(offset + 9));
+        entity.setLogin(cursor.getInt(offset + 10));
+        entity.setMobile(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
+        entity.setModelid(cursor.getInt(offset + 12));
+        entity.setPassword(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
+        entity.setPic(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
+        entity.setPicUrl(cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15));
+        entity.setRegIp(cursor.getInt(offset + 16));
+        entity.setRegTime(cursor.getLong(offset + 17));
+        entity.setScore(cursor.getInt(offset + 18));
+        entity.setStatus(cursor.getInt(offset + 19));
+        entity.setTokenId(cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20));
+        entity.setUpdateTime(cursor.getInt(offset + 21));
+        entity.setUsername(cursor.isNull(offset + 22) ? null : cursor.getString(offset + 22));
      }
     
     @Override

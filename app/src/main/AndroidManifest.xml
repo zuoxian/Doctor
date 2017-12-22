@@ -170,6 +170,12 @@
             android:label="@string/add_grid"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".ui.PatientsActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/my_patients"
+            android:screenOrientation="portrait"/>
+
 
         <activity
             android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
