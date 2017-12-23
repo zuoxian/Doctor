@@ -23,6 +23,7 @@ import com.yjm.doctor.model.PatientBean;
 import com.yjm.doctor.model.User;
 import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.ui.MainAppointmentsInfoActivity;
+import com.yjm.doctor.ui.UserPatientInfoActivity;
 import com.yjm.doctor.ui.adapter.MainAppointmentInfoAdapter;
 import com.yjm.doctor.ui.adapter.UserPatientsInfoAdapter;
 import com.yjm.doctor.ui.base.BaseLoadFragment;
@@ -79,7 +80,7 @@ public class UserPatientsFragment extends BaseLoadFragment<PatientBean> implemen
         if(null ==search)
             return;
         search.addTextChangedListener(this);
-        search.setFocusable(false);
+//        search.setFocusable(false);
         initData();
     }
 
@@ -102,7 +103,6 @@ public class UserPatientsFragment extends BaseLoadFragment<PatientBean> implemen
         mAdapter.setListener(this);
     }
 
-
     @Override
     protected int getLayoutRes() {
         userAPI = RestAdapterUtils.getRestAPI(Config.USER_BUSINESSSETTING, UserAPI.class, getActivity());
@@ -121,7 +121,6 @@ public class UserPatientsFragment extends BaseLoadFragment<PatientBean> implemen
         userAPI.getPatients("",mPage,10,this);
         isLoading = true;
     }
-
 
     @Override
     public void onRefresh() {
@@ -143,15 +142,38 @@ public class UserPatientsFragment extends BaseLoadFragment<PatientBean> implemen
         } else if (mPage > 1 && !mAdapter.containsAll(list)) {
             if(mAdapter!=null)mAdapter.addItems(list);
         } else return;
-
-
     }
-
 
     @Override
     public void success(PatientBean subListPage, Response response) {
         stopRefresh();
-        if(null != subListPage && !TextUtils.isEmpty(subListPage.getMsg()) && subListPage.getMsg().contains("token")){
+
+        if (null != subListPage && subListPage.getSuccess()) {
+            if(null == subListPage.getObj() || null == subListPage.getObj().getRows() || !(null != subListPage.getObj().getRows() && subListPage.getObj().getRows().size()>0)){
+                showConnectionRetry("无新消息");
+                return;
+            }
+            if (mPage == 1) {
+                setPageData(subListPage);
+            } else {
+                onInitLoadData(subListPage);
+            }
+            Log.e("all",subListPage.getObj().getRows().size()+"");
+            if(!(0 < subListPage.getObj().getTotal() && subListPage.getObj().getTotal()<=10) && (mPage * 10)<subListPage.getObj().getTotal())
+                mPage = mPage + 1;
+        } else {
+            showConnectionRetry("请求异常，请重试");
+        }
+
+        if (mProgressbar != null) mProgressbar.setVisibility(View.GONE);
+
+        isLoading = false;
+    }
+
+
+    @Override
+    public void failure(RetrofitError error) {
+        if(null != error && error.getMessage().contains("path $.obj")){
             if(null != getActivity()) {
                 UserAPI userAPI1 = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, getActivity());
                 final UserService userService = UserService.getInstance(getActivity());
@@ -174,32 +196,10 @@ public class UserPatientsFragment extends BaseLoadFragment<PatientBean> implemen
                 });
             }
         }
-        if (null != subListPage && subListPage.getSuccess()) {
-            if(null == subListPage.getObj() || null == subListPage.getObj().getRows() || !(null != subListPage.getObj().getRows() && subListPage.getObj().getRows().size()>0)){
-                showConnectionRetry("无新消息");
-                return;
-            }
-            if (mPage == 1) {
-                setPageData(subListPage);
-            } else {
-                onInitLoadData(subListPage);
-            }
-            if(!(0 < subListPage.getObj().getTotal() && subListPage.getObj().getTotal()<=10) && (mPage * 10)<subListPage.getObj().getTotal())
-                mPage = mPage + 1;
-        } else {
-            showConnectionRetry("请求异常，请重试");
-        }
-
-        if (mProgressbar != null) mProgressbar.setVisibility(View.GONE);
-
-        isLoading = false;
-    }
-
-    @Override
-    public void failure(RetrofitError error) {
         Log.i("main","失败"+error.getUrl()+","+error.getMessage());
         stopRefresh();
         showConnectionRetry();
+
         if (mProgressbar != null) mProgressbar.setVisibility(View.GONE);
         isLoading = false;
     }
@@ -208,8 +208,8 @@ public class UserPatientsFragment extends BaseLoadFragment<PatientBean> implemen
 
     @Override
     public void onListItemClick(User item) {
-        Log.i("app","AppointmentInfo:"+item.toString());
-//        ActivityJumper.getInstance().buttonObjectJumpTo(getActivity(), MainAppointmentsInfoActivity.class,item);
+        Log.i("app","User:"+item.toString());
+        ActivityJumper.getInstance().buttonObjectJumpTo(getActivity(), UserPatientInfoActivity.class,item);
     }
 
     @Override

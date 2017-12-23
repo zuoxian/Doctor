@@ -23,8 +23,8 @@ public interface MainAPI {
     @GET("/appointments")
     void appointments(@Query("tokenId") String tokenId, @Query("isReply") int isReply, @Query("query") String query, @Query("page") int page, @Query("rows") int rows, Callback<AppointmentBean> callback);
 
-//    @GET("/getAppointmentDetail") //加号详情
-//    void appointmentInfo(@Query("tokenId") String tokenId,Callback<>);
+    @GET("/getAppointmentDetail") //加号详情
+    void appointmentInfo(@Query("id") int id,Callback<AppointmentBean> callback);
 
     @GET("/consultations")
     void consultations(@Query("tokenId") String tokenId, @Query("isReply") int isReply, @Query("query") String query, @Query("page") int page, @Query("rows") int rows, Callback<ConsultationBean> callback);

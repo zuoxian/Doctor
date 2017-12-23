@@ -135,7 +135,17 @@ public class AddGridActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void success(Message message, Response response) {
 
-        if(null != message && !TextUtils.isEmpty(message.getMsg()) && message.getMsg().contains("token")){
+        if(null != message && !TextUtils.isEmpty(message.getMsg())){
+            SystemTools.show_msg(AddGridActivity.this, message.getMsg());
+        }
+
+
+    }
+
+    @Override
+    public void failure(RetrofitError error) {
+        SystemTools.show_msg(AddGridActivity.this, "添加失败，请重试~2");
+        if(null != error && error.getMessage().contains("path $.obj")){
             UserAPI userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class);
             final UserService userService = UserService.getInstance(this);
             final User user = userService.getActiveAccountInfo();
@@ -156,16 +166,5 @@ public class AddGridActivity extends BaseActivity implements View.OnClickListene
             });
 
         }
-
-        if(null != message && !TextUtils.isEmpty(message.getMsg())){
-            SystemTools.show_msg(AddGridActivity.this, message.getMsg());
-        }
-
-
-    }
-
-    @Override
-    public void failure(RetrofitError error) {
-        SystemTools.show_msg(AddGridActivity.this, "添加失败，请重试~2");
     }
 }

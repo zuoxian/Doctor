@@ -37,12 +37,12 @@ public class MainAppointmentsActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         List<Fragment> fragments = new ArrayList<>();
         Bundle bundle = new Bundle();
-        bundle.putInt(Config.APPOINTMENT_TYPE, Config.APPOINTMENT_MAKE);//未回复
+        bundle.putString("appointment_make", "appointment_make");//未回复
         Fragment fragment1 = new MainAppointmentFragment();
         fragment1.setArguments(bundle);
         fragments.add((Fragment)(fragment1));
         Bundle bundle1 = new Bundle();
-        bundle1.putInt(Config.APPOINTMENT_TYPE, Config.APPOINTMENT_REPLY);//已回复
+        bundle1.putString("appointment_reply", "appointment_reply");//已回复
         Fragment fragment2 = new MainAppointmentFragment();
         fragment2.setArguments(bundle1);
         fragments.add((Fragment)(fragment2));

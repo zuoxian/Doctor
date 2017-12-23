@@ -72,12 +72,11 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         initTwoWayView();
         super.onActivityCreated(savedInstanceState);
-        Bundle bundle = this.getArguments();
-        mType = bundle.getInt(Config.APPOINTMENT_TYPE);
+
         if(null ==search)
             return;
         search.addTextChangedListener(this);
-        search.setFocusable(false);
+//        search.setFocusable(false);
         initData();
     }
 
@@ -103,6 +102,13 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
 
     @Override
     protected int getLayoutRes() {
+        Bundle bundle = this.getArguments();
+        if("appointment_make".equals(bundle.getString("appointment_make"))){
+            mType = 0;
+        }
+        if("appointment_reply".equals(bundle.getString("appointment_reply"))){
+            mType = 1;
+        }
         mainAPI = RestAdapterUtils.getRestAPI(Config.HOME_APPOINTMENT, MainAPI.class, getActivity());
         return R.layout.fragment_main_appointment_content;
     }
@@ -147,28 +153,7 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
     @Override
     public void success(AppointmentBean subListPage, Response response) {
         stopRefresh();
-        if(null != subListPage && !TextUtils.isEmpty(subListPage.getMsg()) && subListPage.getMsg().contains("token")){
-            if(null != getActivity()) {
-                UserAPI userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, getActivity());
-                final UserService userService = UserService.getInstance(getActivity());
-                final User user = userService.getActiveAccountInfo();
-                userAPI.login(user.getMobile(),userService.getPwd(user.getId()),2,new Callback<UserBean>(){
 
-                    @Override
-                    public void success(UserBean userBean, Response response) {
-                        if(null != userBean && null != userBean.getObj() && !TextUtils.isEmpty(userBean.getObj().getTokenId())){
-                            userService.setTokenId(user.getId(),userBean.getObj().getTokenId());
-                            mainAPI.appointments(UserService.getInstance(getActivity()).getTokenId(Config.userId),mType,"",mPage,10, MainAppointmentFragment.this);
-                        }
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-
-                    }
-                });
-            }
-        }
         if (null != subListPage && subListPage.getSuccess()) {
             if(null == subListPage.getObj() || null == subListPage.getObj().getRows() || !(null != subListPage.getObj().getRows() && subListPage.getObj().getRows().size()>0)){
                 showConnectionRetry("无新消息");
@@ -193,6 +178,28 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
     @Override
     public void failure(RetrofitError error) {
         Log.i("main","失败"+error.getUrl()+","+error.getMessage());
+        if(null != error && error.getMessage().contains("path $.obj")){
+            if(null != getActivity()) {
+                UserAPI userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, getActivity());
+                final UserService userService = UserService.getInstance(getActivity());
+                final User user = userService.getActiveAccountInfo();
+                userAPI.login(user.getMobile(),userService.getPwd(user.getId()),2,new Callback<UserBean>(){
+
+                    @Override
+                    public void success(UserBean userBean, Response response) {
+                        if(null != userBean && null != userBean.getObj() && !TextUtils.isEmpty(userBean.getObj().getTokenId())){
+                            userService.setTokenId(user.getId(),userBean.getObj().getTokenId());
+                            mainAPI.appointments(UserService.getInstance(getActivity()).getTokenId(Config.userId),mType,"",mPage,10, MainAppointmentFragment.this);
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                });
+            }
+        }
         stopRefresh();
         showConnectionRetry();
         if (mProgressbar != null) mProgressbar.setVisibility(View.GONE);
@@ -202,7 +209,7 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
     @Override
     public void onListItemClick(AppointmentInfo item) {
         Log.i("app","AppointmentInfo:"+item.toString());
-        ActivityJumper.getInstance().buttonObjectJumpTo(getActivity(), MainAppointmentsInfoActivity.class,item);
+        ActivityJumper.getInstance().buttonObjectJumpTo(getActivity(), MainAppointmentsInfoActivity.class,item,mType);
     }
 
     @Override

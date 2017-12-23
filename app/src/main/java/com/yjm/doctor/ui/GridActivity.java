@@ -113,27 +113,7 @@ public class GridActivity extends BaseActivity implements GridAdapter.OnListItem
             mEmpty.setVisibility(View.GONE);
         }
         Log.i("gird","=1===");
-        if(null != gridBean && !TextUtils.isEmpty(gridBean.getMsg()) && gridBean.getMsg().contains("token")){
-            userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class);
-            final UserService userService = UserService.getInstance(this);
-            final User user = userService.getActiveAccountInfo();
-            userAPI.login(user.getMobile(),userService.getPwd(user.getId()),2,new Callback<UserBean>(){
 
-                @Override
-                public void success(UserBean userBean, Response response) {
-                    if(null != userBean && null != userBean.getObj() && !TextUtils.isEmpty(userBean.getObj().getTokenId())){
-                        userService.setTokenId(user.getId(),userBean.getObj().getTokenId());
-                        serviceAPI.getGrid(GridActivity.this);
-                    }
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-
-                }
-            });
-
-        }
         if (null != gridBean && null != gridBean.getObj()){
             UpdateUI(gridBean.getObj());
         }else {
@@ -174,6 +154,27 @@ public class GridActivity extends BaseActivity implements GridAdapter.OnListItem
 
         closeDialog();
         Log.i("gird","=1===");
+        if(null != error && error.getMessage().contains("path $.obj")){
+            userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class);
+            final UserService userService = UserService.getInstance(this);
+            final User user = userService.getActiveAccountInfo();
+            userAPI.login(user.getMobile(),userService.getPwd(user.getId()),2,new Callback<UserBean>(){
+
+                @Override
+                public void success(UserBean userBean, Response response) {
+                    if(null != userBean && null != userBean.getObj() && !TextUtils.isEmpty(userBean.getObj().getTokenId())){
+                        userService.setTokenId(user.getId(),userBean.getObj().getTokenId());
+                        serviceAPI.getGrid(GridActivity.this);
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+
+                }
+            });
+
+        }
 
     }
 

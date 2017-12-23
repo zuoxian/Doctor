@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -69,10 +70,31 @@ public class MainAppointmentsInfoActivity extends BaseActivity implements Callba
     @BindView(R.id.reason)
     EditText mReason;
 
+    @BindView(R.id.agree)
+    TextView mAgree;
+
+    @BindView(R.id.refuse)
+    TextView mRefuse;
+
+    @BindView(R.id.status_layout)
+    LinearLayout mStatusLayout;
+
+    @BindView(R.id.detail_layout)
+    LinearLayout mDetailLayout;
+
+    @BindView(R.id.detail)
+    TextView mDetail;
+
+    @BindView(R.id.status)
+    TextView mStatus;
+
+
 
     private AppointmentInfo item;
 
     private User user;
+
+    private int mType;
 
     private int requestType = 0;
 
@@ -110,7 +132,9 @@ public class MainAppointmentsInfoActivity extends BaseActivity implements Callba
 
     @Override
     public int initView() {
-        item = (AppointmentInfo) this.getIntent().getSerializableExtra("object");
+        item = (AppointmentInfo) this.getIntent().getSerializableExtra("object1");
+        mType = this.getIntent().getIntExtra("object2",0);
+
         Log.i("app","app info :"+item.toString());
         mainAPI = RestAdapterUtils.getRestAPI(Config.HOME_APPOINTMENT_INFO, MainAPI.class);
 
@@ -168,6 +192,35 @@ public class MainAppointmentsInfoActivity extends BaseActivity implements Callba
                 mTime.setText(item.getAppointAddress());
             }
         }
+        String status = "待确认";
+        if(Config.APPOINTMENT_REPLY == mType){//已回复
+            if(null != mAgree)mAgree.setVisibility(View.GONE);
+            if(null != mRefuse)mRefuse.setVisibility(View.GONE);
+
+            if(null != mStatusLayout )mStatusLayout.setVisibility(View.VISIBLE);
+            if(!TextUtils.isEmpty(item.getAppointStatus()) ){
+                switch (item.getAppointStatus()){
+                    case "0":
+                        status = "待确认";
+                        break;
+                    case "1":
+                        status = "医生已确认";
+                        break;
+                    case "2":
+                        status = "用户已确认";
+                        break;
+                    case "3":
+                        status = "已取消";
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if(null != mStatus) {
+                mStatus.setText(status);
+                if(null != mStatus)mStatus.setTextColor(getResources().getColor(R.color.btn_logout_normal));
+            }
+        }
     }
 
     @Override
@@ -177,7 +230,55 @@ public class MainAppointmentsInfoActivity extends BaseActivity implements Callba
 
     @Override
     public void success(UserBean userBean, Response response) {
-        if(null != userBean && !TextUtils.isEmpty(userBean.getMsg()) && userBean.getMsg().contains("token")){
+
+
+
+        if (null != userBean && true == userBean.getSuccess()) {
+            if (null != mInfoStatus && 0 == requestType) {//同意
+//                mInfoStatus.setText("加号信息（已同意）");
+                if(null != mStatusLayout){
+                    mStatusLayout.setVisibility(View.VISIBLE);
+                }
+                if(null != mStatus){
+                    mStatus.setText("已同意");
+                }
+
+            } else {//拒绝
+                mReason.setVisibility(View.GONE);
+//                mInfoStatus.setText("加号信息（已拒绝）");
+                reason = false;
+                mReason.setVisibility(View.GONE);
+                if(null != mStatusLayout){
+                    mStatusLayout.setVisibility(View.VISIBLE);
+                }
+                if(null != mStatus){
+                    mStatus.setText("已拒绝");
+                }
+                if(null != mDetailLayout){
+                    mDetailLayout.setVisibility(View.VISIBLE);
+                }
+                if(null != mDetail && null != mReason && !TextUtils.isEmpty(mReason.getText()))
+                    mDetail.setText(mReason.getText().toString());
+                if(null != mStatusLayout){
+                    mStatusLayout.setVisibility(View.VISIBLE);
+                }
+            }
+            if(null != mRefuse)mRefuse.setVisibility(View.GONE);
+            if(null != mAgree)mAgree.setVisibility(View.GONE);
+            if(null != mStatus)mStatus.setTextColor(getResources().getColor(R.color.btn_logout_normal));
+        }else if(null != userBean && !TextUtils.isEmpty(userBean.getMsg())){
+            SystemTools.show_msg(this,userBean.getMsg());
+        }
+
+    }
+
+
+
+    @Override
+    public void failure(RetrofitError error) {
+        SystemTools.show_msg(this,"请求失败,请重试");
+
+        if(null != error && error.getMessage().contains("path $.obj")){
             userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this);
             final UserService userService = UserService.getInstance(this);
             final User user = userService.getActiveAccountInfo();
@@ -207,29 +308,5 @@ public class MainAppointmentsInfoActivity extends BaseActivity implements Callba
             });
 
         }
-
-
-        if (null != userBean && true == userBean.getSuccess()) {
-            if (null != mInfoStatus && 0 == requestType) {//同意
-                mInfoStatus.setText("加号信息（已同意）");
-
-            } else {//拒绝
-                mReason.setVisibility(View.GONE);
-                mInfoStatus.setText("加号信息（已拒绝）");
-                reason = false;
-                finish();
-            }
-            mInfoStatus.setTextColor(getResources().getColor(R.color.btn_logout_normal));
-        }else if(null != userBean && !TextUtils.isEmpty(userBean.getMsg())){
-            SystemTools.show_msg(this,userBean.getMsg());
-        }
-
-    }
-
-
-
-    @Override
-    public void failure(RetrofitError error) {
-        SystemTools.show_msg(this,"请求失败,请重试");
     }
 }

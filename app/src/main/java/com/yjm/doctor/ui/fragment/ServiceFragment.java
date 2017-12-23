@@ -130,29 +130,7 @@ public class ServiceFragment extends BaseFragment<UserBean> {
     @Override
     public void success(UserBean userBean, Response response) {
         try {
-            if(null != getActivity()) {
-                if (null != userBean && !TextUtils.isEmpty(userBean.getMsg()) && userBean.getMsg().contains("token")) {
 
-                    final UserService userService = UserService.getInstance(getActivity());
-                    final User user = userService.getActiveAccountInfo();
-                    mUserAPI.login(user.getMobile(), userService.getPwd(user.getId()), 2, new Callback<UserBean>() {
-
-                        @Override
-                        public void success(UserBean userBean, Response response) {
-                            if (null != userBean && null != userBean.getObj() && !TextUtils.isEmpty(userBean.getObj().getTokenId())) {
-                                userService.setTokenId(user.getId(), userBean.getObj().getTokenId());
-                                mUserAPI.getUserInfoByTokenId(tokenID, this);
-                            }
-                        }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-
-                        }
-                    });
-
-                }
-            }
             if (null != userBean && null != userBean.getObj()) {
                 String u = sharedPreferencesUtil.serialize(userBean.getObj());
                 if(!TextUtils.isEmpty(u)) {
@@ -168,7 +146,29 @@ public class ServiceFragment extends BaseFragment<UserBean> {
 
     @Override
     public void failure(RetrofitError error) {
+        if(null != getActivity()) {
+            if(null != error && error.getMessage().contains("path $.obj")){
 
+                final UserService userService = UserService.getInstance(getActivity());
+                final User user = userService.getActiveAccountInfo();
+                mUserAPI.login(user.getMobile(), userService.getPwd(user.getId()), 2, new Callback<UserBean>() {
+
+                    @Override
+                    public void success(UserBean userBean, Response response) {
+                        if (null != userBean && null != userBean.getObj() && !TextUtils.isEmpty(userBean.getObj().getTokenId())) {
+                            userService.setTokenId(user.getId(), userBean.getObj().getTokenId());
+                            mUserAPI.getUserInfoByTokenId(tokenID, this);
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                });
+
+            }
+        }
     }
 
     private void updateUI(User user){

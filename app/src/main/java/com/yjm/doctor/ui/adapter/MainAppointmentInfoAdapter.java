@@ -83,18 +83,18 @@ public class MainAppointmentInfoAdapter extends BaseLoadRecyclerAdapter<Appointm
             TextView username = (TextView) view.findViewById(R.id.username);
             TextView sex_age = (TextView) view.findViewById(R.id.sex_age);
             TextView time = (TextView) view.findViewById(R.id.time);
-        TextView address = (TextView) view.findViewById(R.id.address);
-        User user = item.getUser();
-        if(user!= null ) {
-            if (!TextUtils.isEmpty(user.getPicUrl()))
+            TextView address = (TextView) view.findViewById(R.id.address);
+            User user = item.getUser();
+            if(user!= null ) {
+                if (!TextUtils.isEmpty(user.getPicUrl()))
                     sdvImage.setImageURI(Uri.parse(user.getPicUrl()));
-            Customer customer = user.getCustomer();
-            Log.i("log",username+"");
-            if(null != customer) {
-                if (!TextUtils.isEmpty(customer.getRealName())) {
-                    username.setText(customer.getRealName());
+                Customer customer = user.getCustomer();
+                Log.i("log",username+"");
+                if(null != customer) {
+                    if (!TextUtils.isEmpty(customer.getRealName())) {
+                        username.setText(customer.getRealName());
+                    }
                 }
-            }
 
             if(null != customer){
                 String sex =  "女";

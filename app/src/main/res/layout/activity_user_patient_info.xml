@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@color/login_background"
+    >
+
+    <include layout="@layout/toolbar"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:text="患者信息"
+        android:background="@color/whitecolor"
+        android:textColor="@color/text2"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:gravity="center_vertical"
+        />
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <LinearLayout
+           android:id="@+id/customerinfo"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:paddingTop="5dp"
+           android:paddingBottom="5dp"
+           android:orientation="horizontal"
+           android:background="@drawable/bordersquarestyle"
+           >
+           <com.facebook.drawee.view.SimpleDraweeView
+               android:id="@+id/user_icon"
+               android:layout_width="40dp"
+               android:layout_height="40dp"
+               fresco:actualImageScaleType="fitXY"
+               fresco:placeholderImageScaleType="fitXY"
+               android:layout_marginLeft="20dp"
+               android:layout_marginRight="20dp"
+               android:layout_marginTop="4dp"
+               android:background="@drawable/check"
+               />
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+               android:layout_gravity="center"
+               >
+               <TextView
+                   android:id="@+id/username"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:textColor="@color/content"
+                   android:gravity="center_vertical"
+                   />
+               <TextView
+                   android:id="@+id/user_info"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:textColor="@color/login_font_color"
+                   android:gravity="center_vertical"
+                   />
+
+           </LinearLayout>
+       </LinearLayout>
+
+   </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:text="预约记录"
+        android:textColor="@color/text2"
+        android:background="@color/whitecolor"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:gravity="center_vertical"
+        />
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/whitecolor"
+        />
+
+
+
+</LinearLayout>

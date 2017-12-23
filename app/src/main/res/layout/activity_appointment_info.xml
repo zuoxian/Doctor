@@ -139,7 +139,6 @@
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="42dp"
-
             android:textColor="@color/login_font_color"
             android:paddingRight="20dp"
             android:gravity="center_vertical"
@@ -156,7 +155,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="42dp"
-
             android:textColor="@color/login_font_color"
             android:text="@string/appointment_info_address"
             android:paddingLeft="20dp"
@@ -167,6 +165,66 @@
             />
         <TextView
             android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:textColor="@color/login_font_color"
+            android:paddingRight="20dp"
+            android:gravity="center_vertical"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/status_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/bordersquarestyle"
+        android:visibility="gone"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:textColor="@color/login_font_color"
+            android:text="@string/appointment_info_status"
+            android:paddingLeft="20dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:drawablePadding="20dp"
+            android:drawableLeft="@drawable/address"
+            />
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:textColor="@color/login_font_color"
+            android:paddingRight="20dp"
+            android:gravity="center_vertical"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/detail_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/bordersquarestyle"
+        android:visibility="gone"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:textColor="@color/login_font_color"
+            android:text="@string/appointment_info_detail"
+            android:paddingLeft="20dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:drawablePadding="20dp"
+            android:drawableLeft="@drawable/address"
+            />
+        <TextView
+            android:id="@+id/detail"
             android:layout_width="wrap_content"
             android:layout_height="42dp"
             android:textColor="@color/login_font_color"
@@ -197,14 +255,14 @@
         android:layout_marginTop="20dp"
         >
         <TextView
-            android:id="@+id/agree"
-            android:layout_width="84dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/buttonstyle"
-            android:text="@string/agreen"
-            android:gravity="center"
-            android:layout_marginRight="40dp"
-            />
+        android:id="@+id/agree"
+        android:layout_width="84dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/buttonstyle"
+        android:text="@string/agreen"
+        android:gravity="center"
+        android:layout_marginRight="40dp"
+        />
 
         <TextView
             android:id="@+id/refuse"
@@ -213,7 +271,6 @@
             android:background="@drawable/refusebuttonstyle"
             android:text="@string/refuse"
             android:gravity="center"
-
             />
 
     </LinearLayout>

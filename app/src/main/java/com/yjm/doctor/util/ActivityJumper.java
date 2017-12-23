@@ -32,10 +32,34 @@ public class ActivityJumper {
 
     }
 
+    public void buttonIntJumpTo(Context ctx ,Class activity,int id){
+        Intent intent = new Intent();
+        intent.setClass(ctx, activity);
+        intent.putExtra("id", id);
+        ctx.startActivity(intent);
+    }
+
     public void buttonObjectJumpTo(Context ctx , Class activity , Object object){
         Intent intent = new Intent();
         intent.setClass(ctx, activity);
         intent.putExtra("object", (Serializable) object);
+        ctx.startActivity(intent);
+
+    }
+
+    public void buttonObjectJumpTo(Context ctx , Class activity , Object object1,Object object2){
+        Intent intent = new Intent();
+        intent.setClass(ctx, activity);
+        intent.putExtra("object1", (Serializable) object1);
+        intent.putExtra("object2", (Serializable) object2);
+        ctx.startActivity(intent);
+
+    }
+    public void buttonObjectJumpTo(Context ctx , Class activity , Object object1,int object2){
+        Intent intent = new Intent();
+        intent.setClass(ctx, activity);
+        intent.putExtra("object1", (Serializable) object1);
+        intent.putExtra("object2", object2);
         ctx.startActivity(intent);
 
     }

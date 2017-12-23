@@ -6,6 +6,7 @@ import com.yjm.doctor.model.LevelBean;
 import com.yjm.doctor.model.Message;
 import com.yjm.doctor.model.PatientBean;
 import com.yjm.doctor.model.UserBean;
+import com.yjm.doctor.model.UserPatientInfoBean;
 import com.yjm.doctor.ui.view.layout.BalanceListBean;
 
 import retrofit.Callback;
@@ -69,4 +70,9 @@ public interface UserAPI {
     @POST("/myPatients")
     void getPatients(@Query("query") String query, @Query("page") int page, @Query("rows") int rows,Callback<PatientBean> callback);
 
+
+    @POST("/myPatientDetail")
+    void getUserPatientInfo(
+            @Query("userId") int userId ,
+            Callback<UserPatientInfoBean> callback);
 }

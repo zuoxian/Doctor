@@ -178,6 +178,20 @@
 
 
         <activity
+            android:name=".ui.UserPatientInfoActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/my_patients"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".ui.UserAppointmentsInfoActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/appointments_reply"
+            android:screenOrientation="portrait"/>
+
+
+
+        <activity
             android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
             android:screenOrientation="portrait"
             />

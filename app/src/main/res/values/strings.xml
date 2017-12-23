@@ -106,6 +106,9 @@
     <string name="appointment_info_time">时间</string>
     <string name="appointment_info_address">地点</string>
 
+    <string name="appointment_info_status">预约状态</string>
+    <string name="appointment_info_detail">拒绝详情</string>
+
     <string name="agreen">同意</string>
     <string name="refuse">拒绝</string>
     <string name="mail">站内信息</string>
