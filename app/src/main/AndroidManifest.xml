@@ -199,6 +199,11 @@
             android:label="@string/update_account"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".ui.MyCommentsActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/mycomment"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
             android:screenOrientation="portrait"

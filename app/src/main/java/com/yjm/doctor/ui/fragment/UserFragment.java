@@ -14,6 +14,7 @@ import com.yjm.doctor.model.User;
 import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.ui.BusinessSettingActivity;
 import com.yjm.doctor.ui.MainAccountActivity;
+import com.yjm.doctor.ui.MyCommentsActivity;
 import com.yjm.doctor.ui.PatientsActivity;
 import com.yjm.doctor.ui.UserInfoActivity;
 import com.yjm.doctor.ui.base.BaseFragment;
@@ -94,7 +95,8 @@ public class UserFragment extends BaseFragment<UserBean> {
                         break;
                     }
                     case 3: {
-
+                        if(null != getActivity())
+                            ActivityJumper.getInstance().buttonJumpTo(getActivity(), MyCommentsActivity.class);
                         break;
                     }
                 }

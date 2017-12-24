@@ -3,6 +3,8 @@ package com.yjm.doctor.api;
 import com.yjm.doctor.model.Account;
 import com.yjm.doctor.model.AccountBean;
 import com.yjm.doctor.model.BusinessSettingBean;
+import com.yjm.doctor.model.Comment;
+import com.yjm.doctor.model.CommentBean;
 import com.yjm.doctor.model.Level;
 import com.yjm.doctor.model.LevelBean;
 import com.yjm.doctor.model.Message;
@@ -94,5 +96,9 @@ public interface UserAPI {
             @Query("bankCard") String bankCard,
             @Query("alipay") String alipay,
             Callback<Message> callback);
+
+    @POST("/myComments")
+    void getComments(Callback<CommentBean> callback);
+
 
 }
