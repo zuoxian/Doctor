@@ -1,5 +1,7 @@
 package com.yjm.doctor.api;
 
+import com.yjm.doctor.model.Account;
+import com.yjm.doctor.model.AccountBean;
 import com.yjm.doctor.model.BusinessSettingBean;
 import com.yjm.doctor.model.Level;
 import com.yjm.doctor.model.LevelBean;
@@ -75,4 +77,22 @@ public interface UserAPI {
     void getUserPatientInfo(
             @Query("userId") int userId ,
             Callback<UserPatientInfoBean> callback);
+
+    @POST("/getAccount")
+    void getAccount(Callback<AccountBean> callback);
+
+
+
+
+    @POST("/updateAccount")
+    void updateAccount(
+            @Query("bankAccount") String bankAccount,
+            @Query("bankPhone") String bankPhone,
+            @Query("bankIdNo") String bankIdNo,
+            @Query("bankCode") String bankCode,
+            @Query("bankName") String bankName,
+            @Query("bankCard") String bankCard,
+            @Query("alipay") String alipay,
+            Callback<Message> callback);
+
 }

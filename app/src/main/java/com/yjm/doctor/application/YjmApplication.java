@@ -29,6 +29,8 @@ public class YjmApplication extends Application {
 
     public static boolean tooAdd =false;
 
+    public static boolean update = false;
+
     @Override
     public void onCreate() {
         super.onCreate();

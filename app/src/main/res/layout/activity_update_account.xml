@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whitecolor"
+    >
+
+    <include layout="@layout/toolbar" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:id="@+id/bankAccount"
+        android:hint="输入开户名"
+        android:textColorHint="@color/login_font_color"
+        android:textColor="@color/content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@drawable/bordersquarestyle"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:id="@+id/bankPhone"
+        android:hint="输入预留手机号"
+        android:textColorHint="@color/login_font_color"
+        android:textColor="@color/content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@drawable/bordersquarestyle"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:id="@+id/bankIdNo"
+        android:hint="输入身份证号"
+        android:textColorHint="@color/login_font_color"
+        android:textColor="@color/content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@drawable/bordersquarestyle"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:id="@+id/bankCode"
+        android:text="银行"
+        android:textColorHint="@color/login_font_color"
+        android:textColor="@color/content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/bordersquarestyle"
+        android:drawableRight="@drawable/comein"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:id="@+id/bankName"
+        android:hint="输入开户行支行"
+        android:textColorHint="@color/login_font_color"
+        android:textColor="@color/content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@drawable/bordersquarestyle"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:id="@+id/bankCard"
+        android:hint="输入银行卡号"
+        android:textColorHint="@color/login_font_color"
+        android:textColor="@color/content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@drawable/bordersquarestyle"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:id="@+id/alipay"
+        android:hint="请输入支付宝账号"
+        android:textColorHint="@color/login_font_color"
+        android:textColor="@color/content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@drawable/bordersquarestyle"
+        />
+
+</LinearLayout>

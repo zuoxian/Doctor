@@ -47,6 +47,18 @@
         android:paddingRight="20dp"
         android:paddingLeft="20dp"
         />
+    <TextView
+        android:id="@+id/toolupdate"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="@string/update"
+        android:textColor="@color/tool_font_color"
+        android:gravity="center"
+        android:layout_gravity="right"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:visibility="gone"
+        />
 
     <TextView
         android:id="@+id/tool_add"
@@ -57,7 +69,7 @@
         android:layout_gravity="right"
         android:paddingRight="20dp"
         android:paddingLeft="20dp"
-        android:background="@drawable/add"
+        android:text="保存"
         android:visibility="gone"
         />
 

@@ -16,14 +16,6 @@ import butterknife.OnClick;
 
 public class MainAccountActivity extends BaseActivity {
 
-//    @BindView(R.id.toolbar)
-//    Toolbar mToolbar;
-//    @BindView(R.id.toolicon)
-//    RelativeLayout mToolicon;
-//    @BindView(R.id.tooltitle)
-//    TextView mTooltitle;
-//    @BindView(R.id.toolfinish)
-//    TextView mToolfinish;
 
     @BindView(R.id.listview_layout)
     ListView mListviewLayout;
@@ -42,14 +34,10 @@ public class MainAccountActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-//        setSupportActionBar(mToolbar);
-//        mTooltitle.setText(R.string.account);
-//        mToolicon.setVisibility(View.GONE);
-//        mToolfinish.setVisibility(View.GONE);
         List<ListLayoutModel> modelList=new ArrayList<ListLayoutModel>();
         modelList.add(new ListLayoutModel(R.drawable.business_setting,R.string.account_info,R.drawable.comein));
         modelList.add(new ListLayoutModel(R.drawable.patient,R.string.account_balance,R.drawable.comein));
-        modelList.add(new ListLayoutModel(R.drawable.account,R.string.account_withdrawal,R.drawable.comein));
+//        modelList.add(new ListLayoutModel(R.drawable.account,R.string.account_withdrawal,R.drawable.comein));
         mLayoutAdapter=new ListLayoutAdapter(this,modelList);
         mListviewLayout.setAdapter(mLayoutAdapter);
         mLayoutAdapter.setOnListItemOnClickListener(new ListLayoutAdapter.OnListItemOnClickListener() {
@@ -65,9 +53,9 @@ public class MainAccountActivity extends BaseActivity {
 
                         break;
                     }
-                    case 2: {
-                        break;
-                    }
+//                    case 2: {
+//                        break;
+//                    }
                 }
             }
         });

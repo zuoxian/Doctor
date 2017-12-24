@@ -7,7 +7,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.yjm.doctor.R;
+import com.yjm.doctor.model.User;
 import com.yjm.doctor.ui.base.BaseActivity;
+import com.yjm.doctor.util.auth.UserService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +28,10 @@ public class AccountBalanceActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-        mTvBalance.setText("0");
+        User u = UserService.getInstance().getActiveAccountInfo();
+        if(null != u && null != mTvBalance) {
+            mTvBalance.setText(u.getAmount()+"");
+        }
 
 
 

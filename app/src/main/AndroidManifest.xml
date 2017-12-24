@@ -194,6 +194,11 @@
             android:label="@string/contact_us"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".ui.UpateAccountActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/update_account"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
             android:screenOrientation="portrait"

@@ -34,7 +34,8 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
     TextView toolTitle = null;
     RelativeLayout toolIcon = null;
     TextView toolFinishButton = null;
-    TextView toolAdd = null ;
+    TextView toolAdd = null;
+    TextView update = null;
 
 //    public ActivityLifecycle(String title) {
 //        this.mTitle = title;
@@ -42,19 +43,23 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @Override
     public void onActivityCreated(final Activity activity, Bundle savedInstanceState) {
-        Log.i("activity","life onActivityCreated");
-        Log.i("Main","====================");
-        if(activity instanceof IActivity){
-            activity.setContentView(((IActivity)activity).initView());
+        Log.i("activity", "life onActivityCreated");
+        Log.i("Main", "====================");
+        if (activity instanceof IActivity) {
+            YjmApplication.tooAdd = false;
+            YjmApplication.update = false;
+            YjmApplication.toolFinish = false;
+            activity.setContentView(((IActivity) activity).initView());
         }
 
         toolbar = activity.findViewById(R.id.toolbar);
-        toolTitle = (TextView)activity.findViewById(R.id.tooltitle);
-        toolIcon = (RelativeLayout)activity.findViewById(R.id.toolicon);
-        toolFinishButton = (TextView)activity.findViewById(R.id.toolfinish);
-        toolAdd = (TextView)activity.findViewById(R.id.tool_add);
+        toolTitle = (TextView) activity.findViewById(R.id.tooltitle);
+        toolIcon = (RelativeLayout) activity.findViewById(R.id.toolicon);
+        toolFinishButton = (TextView) activity.findViewById(R.id.toolfinish);
+        toolAdd = (TextView) activity.findViewById(R.id.tool_add);
+        update = (TextView) activity.findViewById(R.id.toolupdate);
 
-        if(null != toolAdd) {
+        if (null != toolAdd) {
             toolAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -64,7 +69,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             });
         }
 
-        if(null != toolFinishButton) {
+        if (null != toolFinishButton) {
             toolFinishButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -73,27 +78,19 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             });
         }
 
-        if(YjmApplication.toolBackIcon){
-            if(null != toolIcon)toolIcon.setVisibility(View.VISIBLE);
-        }else{
-            if(null != toolIcon)toolIcon.setVisibility(View.GONE);
+
+        if (null != update) {
+            update.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((IActivity) activity).finishButton();
+                }
+            });
         }
 
-        if(YjmApplication.tooAdd){
-            if(null != toolAdd)toolAdd.setVisibility(View.VISIBLE);
-        }else{
-            if(null != toolAdd)toolAdd.setVisibility(View.GONE);
-        }
 
-        if(null != toolFinishButton) {
-            if (YjmApplication.toolFinish) {
-                toolFinishButton.setVisibility(View.VISIBLE);
-            } else {
-                toolFinishButton.setVisibility(View.GONE);
-            }
-        }
 
-        if ( toolbar != null) { //找到 Toolbar 并且替换 Actionbar
+        if (toolbar != null) { //找到 Toolbar 并且替换 Actionbar
             if (activity instanceof AppCompatActivity) {
                 ((AppCompatActivity) activity).setSupportActionBar((Toolbar) toolbar);
                 ((AppCompatActivity) activity).getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -105,15 +102,14 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
                 }
             }
         }
-        if ( toolTitle != null) { //找到 Toolbar 的标题栏并设置标题名
+        if (toolTitle != null) { //找到 Toolbar 的标题栏并设置标题名
 //            if(TextUtils.isEmpty(mTitle)){
-                toolTitle.setText(activity.getTitle());
-            Log.i("mTitle", "标题: "+ activity.getTitle() );
+            toolTitle.setText(activity.getTitle());
+            Log.i("mTitle", "标题: " + activity.getTitle());
 //            } else {
 //                toolTitle.setText(mTitle);
 //            }
         }
-
 
 
         if (toolIcon != null) { //找到 Toolbar 的返回按钮,并且设置点击事件,点击关闭这个 Activity
@@ -130,20 +126,46 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
     }
 
 
-
     @Override
     public void onActivityStarted(Activity activity) {
-        Log.i("activity","life onActivityStarted");
+        Log.i("activity", "life onActivityStarted");
     }
 
     @Override
     public void onActivityResumed(Activity activity) {
-        Log.i("activity","life onActivityResumed");
-//        if(null != toolTitle){
-//            toolTitle.setText(mTitle);
-//        }
+        Log.i("activity", "life onActivityResumed");
 
+        if (YjmApplication.toolBackIcon) {
+            if (null != toolIcon) toolIcon.setVisibility(View.VISIBLE);
+        } else {
+            if (null != toolIcon) toolIcon.setVisibility(View.GONE);
+        }
+
+        if (YjmApplication.tooAdd) {
+            if (null != toolAdd) toolAdd.setVisibility(View.VISIBLE);
+        } else {
+            if (null != toolAdd) toolAdd.setVisibility(View.GONE);
+        }
+
+        if (YjmApplication.update) {
+            if (null != update) update.setVisibility(View.VISIBLE);
+        } else {
+            if (null != update) update.setVisibility(View.GONE);
+        }
+
+        if (null != toolFinishButton) {
+            if (YjmApplication.toolFinish) {
+                toolFinishButton.setVisibility(View.VISIBLE);
+            } else {
+                toolFinishButton.setVisibility(View.GONE);
+            }
+
+        }
     }
+
+
+
+
 
     @Override
     public void onActivityPaused(Activity activity) {
