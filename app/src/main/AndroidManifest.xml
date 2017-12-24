@@ -189,7 +189,10 @@
             android:label="@string/appointments_reply"
             android:screenOrientation="portrait"/>
 
-
+        <activity android:name=".ui.ContactUsActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/contact_us"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"

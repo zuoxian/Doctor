@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/login_background"
+    >
+
+    <include layout="@layout/toolbar"/>
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/user_icon"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        fresco:actualImageScaleType="fitXY"
+        fresco:placeholderImageScaleType="fitXY"
+        android:layout_gravity="center_vertical"
+        />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="42dp"
+    android:orientation="horizontal"
+    android:background="@color/whitecolor"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:drawableLeft="@drawable/tel"
+        android:drawablePadding="10dp"
+        android:text="@string/tel"
+        android:textColor="@color/content"
+        android:gravity="center_vertical"
+        />
+    <TextView
+        android:id="@+id/tel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:textColor="@color/content"
+        android:layout_gravity="center_vertical"
+        />
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:orientation="horizontal"
+        android:background="@color/whitecolor"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="10dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/mainmail"
+            android:drawablePadding="10dp"
+            android:text="@string/main_mail"
+            android:textColor="@color/content"
+            android:gravity="center_vertical"
+            />
+        <TextView
+            android:id="@+id/mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:gravity="right"
+            android:textColor="@color/content"
+            android:layout_gravity="center_vertical"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:orientation="horizontal"
+        android:background="@color/whitecolor"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="10dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/mainaddress"
+            android:drawablePadding="10dp"
+            android:text="@string/main_address"
+            android:textColor="@color/content"
+            android:gravity="center_vertical"
+            />
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textColor="@color/content"
+            android:layout_gravity="center_vertical"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

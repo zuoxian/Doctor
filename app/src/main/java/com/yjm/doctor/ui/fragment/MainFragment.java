@@ -20,6 +20,7 @@ import com.yjm.doctor.model.Banner;
 import com.yjm.doctor.model.BannerBean;
 import com.yjm.doctor.model.EventType;
 import com.yjm.doctor.model.User;
+import com.yjm.doctor.ui.ContactUsActivity;
 import com.yjm.doctor.ui.MainAppointmentsActivity;
 import com.yjm.doctor.ui.MainConsultationsActivity;
 import com.yjm.doctor.ui.MainConsultationsInfoActivity;
@@ -122,6 +123,7 @@ public class MainFragment extends BaseFragment<BannerBean> implements IActivity{
 
     @OnClick(R.id.main_image_text_consulting)
     void image_text_consulting(){
+        if(null != getActivity())
         ActivityJumper.getInstance().buttonJumpTo(getActivity(), MainConsultationsActivity.class);
     }
 
@@ -139,7 +141,8 @@ public class MainFragment extends BaseFragment<BannerBean> implements IActivity{
 
     @OnClick(R.id.main_contact_us)
     void contact_us(){
-
+        if(null != getActivity())
+        ActivityJumper.getInstance().buttonJumpTo(getActivity(), ContactUsActivity.class);
     }
 
     @Override

@@ -22,7 +22,7 @@ public class Config {
 
     public static final String USER_BALANCE = DOMAIN_URL + "/ethealth/api/balance";
 
-
+    public static final String MAIN_BASEDATA = DOMAIN_URL + "/ethealth/api/baseData";
 
     public static final String HOME_APPOINTMENT_INFO = DOMAIN_URL +"/ethealth/api/appointment";
 

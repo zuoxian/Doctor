@@ -4,6 +4,7 @@ import com.yjm.doctor.model.Appointment;
 import com.yjm.doctor.model.AppointmentBean;
 import com.yjm.doctor.model.BannerBean;
 import com.yjm.doctor.model.ConsultationBean;
+import com.yjm.doctor.model.DataTypeBean;
 import com.yjm.doctor.model.UserBean;
 
 import retrofit.Callback;
@@ -32,4 +33,7 @@ public interface MainAPI {
 
     @POST("/updateAppointmentStatus")
     void updateAppointmentStatus(@Query("id") int id, @Query("appointStatus") int appointStatus, @Query("refuseReason") String refuseReason, Callback<UserBean> callback);
+
+    @POST("/basedata")
+    void baseData(@Query("dataType") String dataType, Callback<DataTypeBean> callback);
 }
