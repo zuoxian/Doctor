@@ -28,6 +28,8 @@ public class Config {
 
     public static final String SERVICE_GRID = DOMAIN_URL +"/ethealth/api/doctorCloseTime";
 
+
+
     public static String DEFAULT_TOKENID = "1D96DACB84F21890ED9F4928FA8B352B";
 
     public static final int DOCTOR = 2;

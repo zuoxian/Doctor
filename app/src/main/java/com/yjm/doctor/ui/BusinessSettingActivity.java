@@ -1,5 +1,7 @@
 package com.yjm.doctor.ui;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ListView;
@@ -46,6 +48,8 @@ public class BusinessSettingActivity extends BaseActivity {
 //    @BindView(R.id.toolfinish)
 //    TextView mToolfinish;
 
+
+
     @BindView(R.id.listview_layout)
     ListView mListviewLayout;
 
@@ -68,8 +72,8 @@ public class BusinessSettingActivity extends BaseActivity {
 
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mUser = UserService.getInstance(this).getActiveAccountInfo();
 
 
@@ -79,9 +83,9 @@ public class BusinessSettingActivity extends BaseActivity {
 //        mToolfinish.setVisibility(View.GONE);
 
         modelList=new ArrayList<ListLayoutModel>();
-        modelList.add(new ListLayoutModel(R.string.business_accept_appointments,"",0,R.drawable.comein));
+        modelList.add(new ListLayoutModel(R.string.business_accept_appointments,"",0,R.drawable.receiveicon_sel));
         modelList.add(new ListLayoutModel(R.string.business_appointments_fee,"￥0.00",R.color.colorAccent,0));
-        modelList.add(new ListLayoutModel(R.string.business_accept_image_text_consulting,"",0,R.drawable.comein));
+        modelList.add(new ListLayoutModel(R.string.business_accept_image_text_consulting,"",0,R.drawable.receiveicon_sel));
         modelList.add(new ListLayoutModel(R.string.business_image_text_consulting_fee,"￥0.00",R.color.colorAccent,0));
         mLayoutAdapter=new ListLayoutAdapter(this,modelList);
         mListviewLayout.setAdapter(mLayoutAdapter);
@@ -109,25 +113,32 @@ public class BusinessSettingActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
     private void getSettingInfo(){
         if(tokenID != null && NetworkUtils.isNetworkAvaliable(this)) {
             mUserAPI.getBusinessSetting(tokenID, new Callback<BusinessSettingBean>() {
                 @Override
                 public void success(BusinessSettingBean bean, Response response) {
+                    closeDialog();
                     if (bean != null) {
                         mSettingBean=bean;
                         if (null != bean.getObj() && bean.getObj().isAcceptAppointment()){
-                            modelList.set(0,new ListLayoutModel(R.string.business_accept_appointments,"",0,R.drawable.comein));
+                            modelList.set(0,new ListLayoutModel(R.string.business_accept_appointments,"",0,R.drawable.receiveicon_sel));
                         }else {
-                            modelList.set(0,new ListLayoutModel(R.string.business_accept_appointments,"",0,R.drawable.comein));
+                            modelList.set(0,new ListLayoutModel(R.string.business_accept_appointments,"",0,R.drawable.receiveicon));
                         }
                         if (null != bean.getObj() && !TextUtils.isEmpty(bean.getObj().getAppointmentFee())) {
                             modelList.set(1, new ListLayoutModel(R.string.business_appointments_fee, "￥" + bean.getObj().getAppointmentFee(), R.color.colorAccent, 0));
                         }
                         if (null != bean.getObj() && bean.getObj().isAcceptConsultation()) {
-                            modelList.set(2, new ListLayoutModel(R.string.business_accept_image_text_consulting, "", 0, R.drawable.comein));
+                            modelList.set(2, new ListLayoutModel(R.string.business_accept_image_text_consulting, "", 0, R.drawable.receiveicon_sel));
                         }else {
-                            modelList.set(2, new ListLayoutModel(R.string.business_accept_image_text_consulting, "", 0, R.drawable.comein));
+                            modelList.set(2, new ListLayoutModel(R.string.business_accept_image_text_consulting, "", 0, R.drawable.receiveicon));
                         }
 
                         if (null != bean.getObj() && !TextUtils.isEmpty(bean.getObj().getConsultationFee())) {
@@ -138,7 +149,7 @@ public class BusinessSettingActivity extends BaseActivity {
                         Log.i(TAG, "为null: ");
                     }
                     mLayoutAdapter.notifyDataSetChanged();
-                    closeDialog();
+
                 }
 
                 @Override

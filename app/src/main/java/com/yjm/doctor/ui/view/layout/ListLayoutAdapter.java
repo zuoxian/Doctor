@@ -36,6 +36,15 @@ public class ListLayoutAdapter extends BaseAdapter {
         mList = list;
     }
 
+    public ListLayoutAdapter(Context context) {
+        mContext = context;
+
+    }
+
+    public void setData(List<ListLayoutModel> list){
+        mList = list;
+    }
+
     @Override
     public int getCount() {
         return mList.size();
