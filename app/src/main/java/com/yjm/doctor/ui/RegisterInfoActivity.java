@@ -17,7 +17,11 @@ import com.yjm.doctor.Config;
 import com.yjm.doctor.R;
 import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.application.YjmApplication;
+import com.yjm.doctor.model.DepartMent;
+import com.yjm.doctor.model.DepartMentBean;
 import com.yjm.doctor.model.EventType;
+import com.yjm.doctor.model.Hospital;
+import com.yjm.doctor.model.HospitalBean;
 import com.yjm.doctor.model.Level;
 import com.yjm.doctor.model.LevelBean;
 import com.yjm.doctor.model.User;
@@ -59,16 +63,19 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
     @BindView(R.id.name)
     EditText mName;
 
-    @BindView(R.id.hospital)
-    EditText mHospital;
+    @BindView(R.id.hospitalname)
+    TextView mHospitalName;
 
-    @BindView(R.id.department)
-    EditText mDepartment;
+    @BindView(R.id.departmentname)
+    TextView mDepartmentName;
 
     private User userBasicInfo ;
 
+    private UserAPI userAPIHospital;
 
+    private List<Hospital> hospitalList;
 
+    private List<DepartMent> departMentList;
 
 
     @Override
@@ -81,7 +88,80 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
         super.onCreate(savedInstanceState);
         levelAPI = RestAdapterUtils.getRestAPI(Config.USER_LEVELS_API,UserAPI.class,this,"");
         userAPI = RestAdapterUtils.getRestAPI(Config.USER_API,UserAPI.class,this,"");
+        userAPIHospital = RestAdapterUtils.getRestAPI(Config.DOCTORSERVICE,UserAPI.class,this);
         EventBus.getDefault().register(this);
+
+
+        getHospitals();
+        getDepartments();
+
+    }
+
+    private void getHospitals(){
+        userAPIHospital.hospitalList(new Callback<HospitalBean>() {
+            @Override
+            public void success(HospitalBean levelBean, Response response) {
+                closeDialog();
+
+                if(null != levelBean && true == levelBean.getSuccess()){
+                    if(null == levelBean.getObj()) {
+                        SystemTools.show_msg(RegisterInfoActivity.this, R.string.level_fail);
+                        return;
+                    }
+
+//                        Hospital hospital = new Hospital(1480562081846l,0,"0",1482214042373l,"无职位");
+
+                    hospitalList = levelBean.getObj();
+//                        levelList.add(hospital);
+                    if(null != hospitalList && 0 < hospitalList.size()) {
+                        Collections.sort(hospitalList);
+                        if(null != mHospitalName && !TextUtils.isEmpty(hospitalList.get(0).getHospitalName())){
+                            mHospitalName.setText(hospitalList.get(0).getHospitalName());
+                        }
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                closeDialog();
+            }
+        });
+    }
+
+    private void getDepartments(){
+        userAPIHospital.departmentList(new Callback<DepartMentBean>() {
+            @Override
+            public void success(DepartMentBean levelBean, Response response) {
+                closeDialog();
+                if(null != levelBean && true == levelBean.getSuccess()){
+                    if(null == levelBean.getObj()) {
+                        SystemTools.show_msg(RegisterInfoActivity.this, R.string.level_fail);
+                        return;
+                    }
+
+//                        Hospital hospital = new Hospital(1480562081846l,0,"0",1482214042373l,"无职位");
+
+                    departMentList = levelBean.getObj();
+//                        levelList.add(hospital);
+                    if(null != departMentList && 0 < departMentList.size()) {
+                        Collections.sort(departMentList);
+                        if(null != mDepartmentName && !TextUtils.isEmpty(departMentList.get(0).getName())){
+                            mDepartmentName.setText(departMentList.get(0).getName());
+                        }
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                closeDialog();
+            }
+        });
     }
 
     @Override
@@ -100,8 +180,59 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
 
             mPositionalName.setText(level.getName());
         }
+        if(Config.HOSPITAL_EVENTTYPE.equals(event.getType())){
+            if(null == mHospitalName){
+                return;
+            }
+            if(null == event.getObject())
+                return;
+            Hospital hospital =(Hospital) event.getObject();
+
+            mHospitalName.setText(hospital.getHospitalName());
+        }
+        if(Config.DEPARTMENT_EVENTTYPE.equals(event.getType())){
+            if(null == mDepartmentName){
+                return;
+            }
+            if(null == event.getObject())
+                return;
+            DepartMent departMent =(DepartMent) event.getObject();
+
+            mDepartmentName.setText(departMent.getName());
+        }
     }
 
+    @OnClick(R.id.department)
+    void getDepartment(){
+        if(NetworkUtils.isNetworkAvaliable(this)){
+            if(null != departMentList && 0 < departMentList.size()) {
+
+                ActivityJumper.getInstance().buttoListJumpTo(RegisterInfoActivity.this, DepartmentActivity.class, departMentList);
+            }else{
+                showDialog("正在加载~");
+                getDepartments();
+            }
+
+        }else{
+            SystemTools.show_msg(this, R.string.toast_msg_no_network);
+        }
+    }
+
+    @OnClick(R.id.hospital)
+    void getHospital(){
+        if(NetworkUtils.isNetworkAvaliable(this)){
+            if(null != hospitalList && 0 < hospitalList.size()) {
+
+                ActivityJumper.getInstance().buttoListJumpTo(RegisterInfoActivity.this, HospitalActivity.class, hospitalList);
+            }else{
+                showDialog("正在加载~");
+                getHospitals();
+            }
+
+        }else{
+            SystemTools.show_msg(this, R.string.toast_msg_no_network);
+        }
+    }
 
     @OnClick(R.id.positional)
     void getLevels(){
@@ -139,7 +270,7 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
 
     @OnClick(R.id.register)
     void register(){
-        if(null == mName || null == mHospital || null == mDepartment) {
+        if(null == mName || null == mHospitalName || null == mDepartmentName) {
             SystemTools.show_msg(this,R.string.register_fail);
             return;
         }
@@ -159,7 +290,7 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
 //            return;
 //        }
         userBasicInfo = (User) this.getIntent().getSerializableExtra("object");
-        userAPI.addDoctorInfo(userBasicInfo.getId(),mName.getText().toString(),mHospital.getText().toString(),mDepartment.getText().toString(),level.getId(),this);
+        userAPI.addDoctorInfo(userBasicInfo.getId(),mName.getText().toString(),mHospitalName.getText().toString(),mDepartmentName.getText().toString(),level.getId(),this);
         showDialog("正在注册中~");
     }
 //    finishLogin(user);
@@ -196,25 +327,27 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
         Config.mobile = user.getMobile();
         setResult(11);
 
-        EMClient.getInstance().login("2-"+user.getUsername(), userBasicInfo.getPwd(), new EMCallBack() {
-            @Override
-            public void onSuccess() {
+        if(!(EMClient.getInstance().isLoggedInBefore())) {
+            EMClient.getInstance().login("2-" + user.getUsername(), userBasicInfo.getPwd(), new EMCallBack() {
+                @Override
+                public void onSuccess() {
 
-                EMClient.getInstance().groupManager().loadAllGroups();
-                EMClient.getInstance().chatManager().loadAllConversations();
-                Log.i("EMClient","login is success");
-            }
+                    EMClient.getInstance().groupManager().loadAllGroups();
+                    EMClient.getInstance().chatManager().loadAllConversations();
+                    Log.i("EMClient", "login is success");
+                }
 
-            @Override
-            public void onError(int i, String s) {
-                Log.i("EMClient","login error i="+i+",s="+s);
-            }
+                @Override
+                public void onError(int i, String s) {
+                    Log.i("EMClient", "login error i=" + i + ",s=" + s);
+                }
 
-            @Override
-            public void onProgress(int i, String s) {
-                Log.i("EMClient","login onProgress i="+i+",s="+s);
-            }
-        });
+                @Override
+                public void onProgress(int i, String s) {
+                    Log.i("EMClient", "login onProgress i=" + i + ",s=" + s);
+                }
+            });
+        }
     }
 
     @Override

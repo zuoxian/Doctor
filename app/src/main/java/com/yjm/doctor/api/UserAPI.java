@@ -5,6 +5,8 @@ import com.yjm.doctor.model.AccountBean;
 import com.yjm.doctor.model.BusinessSettingBean;
 import com.yjm.doctor.model.Comment;
 import com.yjm.doctor.model.CommentBean;
+import com.yjm.doctor.model.DepartMentBean;
+import com.yjm.doctor.model.HospitalBean;
 import com.yjm.doctor.model.Level;
 import com.yjm.doctor.model.LevelBean;
 import com.yjm.doctor.model.Message;
@@ -100,5 +102,10 @@ public interface UserAPI {
     @POST("/myComments")
     void getComments(Callback<CommentBean> callback);
 
+    @POST("/hospitalList")
+    void hospitalList(Callback<HospitalBean> callback);
+
+    @POST("/departmentList")
+    void departmentList(Callback<DepartMentBean> callback);
 
 }

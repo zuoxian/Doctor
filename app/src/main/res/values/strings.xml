@@ -52,8 +52,8 @@
     <string name="register_verification_fail">验证码请求失败，请重试~</string>
 
     <string name="realname">您的真实姓名</string>
-    <string name="hospital">您所在的医院名称（全程）</string>
-    <string name="department">您所在的科室名称</string>
+    <string name="hospital">医院名称</string>
+    <string name="department">您的科室名称</string>
     <string name="positionaltitles">您的职称</string>
     <string name="register_info">第二部 填写医生信息</string>
     <string name="register_remind">提示：真实的医生信息能保证您的认证尽快通过</string>
@@ -165,6 +165,8 @@
     <string name="add_grid">添加停诊发布</string>
 
     <string name="my_patients">我的患者</string>
+    <string name="hospitals">您所在的医院</string>
+    <string name="departments">您所在的科室</string>
 
     <string name="cancle">取消</string>
     <string name="title">请选择时间</string>

@@ -28,6 +28,8 @@ public class Config {
 
     public static final String SERVICE_GRID = DOMAIN_URL +"/ethealth/api/doctorCloseTime";
 
+    public static final String DOCTORSERVICE = DOMAIN_URL +"/ethealth/api/doctorService";
+
 
 
     public static String DEFAULT_TOKENID = "1D96DACB84F21890ED9F4928FA8B352B";
@@ -41,6 +43,12 @@ public class Config {
     public static final int AUTH_STATUS_FAIL = 3;//认证失败
 
     public static String LEVEL_EVENTTYPE = "level";
+
+    public static String HOSPITAL_EVENTTYPE = "hospital";
+
+    public static String DEPARTMENT_EVENTTYPE = "department";
+
+
 
     public static int userId = 0;
 

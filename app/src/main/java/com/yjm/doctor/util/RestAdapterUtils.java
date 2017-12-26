@@ -75,6 +75,8 @@ public class RestAdapterUtils {
                         User user = userService.getActiveAccountInfo();
                         if(null != user && 0 < user.getId()) {
                             request.addQueryParam("tokenId", userService.getTokenId(user.getId()));
+                        }else{
+                            request.addQueryParam("tokenId", Config.DEFAULT_TOKENID);
                         }
 
                     }
@@ -109,6 +111,8 @@ public class RestAdapterUtils {
                         User user = userService.getActiveAccountInfo();
                         if(null != user && 0 < user.getId()) {
                             request.addQueryParam("tokenId", userService.getTokenId(user.getId()));
+                        }else{
+                            request.addQueryParam("tokenId", Config.DEFAULT_TOKENID);
                         }
 
                     }

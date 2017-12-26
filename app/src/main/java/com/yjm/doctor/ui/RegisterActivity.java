@@ -103,7 +103,7 @@ public class RegisterActivity extends BaseActivity implements Callback<UserBean>
                 User user = userBean.getObj();
                 if(null != mPassword)
                     user.setPwd(mPassword.getText().toString());
-
+                
                 ActivityJumper.getInstance().buttonObjectJumpTo(this, RegisterInfoActivity.class,user);
             } else {
                 if (TextUtils.isEmpty(userBean.getMsg())) {

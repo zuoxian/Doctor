@@ -38,40 +38,74 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:background="@color/login_background" />
-        <EditText
+
+        <LinearLayout
             android:id="@+id/hospital"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/hospital"
-            android:layout_marginLeft="20dp"
-            android:textColor="@color/blackcolor"
             android:layout_weight="1"
-            android:gravity="center_vertical"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:textColorHint="@color/login_font_color"
-            android:background="@null"
-            android:textCursorDrawable="@null"
-            />
+            >
+            <TextView
+                android:id="@+id/hospitaltitles"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/content"
+                android:textCursorDrawable="@null"
+                android:gravity="center_vertical"
+                android:text="@string/hospital"
+                android:background="@null"
+                />
+            <TextView
+                android:id="@+id/hospitalname"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/content"
+                android:gravity="center_vertical"
+                android:drawableRight="@drawable/into"
+                android:drawablePadding="6dp"
+                />
+        </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:background="@color/login_background" />
-        <EditText
+
+        <LinearLayout
             android:id="@+id/department"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/department"
-            android:layout_marginLeft="20dp"
-            android:textColor="@color/blackcolor"
             android:layout_weight="1"
-            android:gravity="center_vertical"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:textColorHint="@color/login_font_color"
-            android:background="@null"
-            android:textCursorDrawable="@null"
-            />
+            >
+            <TextView
+                android:id="@+id/departmenttitles"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/content"
+                android:textCursorDrawable="@null"
+                android:gravity="center_vertical"
+                android:text="@string/department"
+                android:background="@null"
+                />
+            <TextView
+                android:id="@+id/departmentname"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/content"
+                android:gravity="center_vertical"
+                android:drawableRight="@drawable/into"
+                android:drawablePadding="6dp"
+                />
+        </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
