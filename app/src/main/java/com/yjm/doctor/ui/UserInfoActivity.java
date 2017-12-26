@@ -83,7 +83,7 @@ public class UserInfoActivity extends BaseActivity implements ListLayoutAdapter.
             if (null != mUser && null != mUser.getCustomer() && mUser.getCustomer().getUserId() != 0) {
                 UpdateUI(mUser);
             }else {
-                mUserAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this);
+                mUserAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this,"");
                 if (NetworkUtils.isNetworkAvaliable(this)) {
                     mUserAPI.getUserInfoByTokenId(tokenID, this);
                 } else {

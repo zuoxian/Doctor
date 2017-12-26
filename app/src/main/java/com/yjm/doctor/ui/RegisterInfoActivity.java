@@ -79,8 +79,8 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        levelAPI = RestAdapterUtils.getRestAPI(Config.USER_LEVELS_API,UserAPI.class,this);
-        userAPI = RestAdapterUtils.getRestAPI(Config.USER_API,UserAPI.class,this);
+        levelAPI = RestAdapterUtils.getRestAPI(Config.USER_LEVELS_API,UserAPI.class,this,"");
+        userAPI = RestAdapterUtils.getRestAPI(Config.USER_API,UserAPI.class,this,"");
         EventBus.getDefault().register(this);
     }
 

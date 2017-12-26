@@ -137,7 +137,7 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
 
             Log.i("main", "mainactivity " + isGetUserInfo);
             if (isGetUserInfo) {
-                userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this);
+                userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this,"");
                 userAPI.getUserInfo(this);
             }
         }catch (Exception e){

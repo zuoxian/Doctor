@@ -41,7 +41,7 @@ public class ContactUsActivity extends BaseActivity implements Callback<DataType
     private MainAPI mainAPI;
     @Override
     public int initView() {
-        mainAPI = RestAdapterUtils.getRestAPI(Config.MAIN_BASEDATA, MainAPI.class,this);
+        mainAPI = RestAdapterUtils.getRestAPI(Config.MAIN_BASEDATA, MainAPI.class,this,"");
         return R.layout.activity_contact_us;
     }
 

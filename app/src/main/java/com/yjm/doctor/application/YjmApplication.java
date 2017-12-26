@@ -3,6 +3,7 @@ package com.yjm.doctor.application;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.pm.PackageManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -10,6 +11,8 @@ import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
 import com.yjm.doctor.application.base.ActivityLifecycle;
+import com.yjm.doctor.model.User;
+import com.yjm.doctor.util.auth.UserService;
 
 import java.util.Iterator;
 import java.util.List;
@@ -27,7 +30,9 @@ public class YjmApplication extends Application {
 
     public static boolean toolFinish = false;
 
-    public static boolean tooAdd =false;
+    public static boolean tooAdd =false;//保存
+
+    public static boolean add = false; //添加
 
     public static boolean update = false;
 
@@ -50,7 +55,8 @@ public class YjmApplication extends Application {
     private void initEMClient(){
 
         EMOptions options = new EMOptions();
-        options.setAutoLogin(false);
+        options.setAutoLogin(true);
+        options.setRequireAck(true);
         int pid = android.os.Process.myPid();
         String processAppName = getAppName(pid);
         // 如果APP启用了远程的service，此application:onCreate会被调用2次
@@ -70,25 +76,32 @@ public class YjmApplication extends Application {
         //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
         EMClient.getInstance().setDebugMode(true);
 
-        EMClient.getInstance().login("2-18964025491", "7C97A82686944C8E8D15328F3DA27511", new EMCallBack() {
-            @Override
-            public void onSuccess() {
+        UserService userService = UserService.getInstance(getApplicationContext());
+        if(null != userService){
+            User user = userService.getActiveAccountInfo();
+            if(!(EMClient.getInstance().isLoggedInBefore()) && null != user && !TextUtils.isEmpty(user.getMobile()) && !TextUtils.isEmpty(user.getHxPassword())){
+                EMClient.getInstance().login("2-"+user.getMobile(), user.getHxPassword(), new EMCallBack() {
+                    @Override
+                    public void onSuccess() {
 
-                EMClient.getInstance().groupManager().loadAllGroups();
-                EMClient.getInstance().chatManager().loadAllConversations();
-                Log.i("EMClient","login is success");
-            }
+                        EMClient.getInstance().groupManager().loadAllGroups();
+                        EMClient.getInstance().chatManager().loadAllConversations();
+                        Log.i("EMClient","login is success");
+                    }
 
-            @Override
-            public void onError(int i, String s) {
-                Log.i("EMClient","login error i="+i+",s="+s);
-            }
+                    @Override
+                    public void onError(int i, String s) {
+                        Log.i("EMClient","login error i="+i+",s="+s);
+                    }
 
-            @Override
-            public void onProgress(int i, String s) {
-                Log.i("EMClient","login onProgress i="+i+",s="+s);
+                    @Override
+                    public void onProgress(int i, String s) {
+                        Log.i("EMClient","login onProgress i="+i+",s="+s);
+                    }
+                });
             }
-        });
+        }
+
     }
 
 

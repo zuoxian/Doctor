@@ -62,7 +62,7 @@ public class AddGridActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void finishButton() {
         if(!TextUtils.isEmpty(date)){
-            serviceAPI = RestAdapterUtils.getRestAPI(Config.SERVICE_GRID,ServiceAPI.class);
+            serviceAPI = RestAdapterUtils.getRestAPI(Config.SERVICE_GRID,ServiceAPI.class,this);
             serviceAPI.addGrid(time,date,this);
         }else {
             SystemTools.show_msg(this, "日期不能为空~");
@@ -146,7 +146,7 @@ public class AddGridActivity extends BaseActivity implements View.OnClickListene
     public void failure(RetrofitError error) {
         SystemTools.show_msg(AddGridActivity.this, "添加失败，请重试~2");
         if(null != error && error.getMessage().contains("path $.obj")){
-            UserAPI userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class);
+            UserAPI userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class,this);
             final UserService userService = UserService.getInstance(this);
             final User user = userService.getActiveAccountInfo();
             userAPI.login(user.getMobile(),userService.getPwd(user.getId()),2,new Callback<UserBean>(){

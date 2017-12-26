@@ -61,7 +61,7 @@ public class UpateAccountActivity extends BaseActivity implements Callback<Messa
     public int initView() {
         YjmApplication.update = false;
         YjmApplication.tooAdd = true;
-        userAPI = RestAdapterUtils.getRestAPI(Config.USER_BUSINESSSETTING,UserAPI.class);
+        userAPI = RestAdapterUtils.getRestAPI(Config.USER_BUSINESSSETTING,UserAPI.class,this);
         return R.layout.activity_update_account;
     }
 

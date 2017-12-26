@@ -99,7 +99,7 @@ public class MainConsultationFragment extends BaseLoadFragment<ConsultationBean>
 
     @Override
     protected int getLayoutRes() {
-        mainAPI = RestAdapterUtils.getRestAPI(Config.HOME_CONSULATION, MainAPI.class, getActivity());
+        mainAPI = RestAdapterUtils.getRestAPI(Config.HOME_CONSULATION, MainAPI.class, getActivity(),"");
         return R.layout.fragment_main_appointment_content;
     }
 

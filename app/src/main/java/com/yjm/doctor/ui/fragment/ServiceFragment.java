@@ -111,7 +111,7 @@ public class ServiceFragment extends BaseFragment<UserBean> {
             if (null != mUser && null != mUser.getCustomer() && mUser.getCustomer().getUserId() != 0) {
                 updateUI(mUser);
             }else {
-                mUserAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, getContext());
+                mUserAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, getContext(),"");
                 if (NetworkUtils.isNetworkAvaliable(getContext())) {
                     mUserAPI.getUserInfoByTokenId(tokenID, this);
                 } else {

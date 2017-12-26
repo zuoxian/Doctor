@@ -68,7 +68,7 @@ public class AccountinfoActivity extends BaseActivity implements Callback<Accoun
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        userAPI = RestAdapterUtils.getRestAPI(Config.USER_BUSINESSSETTING,UserAPI.class);
+        userAPI = RestAdapterUtils.getRestAPI(Config.USER_BUSINESSSETTING,UserAPI.class,this);
 
         mListviewTop=(ListView)findViewById(R.id.listview_top);
         mListviewBottom=(ListView)findViewById(R.id.listview_bottom);

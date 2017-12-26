@@ -30,7 +30,7 @@ public class RestAdapterUtils {
      * @param <T>
      * @return
      */
-    public static <T> T getRestAPI(String endpoint, final Class<T> service, final Context ctx) {
+    public static <T> T getRestAPI(String endpoint, final Class<T> service, final Context ctx, String type) {
 
         RestAdapter.LogLevel level;
 
@@ -71,7 +71,7 @@ public class RestAdapterUtils {
                                     "public, only-if-cached, max-stale=" + maxStale);
                         }
                         request.addHeader("Transfer-Encoding","chunked");
-                        UserService userService = UserService.getInstance();
+                        UserService userService = UserService.getInstance(ctx);
                         User user = userService.getActiveAccountInfo();
                         if(null != user && 0 < user.getId()) {
                             request.addQueryParam("tokenId", userService.getTokenId(user.getId()));
@@ -83,7 +83,7 @@ public class RestAdapterUtils {
         return restAdapter.create(service);
     }
 
-    public static <T> T getRestAPI(String endpoint, final Class<T> service) {
+    public static <T> T getRestAPI(String endpoint, final Class<T> service,final Context ctx) {
 
         RestAdapter.LogLevel level;
 
@@ -105,7 +105,7 @@ public class RestAdapterUtils {
                     public void intercept(RequestFacade request) {
                         Log.i("main","request  ======"+request.toString());
                         request.addHeader("Transfer-Encoding","chunked");
-                        UserService userService = UserService.getInstance();
+                        UserService userService = UserService.getInstance(ctx);
                         User user = userService.getActiveAccountInfo();
                         if(null != user && 0 < user.getId()) {
                             request.addQueryParam("tokenId", userService.getTokenId(user.getId()));

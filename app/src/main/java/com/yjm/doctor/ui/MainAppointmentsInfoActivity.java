@@ -136,7 +136,7 @@ public class MainAppointmentsInfoActivity extends BaseActivity implements Callba
         mType = this.getIntent().getIntExtra("object2",0);
 
         Log.i("app","app info :"+item.toString());
-        mainAPI = RestAdapterUtils.getRestAPI(Config.HOME_APPOINTMENT_INFO, MainAPI.class);
+        mainAPI = RestAdapterUtils.getRestAPI(Config.HOME_APPOINTMENT_INFO, MainAPI.class,this);
 
         return R.layout.activity_appointment_info;
     }
@@ -279,7 +279,7 @@ public class MainAppointmentsInfoActivity extends BaseActivity implements Callba
         SystemTools.show_msg(this,"请求失败,请重试");
 
         if(null != error && error.getMessage().contains("path $.obj")){
-            userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this);
+            userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this,"");
             final UserService userService = UserService.getInstance(this);
             final User user = userService.getActiveAccountInfo();
             userAPI.login(user.getMobile(),userService.getPwd(user.getId()),2,new Callback<UserBean>(){

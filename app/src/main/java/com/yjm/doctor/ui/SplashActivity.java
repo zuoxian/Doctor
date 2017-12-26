@@ -37,7 +37,7 @@ public class SplashActivity extends BaseActivity{
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            Log.e("userlogin","判断是否登录  "+ Config.userId+",tokenid="+UserService.getInstance(SplashActivity.this).getTokenId(mUser.getId())+"");
+//            Log.e("userlogin","判断是否登录  "+ Config.userId+",tokenid="+UserService.getInstance(SplashActivity.this).getTokenId(mUser.getId())+"");
 
             if((null != mUser && 0 != mUser.getId())){
                 Log.e("userlogin","已经登录过了"+mUser.toString());

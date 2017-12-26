@@ -79,13 +79,13 @@ public class MainFragment extends BaseFragment<BannerBean> implements IActivity{
 
     @Override
     protected void onLoadData() {
-        if(null != mIscheck){
-            User user = UserService.getInstance().getActiveAccountInfo();
+        if(null != mIscheck && null != getActivity()){
+            User user = UserService.getInstance(getActivity()).getActiveAccountInfo();
             if(null != user && 2 == user.getStatus())
                 mIscheck.setVisibility(View.VISIBLE);
         }
         if(null != getActivity())
-            mainAPI = RestAdapterUtils.getRestAPI(Config.HOME_BANNERS,MainAPI.class,getActivity());
+            mainAPI = RestAdapterUtils.getRestAPI(Config.HOME_BANNERS,MainAPI.class,getActivity(),"");
 
         if(null != mainAPI && null != getActivity()){
             if(NetworkUtils.isNetworkAvaliable(getActivity())){

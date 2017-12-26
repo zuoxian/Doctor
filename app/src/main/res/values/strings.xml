@@ -63,6 +63,7 @@
 
     <string name="finish">完成</string>
     <string name="update">修改</string>
+    <string name="add">添加</string>
 
     <string name="examine">审核认证中</string>
     <string name="examine_title">信息提交成功</string>

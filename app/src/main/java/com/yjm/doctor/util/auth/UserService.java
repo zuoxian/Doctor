@@ -77,8 +77,6 @@ public class UserService {
     private AccountManager mAccountManager;
     private Context mContext;
 
-    public UserService() {
-    }
 
     public UserService(Context c) {
         mContext = c;
@@ -100,11 +98,7 @@ public class UserService {
         return mInstance;
     }
 
-    public static synchronized UserService getInstance() {
-        if (mInstance == null)
-            mInstance = new UserService();
-        return mInstance;
-    }
+
 
     private boolean hasDefaultAccount() {
         return getDefaultAccount() != null;
@@ -174,7 +168,7 @@ public class UserService {
     public Account setActiveAccount(String username, String password) {
         Account account = findAccountByUsername(username);
         if (account == null) {
-            account = new Account(username, mContext.getString(R.string.ACCOUNT_TYPE));
+            account = new Account(username, "com.yjm.doctor.AccountType");
             mAccountManager.addAccountExplicitly(account, password, null);
         }
         this.activeAccount = account;
@@ -262,9 +256,9 @@ public class UserService {
     }
 
     private Account findAccountByUsername(String username) {
-        Log.d("tab", "findAccountByUsername, username: " + username);
-        if (username.length() > 0) {
-            for (Account account : mAccountManager.getAccountsByType(mContext.getString(R.string.ACCOUNT_TYPE))) {
+        Log.d("tab", "findAccountByUsername, username: " + username+",");
+        if (null != mAccountManager && username.length() > 0 && null != mAccountManager.getAccountsByType("com.yjm.doctor.AccountType")) {
+            for (Account account : mAccountManager.getAccountsByType("com.yjm.doctor.AccountType")) {
                 Log.d("tab", "findAccountByUsername, a.name: " + account.name);
                 if (account.name.equals(username)) {
                     return account;

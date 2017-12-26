@@ -46,7 +46,7 @@ public class RegisterActivity extends BaseActivity implements Callback<UserBean>
 
     @Override
     public int initView() {
-        userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class);
+        userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class,this);
         return R.layout.activity_register;
     }
 

@@ -69,7 +69,7 @@ public class BalanceListFragment extends BaseLoadFragment<BalanceListBean> {
 
     @Override
     protected int getLayoutRes() {
-        mUserAPI = RestAdapterUtils.getRestAPI(Config.USER_BALANCE, UserAPI.class, getContext());
+        mUserAPI = RestAdapterUtils.getRestAPI(Config.USER_BALANCE, UserAPI.class, getContext(),"");
         return R.layout.layout_load;
     }
 

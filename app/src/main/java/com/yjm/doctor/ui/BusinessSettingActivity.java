@@ -92,7 +92,7 @@ public class BusinessSettingActivity extends BaseActivity {
 
         showDialog("加载中");
 
-        mUserAPI= RestAdapterUtils.getRestAPI(Config.USER_BUSINESSSETTING,UserAPI.class,this);
+        mUserAPI= RestAdapterUtils.getRestAPI(Config.USER_BUSINESSSETTING,UserAPI.class,this,"");
         tokenID=UserService.getInstance(this).getTokenId(mUser.getId());
         getSettingInfo();
 

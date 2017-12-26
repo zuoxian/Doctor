@@ -62,7 +62,7 @@ public class GridActivity extends BaseActivity implements GridAdapter.OnListItem
 
     @Override
     public int initView() {
-        YjmApplication.tooAdd = true;
+        YjmApplication.add = true;
         return R.layout.activity_user_info; }
 
     @OnClick(R.id.img_operation)
@@ -78,7 +78,7 @@ public class GridActivity extends BaseActivity implements GridAdapter.OnListItem
         mListviewLayout.setAdapter(mLayoutAdapter);
 
         mLayoutAdapter.setOnListItemOnClickListener(this);
-        serviceAPI = RestAdapterUtils.getRestAPI(Config.SERVICE_GRID, ServiceAPI.class);
+        serviceAPI = RestAdapterUtils.getRestAPI(Config.SERVICE_GRID, ServiceAPI.class,this);
 
 
 
@@ -155,7 +155,7 @@ public class GridActivity extends BaseActivity implements GridAdapter.OnListItem
         closeDialog();
         Log.i("gird","=1===");
         if(null != error && error.getMessage().contains("path $.obj")){
-            userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class);
+            userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class,this);
             final UserService userService = UserService.getInstance(this);
             final User user = userService.getActiveAccountInfo();
             userAPI.login(user.getMobile(),userService.getPwd(user.getId()),2,new Callback<UserBean>(){

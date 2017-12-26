@@ -60,6 +60,7 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
     private int mType ;//是未回复  还是已回复
 
 
+    private boolean isSearch = false;
     MainAPI mainAPI ;
 
     public MainAppointmentFragment() {
@@ -109,7 +110,7 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
         if("appointment_reply".equals(bundle.getString("appointment_reply"))){
             mType = 1;
         }
-        mainAPI = RestAdapterUtils.getRestAPI(Config.HOME_APPOINTMENT, MainAPI.class, getActivity());
+        mainAPI = RestAdapterUtils.getRestAPI(Config.HOME_APPOINTMENT, MainAPI.class, getActivity(),"");
         return R.layout.fragment_main_appointment_content;
     }
 
@@ -121,7 +122,17 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
             if(mProgressbar!=null)mProgressbar.setVisibility(View.VISIBLE);
         }
         Log.i("main",UserService.getInstance(getActivity()).getTokenId(Config.userId));
+        if(isSearch){
+            if(null != search && !TextUtils.isEmpty(search.getText())) {
+                mPage = 1;
+                isSearch = true;
+                mainAPI.appointments(UserService.getInstance(getActivity()).getTokenId(Config.userId), mType, search.getText().toString(), mPage, 10, MainAppointmentFragment.this);
+
+            }
+        }else{
+        isSearch = false;
         mainAPI.appointments(UserService.getInstance(getActivity()).getTokenId(Config.userId),mType,"",mPage,10, this);
+        }
         isLoading = true;
     }
 
@@ -177,10 +188,11 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
 
     @Override
     public void failure(RetrofitError error) {
+
         Log.i("main","失败"+error.getUrl()+","+error.getMessage());
         if(null != error && error.getMessage().contains("path $.obj")){
             if(null != getActivity()) {
-                UserAPI userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, getActivity());
+                UserAPI userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, getActivity(),"");
                 final UserService userService = UserService.getInstance(getActivity());
                 final User user = userService.getActiveAccountInfo();
                 userAPI.login(user.getMobile(),userService.getPwd(user.getId()),2,new Callback<UserBean>(){
@@ -189,7 +201,17 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
                     public void success(UserBean userBean, Response response) {
                         if(null != userBean && null != userBean.getObj() && !TextUtils.isEmpty(userBean.getObj().getTokenId())){
                             userService.setTokenId(user.getId(),userBean.getObj().getTokenId());
-                            mainAPI.appointments(UserService.getInstance(getActivity()).getTokenId(Config.userId),mType,"",mPage,10, MainAppointmentFragment.this);
+                            if(isSearch){
+                                if(null != search && !TextUtils.isEmpty(search.getText())) {
+                                    mPage = 1;
+                                    isSearch = true;
+                                    mainAPI.appointments(UserService.getInstance(getActivity()).getTokenId(Config.userId), mType, search.getText().toString(), mPage, 10, MainAppointmentFragment.this);
+
+                                }
+                            }else {
+                                isSearch = false;
+                                mainAPI.appointments(UserService.getInstance(getActivity()).getTokenId(Config.userId), mType, "", mPage, 10, MainAppointmentFragment.this);
+                            }
                         }
                     }
 
@@ -204,6 +226,7 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
         showConnectionRetry();
         if (mProgressbar != null) mProgressbar.setVisibility(View.GONE);
         isLoading = false;
+
     }
 
     @Override
@@ -240,8 +263,12 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
     class SearchTask implements Runnable{
         @Override
         public void run() {
-            if(null != search && !TextUtils.isEmpty(search.getText()))
-                mainAPI.appointments(UserService.getInstance(getActivity()).getTokenId(Config.userId),mType,search.getText().toString(),mPage,10, MainAppointmentFragment.this);
+            if(null != search && !TextUtils.isEmpty(search.getText())) {
+                mPage = 1;
+                isSearch = true;
+                mainAPI.appointments(UserService.getInstance(getActivity()).getTokenId(Config.userId), mType, search.getText().toString(), mPage, 10, MainAppointmentFragment.this);
+
+            }
         }
     }
 }

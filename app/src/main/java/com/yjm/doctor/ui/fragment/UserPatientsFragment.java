@@ -65,6 +65,8 @@ public class UserPatientsFragment extends BaseLoadFragment<PatientBean> implemen
 
     UserAPI userAPI ;
 
+    private boolean isSearch = false;
+
     public UserPatientsFragment() {
 
     }
@@ -105,7 +107,7 @@ public class UserPatientsFragment extends BaseLoadFragment<PatientBean> implemen
 
     @Override
     protected int getLayoutRes() {
-        userAPI = RestAdapterUtils.getRestAPI(Config.USER_BUSINESSSETTING, UserAPI.class, getActivity());
+        userAPI = RestAdapterUtils.getRestAPI(Config.USER_BUSINESSSETTING, UserAPI.class, getActivity(),"");
         return R.layout.fragment_main_appointment_content;
     }
 
@@ -117,8 +119,17 @@ public class UserPatientsFragment extends BaseLoadFragment<PatientBean> implemen
             if(mProgressbar!=null)mProgressbar.setVisibility(View.VISIBLE);
         }
         Log.i("main",UserService.getInstance(getActivity()).getTokenId(Config.userId));
+        if(isSearch){
+            if(null != search && !TextUtils.isEmpty(search.getText())) {
+                mPage = 1;
+                isSearch = true;
+                userAPI.getPatients(search.getText().toString(), mPage, 10, UserPatientsFragment.this);
 
-        userAPI.getPatients("",mPage,10,this);
+            }
+        }else {
+            isSearch = false;
+            userAPI.getPatients("", mPage, 10, this);
+        }
         isLoading = true;
     }
 
@@ -175,7 +186,7 @@ public class UserPatientsFragment extends BaseLoadFragment<PatientBean> implemen
     public void failure(RetrofitError error) {
         if(null != error && error.getMessage().contains("path $.obj")){
             if(null != getActivity()) {
-                UserAPI userAPI1 = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, getActivity());
+                UserAPI userAPI1 = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, getActivity(),"");
                 final UserService userService = UserService.getInstance(getActivity());
                 final User user = userService.getActiveAccountInfo();
                 userAPI1.login(user.getMobile(),userService.getPwd(user.getId()),2,new Callback<UserBean>(){
@@ -184,7 +195,16 @@ public class UserPatientsFragment extends BaseLoadFragment<PatientBean> implemen
                     public void success(UserBean userBean, Response response) {
                         if(null != userBean && null != userBean.getObj() && !TextUtils.isEmpty(userBean.getObj().getTokenId())){
                             userService.setTokenId(user.getId(),userBean.getObj().getTokenId());
-                            userAPI.getPatients("",mPage,10,UserPatientsFragment.this);
+                            if(isSearch){
+                                if(null != search && !TextUtils.isEmpty(search.getText())) {
+                                    mPage = 1;
+                                    isSearch = true;
+                                    userAPI.getPatients(search.getText().toString(), mPage, 10, UserPatientsFragment.this);
+                                }
+                            }else {
+                                isSearch = false;
+                                userAPI.getPatients("", mPage, 10, UserPatientsFragment.this);
+                            }
 
                         }
                     }
@@ -240,8 +260,11 @@ public class UserPatientsFragment extends BaseLoadFragment<PatientBean> implemen
     class SearchTask implements Runnable{
         @Override
         public void run() {
-            if(null != search && !TextUtils.isEmpty(search.getText()))
-                userAPI.getPatients(search.getText().toString(),mPage,10,UserPatientsFragment.this);
+            if(null != search && !TextUtils.isEmpty(search.getText())) {
+                mPage = 1;
+                isSearch = true;
+                userAPI.getPatients(search.getText().toString(), mPage, 10, UserPatientsFragment.this);
+            }
         }
     }
 }

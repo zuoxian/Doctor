@@ -64,7 +64,7 @@ public class UserPatientInfoActivity extends BaseActivity implements Callback<Us
     @Override
     public int initView() {
         user = (User)getIntent().getSerializableExtra("object");
-        userAPI = RestAdapterUtils.getRestAPI(Config.USER_BUSINESSSETTING,UserAPI.class);
+        userAPI = RestAdapterUtils.getRestAPI(Config.USER_BUSINESSSETTING,UserAPI.class,this);
         return R.layout.activity_user_patient_info;
     }
 

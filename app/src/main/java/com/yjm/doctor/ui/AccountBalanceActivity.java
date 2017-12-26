@@ -28,7 +28,7 @@ public class AccountBalanceActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-        User u = UserService.getInstance().getActiveAccountInfo();
+        User u = UserService.getInstance(this).getActiveAccountInfo();
         if(null != u && null != mTvBalance) {
             mTvBalance.setText(u.getAmount()+"");
         }

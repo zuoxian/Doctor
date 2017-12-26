@@ -104,7 +104,7 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Callb
 
         }
 
-        userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this);
+        userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this,"");
 
         if(NetworkUtils.isNetworkAvaliable(this)){
             userAPI.login(mUserName.getText().toString(),mPassword.getText().toString(),Config.DOCTOR,this);
@@ -162,34 +162,36 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Callb
 
         UserService.getInstance(this).signIn(mUserName.getText().toString(), mPassword.getText().toString(), user);
         UserService.getInstance(this).setPwd(user.getId(), mPassword.getText().toString());
-        if(!TextUtils.isEmpty(user.getTokenId())) {
-            if(!TextUtils.isEmpty(user.getTokenId()))
-                UserService.getInstance(this).setTokenId(user.getId(),user.getTokenId());
+        if (!TextUtils.isEmpty(user.getTokenId())) {
+            if (!TextUtils.isEmpty(user.getTokenId()))
+                UserService.getInstance(this).setTokenId(user.getId(), user.getTokenId());
 
         }
         Config.userId = user.getId();
         Config.mobile = user.getMobile();
         setResult(11);
 
-        EMClient.getInstance().login("2-"+mUserName.getText().toString(), user.getHxPassword(), new EMCallBack() {
-            @Override
-            public void onSuccess() {
+        if (!(EMClient.getInstance().isLoggedInBefore())){
+            EMClient.getInstance().login("2-" + mUserName.getText().toString(), user.getHxPassword(), new EMCallBack() {
+                @Override
+                public void onSuccess() {
 
-                EMClient.getInstance().groupManager().loadAllGroups();
-                EMClient.getInstance().chatManager().loadAllConversations();
-                Log.i("EMClient","login is success");
-            }
+                    EMClient.getInstance().groupManager().loadAllGroups();
+                    EMClient.getInstance().chatManager().loadAllConversations();
+                    Log.i("EMClient", "login is success");
+                }
 
-            @Override
-            public void onError(int i, String s) {
-                Log.i("EMClient","login error i="+i+",s="+s);
-            }
+                @Override
+                public void onError(int i, String s) {
+                    Log.i("EMClient", "login error i=" + i + ",s=" + s);
+                }
 
-            @Override
-            public void onProgress(int i, String s) {
-                Log.i("EMClient","login onProgress i="+i+",s="+s);
-            }
-        });
+                @Override
+                public void onProgress(int i, String s) {
+                    Log.i("EMClient", "login onProgress i=" + i + ",s=" + s);
+                }
+            });
+    }
     }
 
     private void jumpMainActivity(){

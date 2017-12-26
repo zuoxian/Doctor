@@ -45,7 +45,7 @@ public class ForgetPwdActivity extends BaseActivity implements Callback<UserBean
     @Override
     public int initView() {
         YjmApplication.toolFinish = false;
-        userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class);
+        userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class,this);
         return R.layout.activity_forget;
     }
 

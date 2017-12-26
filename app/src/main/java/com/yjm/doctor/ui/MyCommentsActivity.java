@@ -54,7 +54,7 @@ public class MyCommentsActivity extends BaseLoadActivity<CommentBean> implements
 
     @Override
     public int initView() {
-        userAPI = RestAdapterUtils.getRestAPI(Config.USER_BUSINESSSETTING,UserAPI.class);
+        userAPI = RestAdapterUtils.getRestAPI(Config.USER_BUSINESSSETTING,UserAPI.class,this);
 
         return R.layout.activity_my_comment;
     }
@@ -157,7 +157,7 @@ public class MyCommentsActivity extends BaseLoadActivity<CommentBean> implements
     public void failure(RetrofitError error) {
         if(null != error && error.getMessage().contains("path $.obj")){
 
-                final UserAPI userAPI1 = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this);
+                final UserAPI userAPI1 = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this,"");
                 final UserService userService = UserService.getInstance(this);
                 final User user = userService.getActiveAccountInfo();
                 userAPI1.login(user.getMobile(),userService.getPwd(user.getId()),2,new Callback<UserBean>(){

@@ -36,6 +36,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
     TextView toolFinishButton = null;
     TextView toolAdd = null;
     TextView update = null;
+    TextView add = null ;
 
 //    public ActivityLifecycle(String title) {
 //        this.mTitle = title;
@@ -49,6 +50,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             YjmApplication.tooAdd = false;
             YjmApplication.update = false;
             YjmApplication.toolFinish = false;
+            YjmApplication.add = false;
             activity.setContentView(((IActivity) activity).initView());
         }
 
@@ -58,6 +60,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         toolFinishButton = (TextView) activity.findViewById(R.id.toolfinish);
         toolAdd = (TextView) activity.findViewById(R.id.tool_add);
         update = (TextView) activity.findViewById(R.id.toolupdate);
+        add = (TextView)activity.findViewById(R.id.add);
 
         if (null != toolAdd) {
             toolAdd.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +72,15 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             });
         }
 
+        if (null != add) {
+            add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    ((IAdd) activity).add();
+                }
+            });
+        }
         if (null != toolFinishButton) {
             toolFinishButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -151,6 +163,11 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             if (null != update) update.setVisibility(View.VISIBLE);
         } else {
             if (null != update) update.setVisibility(View.GONE);
+        }
+        if (YjmApplication.add) {
+            if (null != add) add.setVisibility(View.VISIBLE);
+        } else {
+            if (null != add) add.setVisibility(View.GONE);
         }
 
         if (null != toolFinishButton) {
