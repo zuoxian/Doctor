@@ -48,6 +48,8 @@ public class Config {
 
     public static String DEPARTMENT_EVENTTYPE = "department";
 
+    public static String BC_EVENTTYPE = "bc";
+
 
 
     public static int userId = 0;

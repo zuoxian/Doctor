@@ -86,6 +86,8 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        level = new Level(1480562081846l,0,"0",1482214042373l,"无职位");
+
         levelAPI = RestAdapterUtils.getRestAPI(Config.USER_LEVELS_API,UserAPI.class,this,"");
         userAPI = RestAdapterUtils.getRestAPI(Config.USER_API,UserAPI.class,this,"");
         userAPIHospital = RestAdapterUtils.getRestAPI(Config.DOCTORSERVICE,UserAPI.class,this);
@@ -248,7 +250,7 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
                             return;
                         }
 
-                        level = new Level(1480562081846l,0,"0",1482214042373l,"无职位");
+
 
                         List<Level> levelList = levelBean.getObj();
                         levelList.add(level);
@@ -317,7 +319,7 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
 
     private void finishLogin(User user) {
         UserService.getInstance(this).signIn(user.getUsername(), userBasicInfo.getPwd(), user);
-        UserService.getInstance(this).setPwd(userBasicInfo.getId(), userBasicInfo.getPassword().toString());
+        UserService.getInstance(this).setPwd(userBasicInfo.getId(), userBasicInfo.getPwd());
         if(!TextUtils.isEmpty(user.getTokenId())) {
             if(!TextUtils.isEmpty(user.getTokenId()))
                 UserService.getInstance(this).setTokenId(user.getId(),user.getTokenId());

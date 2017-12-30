@@ -33,7 +33,7 @@
     <string name="login_fail_info">登录失败，请重试~</string>
     <string name="register_fail_info">确认异常，请重试~</string>
     <string name="register2_fail_info">注册失败，请重试~</string>
-    <string name="level_fail">级别提取失败</string>
+    <string name="level_fail">提取失败</string>
 
     <string name="register_fail">注册异常，请重试</string>
 
@@ -86,6 +86,7 @@
 
     <string name="update_account">修改账户</string>
     <string name="mycomment">我的评价</string>
+    <string name="mybank">我的银行账户</string>
 
     <string name="string_loading">Loading&#8230;</string>
     <string name="string_retry">点击重新加载</string>

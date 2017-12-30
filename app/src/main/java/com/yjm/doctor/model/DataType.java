@@ -1,5 +1,7 @@
 package com.yjm.doctor.model;
 
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 
 /**
@@ -81,4 +83,5 @@ public class DataType implements Serializable{
     public void setSeq(String seq) {
         this.seq = seq;
     }
+
 }

@@ -12,6 +12,7 @@ import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.model.BusinessSettingBean;
 import com.yjm.doctor.model.Message;
 import com.yjm.doctor.model.User;
+import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.ui.base.BaseActivity;
 import com.yjm.doctor.ui.view.layout.ListLayoutAdapter;
 import com.yjm.doctor.ui.view.layout.ListLayoutModel;
@@ -101,11 +102,15 @@ public class BusinessSettingActivity extends BaseActivity {
             public void OnItemClick(int position, ListLayoutModel model) {
                 switch (position) {
                     case 0: {
-                        updateInfo(!mSettingBean.getObj().isAcceptAppointment(),mSettingBean.getObj().isAcceptConsultation());
+                        if(null != mSettingBean && null != mSettingBean.getObj()) {
+                            updateInfo(!mSettingBean.getObj().isAcceptAppointment(), mSettingBean.getObj().isAcceptConsultation());
+                        }
                         break;
                     }
                     case 2: {
-                        updateInfo(mSettingBean.getObj().isAcceptAppointment(),!mSettingBean.getObj().isAcceptConsultation());
+                        if(null != mSettingBean && null != mSettingBean.getObj()) {
+                            updateInfo(mSettingBean.getObj().isAcceptAppointment(), !mSettingBean.getObj().isAcceptConsultation());
+                        }
                         break;
                     }
                 }
@@ -156,6 +161,27 @@ public class BusinessSettingActivity extends BaseActivity {
                 public void failure(RetrofitError error) {
                     closeDialog();
                     Log.i(TAG, "获取失败: "+error.getUrl()+"\n"+error.getMessage()+"\n"+error.getResponse());
+                    if(null != error && error.getMessage().contains("path $.obj")){
+                        final UserAPI userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, BusinessSettingActivity.this);
+                        final UserService userService = UserService.getInstance(BusinessSettingActivity.this);
+                        final User user = userService.getActiveAccountInfo();
+                        userAPI.login(user.getMobile(),userService.getPwd(user.getId()),2,new Callback<UserBean>(){
+
+                            @Override
+                            public void success(UserBean userBean, Response response) {
+                                if(null != userBean && null != userBean.getObj() && !TextUtils.isEmpty(userBean.getObj().getTokenId())){
+                                    userService.setTokenId(user.getId(),userBean.getObj().getTokenId());
+                                    getSettingInfo();
+                                }
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+
+                            }
+                        });
+
+                    }
                 }
 
             });

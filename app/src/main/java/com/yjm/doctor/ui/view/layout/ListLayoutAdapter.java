@@ -9,11 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yjm.doctor.R;
+import com.yjm.doctor.model.DataType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -142,5 +144,6 @@ public class ListLayoutAdapter extends BaseAdapter {
     public void setOnListItemOnClickListener(OnListItemOnClickListener mlistener){
         this.mClickListener=mlistener;
     }
+
 
 }

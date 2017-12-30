@@ -214,6 +214,11 @@
             android:label="@string/mycomment"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".ui.BCActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/mybank"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
             android:screenOrientation="portrait"

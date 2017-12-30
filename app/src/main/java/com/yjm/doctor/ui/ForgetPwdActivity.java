@@ -15,6 +15,7 @@ import com.yjm.doctor.util.NetworkUtils;
 import com.yjm.doctor.util.ObjectCheck;
 import com.yjm.doctor.util.RestAdapterUtils;
 import com.yjm.doctor.util.SystemTools;
+import com.yjm.doctor.util.auth.UserService;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -132,6 +133,8 @@ public class ForgetPwdActivity extends BaseActivity implements Callback<UserBean
         if(null != userBean && true == userBean.getSuccess()){
             SystemTools.show_msg(this, userBean.getMsg());
             if(2 == vRequest) {
+                if(null != userBean.getObj() && null != mPassword)
+                UserService.getInstance(this).setPwd(userBean.getObj().getId(), mPassword.getText().toString());
                 ActivityJumper.getInstance().buttonJumpTo(this,LoginActivity.class);
                 finish();
             }
