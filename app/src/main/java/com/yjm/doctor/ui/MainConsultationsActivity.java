@@ -1,5 +1,6 @@
 package com.yjm.doctor.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,10 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMConversation;
+import com.hyphenate.easeui.EaseConstant;
+import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.ui.EaseContactListFragment;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.yjm.doctor.Config;
 import com.yjm.doctor.R;
@@ -14,6 +19,7 @@ import com.yjm.doctor.ui.adapter.MainAppointmentAdapter;
 import com.yjm.doctor.ui.base.BaseActivity;
 import com.yjm.doctor.ui.fragment.MainAppointmentFragment;
 import com.yjm.doctor.ui.fragment.MainConsultationFragment;
+import com.hyphenate.easeui.ui.EaseContactListFragment.EaseContactListItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,14 +51,22 @@ public class MainConsultationsActivity extends BaseActivity{
         List<Fragment> fragments = new ArrayList<>();
         Bundle bundle = new Bundle();
         bundle.putInt(Config.APPOINTMENT_TYPE, Config.APPOINTMENT_MAKE);//未回复
-        Fragment fragment1 = new EaseConversationListFragment();
+        EaseConversationListFragment fragment1 = new EaseConversationListFragment();
         fragment1.setArguments(bundle);
+        fragment1.setConversationListItemClickListener(new EaseConversationListFragment.EaseConversationListItemClickListener() {
+
+            @Override
+            public void onListItemClicked(EMConversation conversation) {
+                startActivity(new Intent(MainConsultationsActivity.this, ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID, conversation.conversationId()));
+            }
+        });
+        fragments.add((Fragment)(fragment1));
         Bundle bundle1 = new Bundle();
         bundle.putInt(Config.APPOINTMENT_TYPE, Config.APPOINTMENT_REPLY);//已回复
         Fragment fragment2 = new MainConsultationFragment();
         fragment2.setArguments(bundle1);
 
-        fragments.add((Fragment)(fragment1));
+
         fragments.add((Fragment)(fragment2));
 
         MainAppointmentAdapter adapter = new MainAppointmentAdapter(getSupportFragmentManager(), fragments, new String[]{"未回复", "已回复"});

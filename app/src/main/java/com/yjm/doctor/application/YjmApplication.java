@@ -10,6 +10,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
+import com.hyphenate.easeui.EaseUI;
 import com.yjm.doctor.application.base.ActivityLifecycle;
 import com.yjm.doctor.model.User;
 import com.yjm.doctor.util.auth.UserService;
@@ -71,7 +72,7 @@ public class YjmApplication extends Application {
             return;
         }
 
-
+        EaseUI.getInstance().init(this, options);
         EMClient.getInstance().init(this, options);
         //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
         EMClient.getInstance().setDebugMode(true);
