@@ -1,3 +1,4 @@
+//apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 
@@ -22,7 +23,7 @@ android {
         }
     }
     defaultConfig {
-        applicationId "com.yjm.docto"
+        applicationId "com.yjm.doctor"
         minSdkVersion 14
         targetSdkVersion 26
         versionCode 1
@@ -70,4 +71,7 @@ dependencies {
     //    compile 'com.google.android.gms:play-services-gcm:10.2.1'
     //    compile 'com.hyphenate:hyphenate-sdk:3.3.0'
     implementation project(':easeui')
+    // Google firebase cloud messaging
+//    compile 'com.google.firebase:firebase-messaging:11.4.0'
 }
+

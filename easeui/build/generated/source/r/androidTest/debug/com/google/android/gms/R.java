@@ -56,35 +56,35 @@ public final class R {
         public static final int adjust_width = 0x7f060001;
         public static final int auto = 0x7f060003;
         public static final int dark = 0x7f06001a;
-        public static final int icon_only = 0x7f060025;
-        public static final int light = 0x7f060035;
-        public static final int none = 0x7f060042;
-        public static final int progressBar = 0x7f060049;
-        public static final int standard = 0x7f06005a;
-        public static final int text = 0x7f06005d;
-        public static final int wide = 0x7f060070;
+        public static final int icon_only = 0x7f060027;
+        public static final int light = 0x7f060037;
+        public static final int none = 0x7f060044;
+        public static final int progressBar = 0x7f06004b;
+        public static final int standard = 0x7f06005c;
+        public static final int text = 0x7f06005f;
+        public static final int wide = 0x7f060072;
     }
     public static final class integer {
         public static final int google_play_services_version = 0x7f070000;
     }
     public static final class string {
-        public static final int common_google_play_services_enable_button = 0x7f090097;
-        public static final int common_google_play_services_enable_text = 0x7f090098;
-        public static final int common_google_play_services_enable_title = 0x7f090099;
-        public static final int common_google_play_services_install_button = 0x7f09009a;
-        public static final int common_google_play_services_install_text = 0x7f09009b;
-        public static final int common_google_play_services_install_title = 0x7f09009c;
-        public static final int common_google_play_services_notification_ticker = 0x7f09009d;
-        public static final int common_google_play_services_unknown_issue = 0x7f09009e;
-        public static final int common_google_play_services_unsupported_text = 0x7f09009f;
-        public static final int common_google_play_services_update_button = 0x7f0900a0;
-        public static final int common_google_play_services_update_text = 0x7f0900a1;
-        public static final int common_google_play_services_update_title = 0x7f0900a2;
-        public static final int common_google_play_services_updating_text = 0x7f0900a3;
-        public static final int common_google_play_services_wear_update_text = 0x7f0900a4;
-        public static final int common_open_on_phone = 0x7f0900a5;
-        public static final int common_signin_button_text = 0x7f0900a6;
-        public static final int common_signin_button_text_long = 0x7f0900a7;
+        public static final int common_google_play_services_enable_button = 0x7f0a0097;
+        public static final int common_google_play_services_enable_text = 0x7f0a0098;
+        public static final int common_google_play_services_enable_title = 0x7f0a0099;
+        public static final int common_google_play_services_install_button = 0x7f0a009a;
+        public static final int common_google_play_services_install_text = 0x7f0a009b;
+        public static final int common_google_play_services_install_title = 0x7f0a009c;
+        public static final int common_google_play_services_notification_ticker = 0x7f0a009d;
+        public static final int common_google_play_services_unknown_issue = 0x7f0a009e;
+        public static final int common_google_play_services_unsupported_text = 0x7f0a009f;
+        public static final int common_google_play_services_update_button = 0x7f0a00a0;
+        public static final int common_google_play_services_update_text = 0x7f0a00a1;
+        public static final int common_google_play_services_update_title = 0x7f0a00a2;
+        public static final int common_google_play_services_updating_text = 0x7f0a00a3;
+        public static final int common_google_play_services_wear_update_text = 0x7f0a00a4;
+        public static final int common_open_on_phone = 0x7f0a00a5;
+        public static final int common_signin_button_text = 0x7f0a00a6;
+        public static final int common_signin_button_text_long = 0x7f0a00a7;
     }
     public static final class styleable {
         public static final int[] LoadingImageView = { 0x7f020002, 0x7f020016, 0x7f020017 };

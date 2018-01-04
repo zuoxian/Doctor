@@ -37,6 +37,8 @@ public class YjmApplication extends Application {
 
     public static boolean update = false;
 
+    public static EaseUI easeUI;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -58,6 +60,17 @@ public class YjmApplication extends Application {
         EMOptions options = new EMOptions();
         options.setAutoLogin(true);
         options.setRequireAck(true);
+
+
+//注意        8.使用 FCM 时需要在退出登录时解绑设备 token，调用EMClient.getInstance().logout(true)
+        //json文件需要更换
+// 或者EMClient.getInstance().logout(true,callback)方法，如果是被踢的情况下，则要求设置为 false。
+        /**
+         * NOTE:你需要设置自己申请的Sender ID来使用Google推送功能，详见集成文档
+         */
+        options.setFCMNumber("921300338324");
+
+
         int pid = android.os.Process.myPid();
         String processAppName = getAppName(pid);
         // 如果APP启用了远程的service，此application:onCreate会被调用2次
@@ -72,7 +85,10 @@ public class YjmApplication extends Application {
             return;
         }
 
-        EaseUI.getInstance().init(this, options);
+
+        if (EaseUI.getInstance().init(this, options)) {
+            easeUI = EaseUI.getInstance();
+        }
         EMClient.getInstance().init(this, options);
         //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
         EMClient.getInstance().setDebugMode(true);

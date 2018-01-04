@@ -108,6 +108,12 @@
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/image_text_consulting"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.MainConversationActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/image_text_consulting"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.MainAppointmentsInfoActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -229,6 +235,20 @@
             android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
             android:screenOrientation="portrait"
             />
+
+        <!--&lt;!&ndash; FCM required start &ndash;&gt;-->
+        <!--<service android:name=".util.fcm.EMFCMMSGService">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.google.firebase.MESSAGING_EVENT" />-->
+            <!--</intent-filter>-->
+        <!--</service>-->
+
+        <!--<service android:name=".util.fcm.EMFCMTokenRefreshService">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.google.firebase.INSTANCE_ID_EVENT" />-->
+            <!--</intent-filter>-->
+        <!--</service>-->
+        <!--&lt;!&ndash; FCM required end &ndash;&gt;-->
 
         <!-- 设置环信应用的appkey -->
         <meta-data

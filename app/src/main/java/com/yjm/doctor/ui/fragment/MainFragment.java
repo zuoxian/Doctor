@@ -24,6 +24,7 @@ import com.yjm.doctor.ui.ContactUsActivity;
 import com.yjm.doctor.ui.MainAppointmentsActivity;
 import com.yjm.doctor.ui.MainConsultationsActivity;
 import com.yjm.doctor.ui.MainConsultationsInfoActivity;
+import com.yjm.doctor.ui.MainConversationActivity;
 import com.yjm.doctor.ui.base.BaseFragment;
 import com.yjm.doctor.ui.view.BannerView;
 import com.yjm.doctor.util.ActivityJumper;
@@ -124,7 +125,8 @@ public class MainFragment extends BaseFragment<BannerBean> implements IActivity{
     @OnClick(R.id.main_image_text_consulting)
     void image_text_consulting(){
         if(null != getActivity())
-        ActivityJumper.getInstance().buttonJumpTo(getActivity(), MainConsultationsActivity.class);
+            ActivityJumper.getInstance().buttonJumpTo(getActivity(), MainConversationActivity.class);
+//        ActivityJumper.getInstance().buttonJumpTo(getActivity(), MainConsultationsActivity.class);
     }
 
     @OnClick(R.id.main_consulting_statistics)
