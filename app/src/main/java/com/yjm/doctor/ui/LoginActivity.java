@@ -49,6 +49,9 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Callb
 
     @Override
     public int initView() {
+        if(1 == getIntent().getIntExtra("id",0)){
+            YjmApplication.toolBackIcon = false;
+        }
         return R.layout.activity_login;
     }
 

@@ -30,6 +30,8 @@ public class Config {
 
     public static final String DOCTORSERVICE = DOMAIN_URL +"/ethealth/api/doctorService";
 
+    public static final String MESSAGE = DOMAIN_URL +"/ethealth/api/message";
+
 
 
     public static String DEFAULT_TOKENID = "1D96DACB84F21890ED9F4928FA8B352B";

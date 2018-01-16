@@ -103,6 +103,13 @@ public class UserFragment extends BaseFragment<UserBean> {
             }
         });
 
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         try {
             sharedPreferencesUtil = SharedPreferencesUtil.instance(getContext());
             String u = sharedPreferencesUtil.getObject("user");
@@ -129,7 +136,6 @@ public class UserFragment extends BaseFragment<UserBean> {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override

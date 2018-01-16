@@ -48,16 +48,16 @@
         "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/drawable/ease_chatfrom_bg.xml"
     },
     {
-        "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/layout_ease_search_bar.xml.flat",
-        "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/layout/ease_search_bar.xml"
+        "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/drawable-hdpi-v4_ease_type_select_btn_nor.png.flat",
+        "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/drawable-hdpi-v4/ease_type_select_btn_nor.png"
     },
     {
         "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/drawable_recall_message_bg.xml.flat",
         "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/drawable/recall_message_bg.xml"
     },
     {
-        "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/drawable-hdpi-v4_ease_type_select_btn_nor.png.flat",
-        "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/drawable-hdpi-v4/ease_type_select_btn_nor.png"
+        "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/layout_ease_search_bar.xml.flat",
+        "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/layout/ease_search_bar.xml"
     },
     {
         "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/drawable-hdpi-v4_ease_dx_checkbox_on.png.flat",
@@ -68,16 +68,16 @@
         "source": "/Users/cnlive-lsf-doc/.gradle/caches/transforms-1/files-1.1/play-services-base-11.4.0.aar/e3811593e64543ad55dfc2c216b32552/res/drawable/common_google_signin_btn_text_light.xml"
     },
     {
-        "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/layout_ease_scroll_tab_item.xml.flat",
-        "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/layout/ease_scroll_tab_item.xml"
+        "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/layout_ease_row_received_voice_call.xml.flat",
+        "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/layout/ease_row_received_voice_call.xml"
     },
     {
         "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/drawable-hdpi-v4_ease_dx_checkbox_gray_on.png.flat",
         "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/drawable-hdpi-v4/ease_dx_checkbox_gray_on.png"
     },
     {
-        "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/layout_ease_row_received_voice_call.xml.flat",
-        "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/layout/ease_row_received_voice_call.xml"
+        "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/layout_ease_scroll_tab_item.xml.flat",
+        "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/layout/ease_scroll_tab_item.xml"
     },
     {
         "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/drawable-xhdpi-v4_googleg_standard_color_18.png.flat",
@@ -100,24 +100,24 @@
         "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/drawable-hdpi-v4/ease_login_error_icon.png"
     },
     {
-        "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/drawable-hdpi-v4_ease_record_animate_11.png.flat",
-        "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/drawable-hdpi-v4/ease_record_animate_11.png"
+        "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/drawable_common_google_signin_btn_text_dark_focused.xml.flat",
+        "source": "/Users/cnlive-lsf-doc/.gradle/caches/transforms-1/files-1.1/play-services-base-11.4.0.aar/e3811593e64543ad55dfc2c216b32552/res/drawable/common_google_signin_btn_text_dark_focused.xml"
     },
     {
         "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/drawable-hdpi-v4_ease_record_animate_05.png.flat",
         "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/drawable-hdpi-v4/ease_record_animate_05.png"
     },
     {
-        "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/drawable_common_google_signin_btn_text_dark_focused.xml.flat",
-        "source": "/Users/cnlive-lsf-doc/.gradle/caches/transforms-1/files-1.1/play-services-base-11.4.0.aar/e3811593e64543ad55dfc2c216b32552/res/drawable/common_google_signin_btn_text_dark_focused.xml"
-    },
-    {
-        "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/drawable-xhdpi-v4_ease_group_icon.png.flat",
-        "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/drawable-xhdpi-v4/ease_group_icon.png"
+        "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/drawable-hdpi-v4_ease_record_animate_11.png.flat",
+        "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/drawable-hdpi-v4/ease_record_animate_11.png"
     },
     {
         "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/layout_ease_row_sent_bigexpression.xml.flat",
         "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/layout/ease_row_sent_bigexpression.xml"
+    },
+    {
+        "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/drawable-xhdpi-v4_ease_group_icon.png.flat",
+        "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/drawable-xhdpi-v4/ease_group_icon.png"
     },
     {
         "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/layout_ease_alert_dialog.xml.flat",
@@ -180,12 +180,12 @@
         "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/drawable-mdpi-v4/ic_launcher.png"
     },
     {
-        "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/drawable-hdpi-v4_ease_chatto_bg_focused.9.png.flat",
-        "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/drawable-hdpi-v4/ease_chatto_bg_focused.9.png"
-    },
-    {
         "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/drawable-hdpi-v4_ease_chat_face_pressed.png.flat",
         "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/drawable-hdpi-v4/ease_chat_face_pressed.png"
+    },
+    {
+        "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/drawable-hdpi-v4_ease_chatto_bg_focused.9.png.flat",
+        "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/drawable-hdpi-v4/ease_chatto_bg_focused.9.png"
     },
     {
         "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/drawable-hdpi-v4_ease_dx_checkbox_off.png.flat",
@@ -658,6 +658,10 @@
     {
         "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/drawable_ease_chat_image_selector.xml.flat",
         "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/drawable/ease_chat_image_selector.xml"
+    },
+    {
+        "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/drawable-xxxhdpi-v4_toolicon.png.flat",
+        "source": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/bundles/debug/res/drawable-xxxhdpi-v4/toolicon.png"
     },
     {
         "merged": "/Users/cnlive-lsf-doc/AndroidStudioProjects/new/Doctor/easeui/build/intermediates/res/merged/androidTest/debug/drawable-hdpi-v4_ease_chatfrom_voice_playing.png.flat",

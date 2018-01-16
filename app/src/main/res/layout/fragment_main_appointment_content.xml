@@ -9,6 +9,8 @@
          android:layout_height="wrap_content"
          android:layout_marginTop="10dp"
          android:background="@color/whitecolor"
+         android:focusable="true"
+         android:focusableInTouchMode="true"
          android:orientation="vertical">
 
         <EditText
@@ -22,6 +24,7 @@
             android:background="@drawable/searchstyle_shape"
             android:drawableLeft="@drawable/search"
             android:drawablePadding="10dp"
+
             android:paddingLeft="10dp" />
 
          <include layout="@layout/layout_load"/>

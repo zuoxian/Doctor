@@ -112,6 +112,7 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
         initViews();
     }
     private static User mUser = null;
+    private int status = 2;//审核中
 
     @Override
     protected void onResume() {
@@ -121,14 +122,16 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
             String u = sharedPreferencesUtil.getObject("user");
             if(null != u) {
                 mUser = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
-                if (null != mUser)
+                if (null != mUser) {
                     Log.d("serial", "share3   =" + mUser.toString());
-                MemberDoctor doctor = mUser.getMemberDoctor();
+                    MemberDoctor doctor = mUser.getMemberDoctor();
 
-                if (null != mUser && null != doctor) {
-                    if (mUser.getId() == doctor.getId()) {
-                        isGetUserInfo = false;//用户信息存在 不需要重新请求
+                    if (null != mUser && null != doctor) {
+                        if (mUser.getId() == doctor.getId()) {
+                            isGetUserInfo = false;//用户信息存在 不需要重新请求
+                        }
                     }
+                    status = mUser.getStatus();
                 }
             }
 
@@ -153,8 +156,31 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
             mTabHost.addTab(mTabHost.newTabSpec(tabNames[i]).setIndicator(tabNames[i]).setIndicator(getTabItemView(i)),
                     fragmentClss[i], null);
 
+
         }
         mTabHost.getTabWidget().setDividerDrawable(null);
+        mTabHost.getTabWidget().getChildTabViewAt(1).setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                if(2 == status){
+                    SystemTools.show_msg(MainActivity.this,"账号审核中，请等待~");
+                }else {
+                    mTabHost.setCurrentTab(1);
+                }
+            }
+        });
+        mTabHost.getTabWidget().getChildTabViewAt(2).setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                if(2 == status){
+                    SystemTools.show_msg(MainActivity.this,"账号审核中，请等待~");
+                }else {
+                    mTabHost.setCurrentTab(2);
+                }
+            }
+        });
 
     }
 
@@ -187,12 +213,14 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
 
         if(null != userBean && true == userBean.getSuccess() && null != userBean.getObj()){
             finishLogin(userBean.getObj());
+
         }
     }
 
 
     private void finishLogin(User user) {
         Log.i("main","mainactivity   user");
+        status = user.getStatus();
 
         try {
 

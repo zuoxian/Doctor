@@ -208,9 +208,10 @@
         android:id="@+id/detail_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:background="@drawable/bordersquarestyle"
         android:visibility="gone"
+        android:layout_gravity="center_vertical"
         >
         <TextView
             android:layout_width="match_parent"
@@ -225,8 +226,9 @@
             />
         <TextView
             android:id="@+id/detail"
-            android:layout_width="wrap_content"
-            android:layout_height="42dp"
+            android:paddingLeft="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textColor="@color/login_font_color"
             android:paddingRight="20dp"
             android:gravity="center_vertical"

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.yjm.doctor.Config;
 import com.yjm.doctor.R;
@@ -31,6 +32,7 @@ import com.yjm.doctor.util.auth.UserService;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -69,6 +71,8 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
 
     private LinearLayoutManager mLayoutManager;
 
+
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         initTwoWayView();
@@ -77,7 +81,6 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
         if(null ==search)
             return;
         search.addTextChangedListener(this);
-//        search.setFocusable(false);
         initData();
     }
 
@@ -139,6 +142,7 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
 
     @Override
     public void onRefresh() {
+        max =false;
         mPage = 1;
         onLoadData();
     }
@@ -159,7 +163,7 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
 
 
     }
-
+    private boolean max = false;
 
     @Override
     public void success(AppointmentBean subListPage, Response response) {
@@ -177,6 +181,9 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
             }
             if(!(0 < subListPage.getObj().getTotal() && subListPage.getObj().getTotal()<=10) && (mPage * 10)<subListPage.getObj().getTotal())
                 mPage = mPage + 1;
+            if((mPage * 10) >= subListPage.getObj().getTotal()){
+                max = true;
+            }
         } else {
             showConnectionRetry("请求异常，请重试");
         }
@@ -237,7 +244,12 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
 
     @Override
     public void onListEnded() {
+
         if (mPage > 1) {
+            if(max && null != getActivity()) {
+                Toast.makeText(getActivity(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+                return;
+            }
             onLoadData();
         } else {
 //            Toast.makeText(getActivity(), "没有更多数据了", Toast.LENGTH_SHORT).show();

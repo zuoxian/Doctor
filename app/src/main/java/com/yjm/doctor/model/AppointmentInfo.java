@@ -17,6 +17,15 @@ public class AppointmentInfo implements Serializable {
     private String appointName;
     private String appointStatus;
     private String appointTime;
+    private String refuseReason;
+
+    public String getRefuseReason() {
+        return refuseReason;
+    }
+
+    public void setRefuseReason(String refuseReason) {
+        this.refuseReason = refuseReason;
+    }
 
     public String getAppointAddress() {
         return appointAddress;

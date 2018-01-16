@@ -5,6 +5,8 @@
     android:paddingTop="7dp"
     android:paddingBottom="7dp"
     android:background="#ededed"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:paddingLeft="@dimen/padding_search_bar"
     android:paddingRight="@dimen/padding_search_bar">
 

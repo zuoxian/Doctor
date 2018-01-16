@@ -14,6 +14,8 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.yjm.doctor.R;
 import com.yjm.doctor.model.AppointmentInfo;
 import com.yjm.doctor.model.Customer;
+import com.yjm.doctor.model.Patient;
+import com.yjm.doctor.model.Patients;
 import com.yjm.doctor.model.User;
 import com.yjm.doctor.ui.base.BaseLoadRecyclerAdapter;
 
@@ -84,24 +86,25 @@ public class MainAppointmentInfoAdapter extends BaseLoadRecyclerAdapter<Appointm
             TextView sex_age = (TextView) view.findViewById(R.id.sex_age);
             TextView time = (TextView) view.findViewById(R.id.time);
             TextView address = (TextView) view.findViewById(R.id.address);
+
             User user = item.getUser();
             if(user!= null ) {
+
                 if (!TextUtils.isEmpty(user.getPicUrl()))
                     sdvImage.setImageURI(Uri.parse(user.getPicUrl()));
-                Customer customer = user.getCustomer();
-                Log.i("log",username+"");
-                if(null != customer) {
-                    if (!TextUtils.isEmpty(customer.getRealName())) {
-                        username.setText(customer.getRealName());
+                Patient patients = user.getPatient();
+                if(null != patients) {
+                    if (!TextUtils.isEmpty(patients.getRealName())) {
+                        username.setText(patients.getRealName());
                     }
                 }
 
-            if(null != customer){
+            if(null != patients){
                 String sex =  "女";
-                if(1==customer.getSex()){
+                if(1==patients.getSex()){
                     sex =  "男";
                 }
-                sex_age.setText(sex+"   "+customer.getAge()+"岁" );
+                sex_age.setText(sex+"   "+patients.getAge()+"岁" );
             }
         }
 

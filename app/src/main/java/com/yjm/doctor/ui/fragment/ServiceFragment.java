@@ -16,9 +16,12 @@ import com.yjm.doctor.Config;
 import com.yjm.doctor.R;
 import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.application.YjmApplication;
+import com.yjm.doctor.model.SMessage;
+import com.yjm.doctor.model.SMessageBean;
 import com.yjm.doctor.model.User;
 import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.ui.GridActivity;
+import com.yjm.doctor.ui.MessageActivity;
 import com.yjm.doctor.ui.UserInfoActivity;
 import com.yjm.doctor.ui.base.BaseFragment;
 import com.yjm.doctor.util.ActivityJumper;
@@ -29,6 +32,7 @@ import com.yjm.doctor.util.SystemTools;
 import com.yjm.doctor.util.auth.UserService;
 
 import java.io.IOException;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -65,11 +69,23 @@ public class ServiceFragment extends BaseFragment<UserBean> {
     @BindView(R.id.toolfinish)
     TextView mToolFinish;
 
+    @BindView(R.id.bar_num1)
+    TextView barNum1;
+
     private SharedPreferencesUtil sharedPreferencesUtil;
     private User mUser=null;
     private UserAPI mUserAPI;
     private String tokenID;
 
+    private UserAPI userAPI;
+
+
+    @OnClick(R.id.mail)
+    void mail(){
+        if(null != getActivity()){
+            ActivityJumper.getInstance().buttonJumpTo(getActivity(), MessageActivity.class);
+        }
+    }
 
     @OnClick(R.id.item)
     void OnClickItem(){
@@ -89,9 +105,39 @@ public class ServiceFragment extends BaseFragment<UserBean> {
     @Override
     public void onResume() {
         super.onResume();
+        if(null != getActivity()) {
+            userAPI = RestAdapterUtils.getRestAPI(Config.MESSAGE, UserAPI.class, getActivity());
+            userAPI.getMessage(1, 50, new Callback<SMessageBean>() {
+                @Override
+                public void success(SMessageBean sMessageBean, Response response) {
+                    if (null != sMessageBean && sMessageBean.getSuccess()) {
+                        if(null == sMessageBean.getObj())return ;
+                        List<SMessage> list = sMessageBean.getObj().getRows();
+                        int readnum = 0;
+                        for(SMessage sMessage : list){
+                            if(!sMessage.isRead()){
+                                readnum = readnum + 1;
+                            }
+                        }
+                        if(0 != readnum){
+                            if(null != barNum1){
+                                barNum1.setText(String.valueOf(readnum));
+                                barNum1.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+
+                }
+            });
+        }
         if(null != mTooltitle)mTooltitle.setText("服务");
         if(null != mToolicon)mToolicon.setVisibility(View.GONE);
         if(null != mToolFinish)mToolFinish.setVisibility(View.GONE);
+
     }
 
 

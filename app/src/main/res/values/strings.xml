@@ -89,8 +89,11 @@
     <string name="empty">无新消息</string>
 
     <string name="update_account">修改账户</string>
+    <string name="update_user_info">修改个人信息</string>
     <string name="mycomment">我的评价</string>
     <string name="mybank">我的银行账户</string>
+    <string name="message">消息</string>
+    <string name="message_info">预约提醒</string>
 
     <string name="string_loading">Loading&#8230;</string>
     <string name="string_retry">点击重新加载</string>
@@ -117,7 +120,7 @@
     <string name="appointment_info_address">地点</string>
 
     <string name="appointment_info_status">预约状态</string>
-    <string name="appointment_info_detail">拒绝详情</string>
+    <string name="appointment_info_detail">拒绝详情:</string>
 
     <string name="agreen">同意</string>
     <string name="refuse">拒绝</string>

@@ -37,6 +37,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
     TextView toolAdd = null;
     TextView update = null;
     TextView add = null ;
+    TextView bar_num = null ;
 
 //    public ActivityLifecycle(String title) {
 //        this.mTitle = title;
@@ -61,6 +62,8 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         toolAdd = (TextView) activity.findViewById(R.id.tool_add);
         update = (TextView) activity.findViewById(R.id.toolupdate);
         add = (TextView)activity.findViewById(R.id.add);
+        bar_num = (TextView)activity.findViewById(R.id.bar_num);
+        if(null != bar_num)bar_num.setVisibility(View.GONE);
 
         if (null != toolAdd) {
             toolAdd.setOnClickListener(new View.OnClickListener() {

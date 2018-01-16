@@ -57,12 +57,12 @@ public final class R {
         public static final int auto = 0x7f060003;
         public static final int dark = 0x7f06001a;
         public static final int icon_only = 0x7f060027;
-        public static final int light = 0x7f060037;
-        public static final int none = 0x7f060044;
-        public static final int progressBar = 0x7f06004b;
-        public static final int standard = 0x7f06005c;
-        public static final int text = 0x7f06005f;
-        public static final int wide = 0x7f060072;
+        public static final int light = 0x7f060038;
+        public static final int none = 0x7f060045;
+        public static final int progressBar = 0x7f06004c;
+        public static final int standard = 0x7f06005d;
+        public static final int text = 0x7f060060;
+        public static final int wide = 0x7f060074;
     }
     public static final class integer {
         public static final int google_play_services_version = 0x7f070000;

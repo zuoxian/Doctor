@@ -9,7 +9,7 @@
     android:background="@color/login_background"
     >
 
-    <include layout="@layout/doctor_login_toolbar"/>
+    <include layout="@layout/toolbar"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,7 +64,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="60dp"
-        android:background="@drawable/loginbuttonstyle"
+        android:background="@color/tool_background"
         android:text="@string/login"
         android:textColor="@color/tool_font_color"
         />

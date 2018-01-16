@@ -39,6 +39,23 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+
+
+    <!-- Required -->
+    <permission
+        android:name="com.yjm.doctor.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <!-- Required -->
+    <uses-permission android:name="com.yjm.doctor.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+
+    <!-- Optional. Required for location feature -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+
+
     <application
         android:name=".application.YjmApplication"
         android:allowBackup="true"
@@ -215,6 +232,11 @@
             android:label="@string/update_account"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".ui.UpateUserActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/update_user_info"
+            android:screenOrientation="portrait"/>
+
         <activity android:name=".ui.MyCommentsActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/mycomment"
@@ -225,11 +247,36 @@
             android:label="@string/mybank"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".ui.MessageActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/message"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.SMessageInfoActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/message_info"
+            android:screenOrientation="portrait"/>
+
         <activity android:name=".ui.ChatActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
             />
+
+        <!-- User defined.  For test only  用户自定义的广播接收器-->
+        <receiver
+            android:name="com.yjm.doctor.util.MyReceiver"
+            android:exported="false"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required  用户注册SDK的intent-->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!--Required  用户接收SDK消息的intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!--Required  用户接收SDK通知栏信息的intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!--Required  用户打开自定义通知栏的intent-->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /><!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <category android:name="com.yjm.doctor" />
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"

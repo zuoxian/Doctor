@@ -21,6 +21,8 @@ import com.yjm.doctor.model.BannerBean;
 import com.yjm.doctor.model.EventType;
 import com.yjm.doctor.model.User;
 import com.yjm.doctor.ui.ContactUsActivity;
+import com.yjm.doctor.ui.LoginActivity;
+import com.yjm.doctor.ui.MainActivity;
 import com.yjm.doctor.ui.MainAppointmentsActivity;
 import com.yjm.doctor.ui.MainConsultationsActivity;
 import com.yjm.doctor.ui.MainConsultationsInfoActivity;
@@ -30,6 +32,7 @@ import com.yjm.doctor.ui.view.BannerView;
 import com.yjm.doctor.util.ActivityJumper;
 import com.yjm.doctor.util.NetworkUtils;
 import com.yjm.doctor.util.RestAdapterUtils;
+import com.yjm.doctor.util.SharedPreferencesUtil;
 import com.yjm.doctor.util.SystemTools;
 import com.yjm.doctor.util.auth.UserService;
 
@@ -64,6 +67,19 @@ public class MainFragment extends BaseFragment<BannerBean> implements IActivity{
     @BindView(R.id.ischeck)
     TextView mIscheck;
 
+    private User user;
+    private SharedPreferencesUtil sharedPreferencesUtil;
+
+    @OnClick(R.id.toolfinish)
+    void logout(){
+        if(null != getActivity()) {
+            sharedPreferencesUtil = SharedPreferencesUtil.instance(getActivity());
+            UserService.getInstance(getActivity()).logout();
+            sharedPreferencesUtil.del("user");
+            ActivityJumper.getInstance().buttonIntJumpTo(getActivity(), LoginActivity.class, 1);
+        }
+    }
+
     @Override
     protected int getLayoutRes() {
         return R.layout.fragment_mian;
@@ -75,15 +91,17 @@ public class MainFragment extends BaseFragment<BannerBean> implements IActivity{
         super.onResume();
         if(null != mTooltitle)mTooltitle.setText("医家盟");
         if(null != mToolicon)mToolicon.setVisibility(View.GONE);
-        if(null != mToolFinish)mToolFinish.setVisibility(View.GONE);
+        if(null != mToolFinish)mToolFinish.setText("退出登录");
     }
 
     @Override
     protected void onLoadData() {
         if(null != mIscheck && null != getActivity()){
-            User user = UserService.getInstance(getActivity()).getActiveAccountInfo();
+            user = UserService.getInstance(getActivity()).getActiveAccountInfo();
             if(null != user && 2 == user.getStatus())
                 mIscheck.setVisibility(View.VISIBLE);
+            else
+                mIscheck.setVisibility(View.GONE);
         }
         if(null != getActivity())
             mainAPI = RestAdapterUtils.getRestAPI(Config.HOME_BANNERS,MainAPI.class,getActivity(),"");
@@ -118,14 +136,25 @@ public class MainFragment extends BaseFragment<BannerBean> implements IActivity{
 
     @OnClick(R.id.main_appointments)
     void appointments(){
-        if(null != getActivity())
-            ActivityJumper.getInstance().buttonJumpTo(getActivity(), MainAppointmentsActivity.class);
+        if (null != getActivity()) {
+            if (null != user && 2 == user.getStatus()) {
+                SystemTools.show_msg(getActivity(), "账号审核中，请等待~");
+            } else {
+
+                ActivityJumper.getInstance().buttonJumpTo(getActivity(), MainAppointmentsActivity.class);
+            }
+        }
     }
 
     @OnClick(R.id.main_image_text_consulting)
     void image_text_consulting(){
-        if(null != getActivity())
-            ActivityJumper.getInstance().buttonJumpTo(getActivity(), MainConversationActivity.class);
+        if(null != getActivity()) {
+            if (null != user && 2 == user.getStatus()) {
+                SystemTools.show_msg(getActivity(), "账号审核中，请等待~");
+            } else {
+                ActivityJumper.getInstance().buttonJumpTo(getActivity(), MainConversationActivity.class);
+            }
+        }
 //        ActivityJumper.getInstance().buttonJumpTo(getActivity(), MainConsultationsActivity.class);
     }
 
@@ -136,7 +165,11 @@ public class MainFragment extends BaseFragment<BannerBean> implements IActivity{
 
     @OnClick(R.id.main_information_service)
     void information_service(){
-        EventBus.getDefault().post(new EventType(Config.MAIN_SERVICE_TYPE, Config.MAIN_SERVICE_TYPE_VALUE));
+        if (null != user && 2 == user.getStatus()) {
+            SystemTools.show_msg(getActivity(), "账号审核中，请等待~");
+        } else {
+            EventBus.getDefault().post(new EventType(Config.MAIN_SERVICE_TYPE, Config.MAIN_SERVICE_TYPE_VALUE));
+        }
 
     }
 

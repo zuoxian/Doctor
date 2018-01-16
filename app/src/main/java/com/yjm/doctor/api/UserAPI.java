@@ -10,15 +10,25 @@ import com.yjm.doctor.model.HospitalBean;
 import com.yjm.doctor.model.Level;
 import com.yjm.doctor.model.LevelBean;
 import com.yjm.doctor.model.Message;
+import com.yjm.doctor.model.MessageInfo;
 import com.yjm.doctor.model.PatientBean;
+import com.yjm.doctor.model.SMessageBean;
+import com.yjm.doctor.model.User;
 import com.yjm.doctor.model.UserBean;
+import com.yjm.doctor.model.UserConfig;
+import com.yjm.doctor.model.UserConfigBean;
 import com.yjm.doctor.model.UserPatientInfoBean;
 import com.yjm.doctor.ui.view.layout.BalanceListBean;
 
+import java.io.File;
+
 import retrofit.Callback;
 import retrofit.http.GET;
+import retrofit.http.Multipart;
 import retrofit.http.POST;
+import retrofit.http.Part;
 import retrofit.http.Query;
+import retrofit.mime.TypedFile;
 
 /**
  * Created by zx on 2017/12/7.
@@ -99,6 +109,29 @@ public interface UserAPI {
             @Query("alipay") String alipay,
             Callback<Message> callback);
 
+
+    @POST("/edit")
+    void updateUserInfo(
+            @Query("realName") String realName,
+            @Query("sex") int sex,
+            @Query("email") String email,
+            @Query("hospital") int hospital,
+            @Query("department") int department,
+            @Query("level") int level,
+            @Query("speciality") String speciality,
+            Callback<UserConfigBean> callback
+
+    );
+
+    @Multipart
+    @POST("/edit")
+    void updateUserInfo(
+            @Part("headImageFile") TypedFile headImageFile,
+            Callback<UserConfigBean> callback
+
+    );
+
+
     @POST("/myComments")
     void getComments(Callback<CommentBean> callback);
 
@@ -107,5 +140,12 @@ public interface UserAPI {
 
     @POST("/departmentList")
     void departmentList(Callback<DepartMentBean> callback);
+
+    @POST("/dataGrid")
+    void getMessage( @Query("page") int page, @Query("rows") int rows,Callback<SMessageBean> callback);
+
+
+    @POST("/detail")
+    void getMessageInfo( @Query("id") int id,Callback<MessageInfo> callback);
 
 }

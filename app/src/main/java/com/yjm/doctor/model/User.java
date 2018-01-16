@@ -28,6 +28,7 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = -8951807283047736469L;
 
+
     private int amount;
     private String email;
 
@@ -83,6 +84,13 @@ public class User implements Serializable {
     private Patient patient;
 
 
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
 
     @Generated(hash = 317224063)
     public User(int id, int amount, String email, String headImage,

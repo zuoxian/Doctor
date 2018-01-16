@@ -19,6 +19,7 @@ import com.yjm.doctor.api.MainAPI;
 import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.model.AppointmentInfo;
 import com.yjm.doctor.model.Customer;
+import com.yjm.doctor.model.Patient;
 import com.yjm.doctor.model.User;
 import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.ui.base.BaseActivity;
@@ -156,7 +157,7 @@ public class MainAppointmentsInfoActivity extends BaseActivity implements Callba
         if(null != mUserIcon && user != null && !TextUtils.isEmpty(user.getPicUrl()))
             mUserIcon.setImageURI(Uri.parse(user.getPicUrl()));
 
-        Customer customer = user.getCustomer();
+        Patient customer = user.getPatient();
 
          if(null != customer){
              if(null != mUserName){
@@ -167,7 +168,11 @@ public class MainAppointmentsInfoActivity extends BaseActivity implements Callba
                  String sex = "女";
                  if(Config.SEX_MALE == customer.getSex())
                      sex ="男";
-                 mUserInfo.setText("性别："+sex +"  年龄："+customer.getAge()+"岁  电话："+customer.getPhone());
+                 String mobile="";
+                 if(null != user) {
+                     mobile =user.getMobile();
+                 }
+                mUserInfo.setText("性别：" + sex + "  年龄：" + customer.getAge() + "岁  电话：" + mobile);
             }
         }
 
@@ -198,27 +203,30 @@ public class MainAppointmentsInfoActivity extends BaseActivity implements Callba
             if(null != mRefuse)mRefuse.setVisibility(View.GONE);
 
             if(null != mStatusLayout )mStatusLayout.setVisibility(View.VISIBLE);
-            if(!TextUtils.isEmpty(item.getAppointStatus()) ){
-                switch (item.getAppointStatus()){
-                    case "0":
-                        status = "待确认";
-                        break;
-                    case "1":
-                        status = "医生已确认";
-                        break;
-                    case "2":
-                        status = "用户已确认";
-                        break;
-                    case "3":
-                        status = "已取消";
-                        break;
-                    default:
-                        break;
+            if(!TextUtils.isEmpty(item.getAppointStatus()) && !TextUtils.isEmpty(item.getStatus())){
+                if ("0" .equals(item.getAppointStatus()) && "1" .equals(item.getStatus()) ) {
+                    status = "未回复";
+                    if(null != mAgree)mAgree.setVisibility(View.VISIBLE);
+                    if(null != mRefuse)mRefuse.setVisibility(View.VISIBLE);
                 }
+                if ("1" .equals(item.getAppointStatus()) && "1" .equals(item.getStatus()) ) {
+                    status = "患者待确认";
+                }
+                if ("2" .equals(item.getAppointStatus()) && "1" .equals(item.getStatus()) ) {
+                    status = "患者已确认";
+                }
+                if ("3" .equals(item.getAppointStatus()) && "1" .equals(item.getStatus()) ) {
+                    status = "已拒绝";
+                }
+
             }
             if(null != mStatus) {
                 mStatus.setText(status);
                 if(null != mStatus)mStatus.setTextColor(getResources().getColor(R.color.btn_logout_normal));
+            }
+            if(!TextUtils.isEmpty(item.getRefuseReason())){
+                if(null != mDetailLayout)mDetailLayout.setVisibility(View.VISIBLE);
+                if(null != mDetail)mDetail.setText(item.getRefuseReason());
             }
         }
     }

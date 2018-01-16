@@ -91,4 +91,9 @@ public class SharedPreferencesUtil {
         SharedPreferences sp = mContext.getSharedPreferences(objName, 0);
         return sp.getString(objName, null);
     }
+
+    public void del(String objName){
+        SharedPreferences sp = mContext.getSharedPreferences(objName, 0);
+        sp.edit().clear().commit();
+    }
 }
