@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.yjm.doctor.R;
+import com.yjm.doctor.model.AppointmentInfo;
 import com.yjm.doctor.ui.base.BaseLoadRecyclerAdapter;
 
 import org.w3c.dom.Text;
@@ -65,6 +66,9 @@ public class BalanceListAdapter extends BaseLoadRecyclerAdapter<BalanceListBean.
 //        }else {
 //            viewHolder.mTvStatus.setText("失败");
 //        }
+        if (position == mItems.size()- 1) {
+            mListener.onListEnded();
+        }
     }
 
 
@@ -82,6 +86,16 @@ public class BalanceListAdapter extends BaseLoadRecyclerAdapter<BalanceListBean.
             mTvStatus=(TextView)itemView.findViewById(R.id.tv_Status);
         }
 
+    }
+
+    private ListAdapterListener mListener;
+
+    public void setListener(ListAdapterListener mListener) {
+        this.mListener = mListener;
+    }
+
+    public interface ListAdapterListener {
+        void onListEnded();
     }
 
 }

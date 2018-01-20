@@ -40,6 +40,7 @@ public class UserService {
     private final String KEY_USER_AMOUNT = "amount";
     private final String KEY_DEFAULT_ACCOUNT = "default_count";
     private final String KEY_USER_TOKEN = "tokenId";
+    private final String KEY_PWD = "pwd";
 
     private final String AGE = "age";
     private final String BALANCE = "balance";
@@ -187,7 +188,7 @@ public class UserService {
         }
         Account account = setActiveAccount(username, password);
         setDefaultAccount(account);
-        updateAccountInfo(account, user);
+        updateAccountInfo(account, user,password);
         return true;
     }
 
@@ -214,16 +215,16 @@ public class UserService {
         user.setEmail(mAccountManager.getUserData(account, KEY_USER_EMAIL));
         user.setAmount(Integer.parseInt(mAccountManager.getUserData(account, KEY_USER_AMOUNT)));
         user.setTokenId(mAccountManager.getUserData(account, KEY_USER_TOKEN));
-
+        user.setPwd(mAccountManager.getUserData(account, KEY_PWD));
 
         return user;
     }
 
     public void updateActiveAccountInfo(User userProfile) {
-        updateAccountInfo(activeAccount, userProfile);
+        updateAccountInfo(activeAccount, userProfile,"");
     }
 
-    public void updateAccountInfo(Account account, User userProfile) {
+    public void updateAccountInfo(Account account, User userProfile,String pwd) {
         Log.i("tokenId",userProfile.toString());
         mAccountManager.setUserData(account, KEY_USER_NAME, String.valueOf(userProfile.getUsername()));
         mAccountManager.setUserData(account, KEY_USER_UPDATETIME, String.valueOf(userProfile.getUpdateTime()));
@@ -248,7 +249,8 @@ public class UserService {
 
         mAccountManager.setAuthToken(account,KEY_USER_TOKEN,userProfile.getTokenId());
         mAccountManager.setUserData(account, KEY_USER_TOKEN, userProfile.getTokenId());
-        Log.i("tokenId",userProfile.getTokenId());
+        mAccountManager.setUserData(account, KEY_PWD, pwd);
+//        Log.i("tokenId",userProfile.getTokenId());
 
 
 

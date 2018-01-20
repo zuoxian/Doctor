@@ -90,7 +90,7 @@ public class UserPatientsInfoAdapter extends BaseLoadRecyclerAdapter<User> {
         if(user!= null ) {
             if (!TextUtils.isEmpty(user.getPicUrl()))
                     sdvImage.setImageURI(Uri.parse(user.getPicUrl()));
-            Customer customer = user.getCustomer();
+            Patient customer = user.getPatient();
             Log.i("log",username+"");
             if(null != customer) {
                 if (!TextUtils.isEmpty(customer.getRealName())) {

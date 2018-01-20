@@ -29,6 +29,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -47,8 +48,10 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.ui.EaseBaseActivity;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.util.EMLog;
+import com.yjm.doctor.Config;
 import com.yjm.doctor.Constant;
 import com.yjm.doctor.R;
+import com.yjm.doctor.model.EventType;
 import com.yjm.doctor.runtimepermissions.PermissionsManager;
 import com.yjm.doctor.runtimepermissions.PermissionsResultAction;
 import com.yjm.doctor.ui.base.BaseActivity;
@@ -56,6 +59,8 @@ import com.yjm.doctor.ui.fragment.ConversationListFragment;
 import com.yjm.doctor.util.Helper;
 
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 @SuppressLint("NewApi")
 public class MainConversationActivity extends EaseBaseActivity {
@@ -98,6 +103,7 @@ public class MainConversationActivity extends EaseBaseActivity {
 					intent.setData(Uri.parse("package:" + packageName));
 					startActivity(intent);
 				} catch (Exception e) {
+					Log.i("error",e.getMessage());
 				}
 			}
 		}
@@ -143,6 +149,8 @@ public class MainConversationActivity extends EaseBaseActivity {
 		//debug purpose only
         registerInternalDebugReceiver();
 	}
+
+
 
 	EMClientListener clientListener = new EMClientListener() {
 		@Override
@@ -256,6 +264,7 @@ public class MainConversationActivity extends EaseBaseActivity {
 			public void run() {
 				// refresh unread count
 				updateUnreadLabel();
+				EventBus.getDefault().post(new EventType(Config.MESSAGE_NUM,""));
 				if (currentTabIndex == 0) {
 					// refresh conversation list
 					if (conversationListFragment != null) {
@@ -282,6 +291,7 @@ public class MainConversationActivity extends EaseBaseActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 updateUnreadLabel();
+				EventBus.getDefault().post(new EventType(Config.MESSAGE_NUM,""));
                 updateUnreadAddressLable();
                 if (currentTabIndex == 0) {
                     // refresh conversation list

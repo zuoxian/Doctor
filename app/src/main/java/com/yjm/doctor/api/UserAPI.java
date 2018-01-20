@@ -148,4 +148,5 @@ public interface UserAPI {
     @POST("/detail")
     void getMessageInfo( @Query("id") int id,Callback<MessageInfo> callback);
 
+
 }

@@ -52,6 +52,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             YjmApplication.update = false;
             YjmApplication.toolFinish = false;
             YjmApplication.add = false;
+            YjmApplication.toolBackIcon = true;
             activity.setContentView(((IActivity) activity).initView());
         }
 
@@ -63,6 +64,8 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         update = (TextView) activity.findViewById(R.id.toolupdate);
         add = (TextView)activity.findViewById(R.id.add);
         bar_num = (TextView)activity.findViewById(R.id.bar_num);
+
+
         if(null != bar_num)bar_num.setVisibility(View.GONE);
 
         if (null != toolAdd) {

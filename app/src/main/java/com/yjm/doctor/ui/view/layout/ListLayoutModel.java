@@ -52,6 +52,8 @@ public class ListLayoutModel {
         this.imgOperaption = imgOperaption;
     }
 
+
+
     public ListLayoutModel(int icon, int title, int titleColor, String msg, int msgColor, String logo, int imgOperaption) {
         this.icon = icon;
         this.title = title;

@@ -2,24 +2,32 @@ package com.yjm.doctor.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.yjm.doctor.Config;
 import com.yjm.doctor.R;
+import com.yjm.doctor.api.MainAPI;
 import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.application.YjmApplication;
 import com.yjm.doctor.application.baseInterface.IAdd;
 import com.yjm.doctor.model.Account;
+import com.yjm.doctor.model.DataType;
+import com.yjm.doctor.model.DataTypeBean;
+import com.yjm.doctor.model.EventType;
 import com.yjm.doctor.model.Message;
 import com.yjm.doctor.ui.base.BaseActivity;
 import com.yjm.doctor.util.ActivityJumper;
 import com.yjm.doctor.util.RestAdapterUtils;
 import com.yjm.doctor.util.SystemTools;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -48,13 +56,39 @@ public class UpateAccountActivity extends BaseActivity implements Callback<Messa
 
     private UserAPI userAPI;
 
+    private MainAPI mainAPI;
     private Account account;
 
 
+    private List<DataType> dataTypes;
+
+    private void getBCs(){
+        mainAPI.baseData("BC",new Callback<DataTypeBean>() {
+            @Override
+            public void success(DataTypeBean levelBean, Response response) {
+                closeDialog();
+
+                if(null != levelBean && true == levelBean.getSuccess()){
+                    if(null == levelBean.getObj()) {
+                        SystemTools.show_msg(UpateAccountActivity.this, R.string.level_fail);
+                        return;
+                    }
+                    dataTypes = levelBean.getObj();
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                closeDialog();
+            }
+        });
+
+    }
 
     @OnClick(R.id.bankCode)
     void bankCodeOnClick(){
-
+        ActivityJumper.getInstance().buttoListJumpTo(this, BCActivity.class, dataTypes);
     }
 
     @Override
@@ -67,6 +101,31 @@ public class UpateAccountActivity extends BaseActivity implements Callback<Messa
 
     @Override
     public void finishButton() {
+        userAPI.updateAccount(account.getBankAccount(), account.getBankPhone(), account.getBankIdNo(), account.getBankCode(),account.getBankName(),account.getBankCard(), account.getAlipay(), new Callback<Message>() {
+            @Override
+            public void success(Message message, Response response) {
+                if(null != message && !TextUtils.isEmpty(message.getMsg())){
+                    SystemTools.show_msg(UpateAccountActivity.this,message.getMsg());
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                SystemTools.show_msg(UpateAccountActivity.this,"更新失败~");
+            }
+        });
+    }
+
+
+    private int bank_index = 1;
+    public void onEventMainThread(EventType event) {
+        if(Config.BC_EVENTTYPE.equals(event.getType()) && null != event && null != event.getObject()){
+
+            if (null != bankCode) bankCode.setText(((DataType) event.getObject()).getName());
+
+
+        }
 
     }
 
@@ -74,10 +133,13 @@ public class UpateAccountActivity extends BaseActivity implements Callback<Messa
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         account = (Account) getIntent().getSerializableExtra("object");
-
+        mainAPI = RestAdapterUtils.getRestAPI(Config.MAIN_BASEDATA, MainAPI.class,this);
+        EventBus.getDefault().register(this);
+        getBCs();
         if(null != account) {
             if (null != bankAccount) bankAccount.setText(account.getBankAccount());
             if (null != bankIdNo) bankIdNo.setText(account.getBankIdNo());
+            if (null != bankCode) bankCode.setText(account.getBankCode());
             if (null != bankPhone) bankPhone.setText(account.getBankPhone());
             if (null != bankName) bankName.setText(account.getBankName());
             if (null != bankCard) bankCard.setText(account.getBankCard());
@@ -92,7 +154,7 @@ public class UpateAccountActivity extends BaseActivity implements Callback<Messa
     public void success(Message message, Response response) {
         if(null != message && true == message.getSuccess()){
             SystemTools.show_msg(this,"修改成功");
-            ActivityJumper.getInstance().buttonJumpTo(this,AccountinfoActivity.class);
+//            ActivityJumper.getInstance().buttonJumpTo(this,AccountinfoActivity.class);
             finish();
         }else {
             SystemTools.show_msg(this,"修改失败");
@@ -116,5 +178,11 @@ public class UpateAccountActivity extends BaseActivity implements Callback<Messa
                 (null != alipay && null != alipay.getText())?alipay.getText().toString():null,
                 this
         );
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

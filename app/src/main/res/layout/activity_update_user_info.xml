@@ -16,7 +16,10 @@
         android:layout_height="42dp"
         fresco:actualImageScaleType="fitXY"
         fresco:placeholderImageScaleType="fitXY"
-        android:layout_gravity="center"
+
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         fresco:roundAsCircle="true"
         android:background="@drawable/business_setting"/>
 
@@ -61,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:id="@+id/email"
-        android:hint="输入电子邮箱"
+        android:hint="请输入电子邮箱"
         android:layout_gravity="center"
         android:textColorHint="@color/login_font_color"
         android:textColor="@color/content"
@@ -121,6 +124,8 @@
         android:textColor="@color/content"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:background="@drawable/bordersquarestyle"
         />
 

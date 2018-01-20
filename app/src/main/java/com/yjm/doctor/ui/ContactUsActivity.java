@@ -1,5 +1,6 @@
 package com.yjm.doctor.ui;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -62,8 +63,8 @@ public class ContactUsActivity extends BaseActivity implements Callback<DataType
         if(null != dataTypeBean && true == dataTypeBean.getSuccess()){
             if(null != dataTypeBean.getObj() && dataTypeBean.getObj().size()>0){
                 for(DataType type : dataTypeBean.getObj()){
-                    if((!TextUtils.isEmpty(type.getName())) && "地图icon".equals(type.getName()) && null != mUserAddressImage && !TextUtils.isEmpty(type.getIcon())){
-                        mUserAddressImage.setImageURI(type.getIcon());
+                    if((!TextUtils.isEmpty(type.getName())) && "CU04".equals(type.getId()) && null != mUserAddressImage && !TextUtils.isEmpty(type.getIcon())){
+                        mUserAddressImage.setImageURI(Uri.parse(type.getIcon()));
                     }
 
                     if((!TextUtils.isEmpty(type.getDescription())) && "电话".equals(type.getDescription()) && null != mTel && !TextUtils.isEmpty(type.getName())){

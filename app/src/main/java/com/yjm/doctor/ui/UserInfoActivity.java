@@ -71,15 +71,15 @@ public class UserInfoActivity extends BaseActivity implements ListLayoutAdapter.
 
         modelList=new ArrayList<ListLayoutModel>();
         modelList.add(new ListLayoutModel(R.string.user_logo," "));
-        modelList.add(new ListLayoutModel(R.string.user_name," ",R.drawable.toolicon));
-        modelList.add(new ListLayoutModel(R.string.user_sex," ",R.drawable.toolicon));
+        modelList.add(new ListLayoutModel(R.string.user_name," ",0));
+        modelList.add(new ListLayoutModel(R.string.user_sex," ",0));
         modelList.add(new ListLayoutModel(R.string.user_phone_number," ",0));
-        modelList.add(new ListLayoutModel(R.string.user_qr_code,R.drawable.toolicon));
-        modelList.add(new ListLayoutModel(R.string.user_email," ",R.drawable.toolicon));
-        modelList.add(new ListLayoutModel(R.string.user_hospital_name," ",R.drawable.toolicon));
-        modelList.add(new ListLayoutModel(R.string.user_department_name," ",R.drawable.toolicon));
-        modelList.add(new ListLayoutModel(R.string.user_level_name," ",R.drawable.toolicon));
-        modelList.add(new ListLayoutModel(R.string.user_speciality," ",R.drawable.toolicon));
+        modelList.add(new ListLayoutModel(R.string.user_qr_code,0));
+        modelList.add(new ListLayoutModel(R.string.user_email," ",0));
+        modelList.add(new ListLayoutModel(R.string.user_hospital_name," ",0));
+        modelList.add(new ListLayoutModel(R.string.user_department_name," ",0));
+        modelList.add(new ListLayoutModel(R.string.user_level_name," ",0));
+        modelList.add(new ListLayoutModel(R.string.user_speciality," ",0));
 
         mLayoutAdapter=new ListLayoutAdapter(this,modelList);
         mListviewLayout.setAdapter(mLayoutAdapter);
@@ -137,20 +137,20 @@ public class UserInfoActivity extends BaseActivity implements ListLayoutAdapter.
         userObject = user;
         modelList.set(0,new ListLayoutModel(R.string.user_logo,user.getPicUrl()));
         if(null != user && null !=user.getCustomer() )
-            modelList.set(1,new ListLayoutModel(R.string.user_name,user.getCustomer().getRealName(),R.drawable.toolicon));
+            modelList.set(1,new ListLayoutModel(R.string.user_name,user.getCustomer().getRealName(),0));
         if (null != user.getCustomer() && user.getCustomer().getSex() == 1 ) {
-            modelList.set(2, new ListLayoutModel(R.string.user_sex, "男", R.drawable.toolicon));
+            modelList.set(2, new ListLayoutModel(R.string.user_sex, "男", 0));
         }else if (null != user.getCustomer() && user.getCustomer().getSex() == 2 ) {
-            modelList.set(2, new ListLayoutModel(R.string.user_sex, "女", R.drawable.toolicon));
+            modelList.set(2, new ListLayoutModel(R.string.user_sex, "女", 0));
         }
         modelList.set(3,new ListLayoutModel(R.string.user_phone_number,user.getMobile(),0));
-        modelList.set(5,new ListLayoutModel(R.string.user_email,user.getEmail(),R.drawable.toolicon));
+        modelList.set(5,new ListLayoutModel(R.string.user_email,user.getEmail(),0));
         if(null != user.getMemberDoctor()) {
-            modelList.set(6, new ListLayoutModel(R.string.user_hospital_name, user.getMemberDoctor().getHospitalName(), R.drawable.toolicon));
+            modelList.set(6, new ListLayoutModel(R.string.user_hospital_name, user.getMemberDoctor().getHospitalName(), 0));
 
-            modelList.set(7, new ListLayoutModel(R.string.user_department_name, user.getMemberDoctor().getDepartmentName(), R.drawable.toolicon));
-            modelList.set(8, new ListLayoutModel(R.string.user_level_name, user.getMemberDoctor().getLevelName(), R.drawable.toolicon));
-            modelList.set(9, new ListLayoutModel(R.string.user_speciality, user.getMemberDoctor().getSpeciality(), R.drawable.toolicon));
+            modelList.set(7, new ListLayoutModel(R.string.user_department_name, user.getMemberDoctor().getDepartmentName(), 0));
+            modelList.set(8, new ListLayoutModel(R.string.user_level_name, user.getMemberDoctor().getLevelName(), 0));
+            modelList.set(9, new ListLayoutModel(R.string.user_speciality, user.getMemberDoctor().getSpeciality(), 0));
         }
         mLayoutAdapter.notifyDataSetChanged();
         closeDialog();

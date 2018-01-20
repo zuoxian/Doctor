@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Doctor</string>
+    <string name="app_name">医家盟医生端</string>
     <string name="ACCOUNT_TYPE">com.yjm.doctor.AccountType</string>
     <string name="ACCOUNT_LABEL">@string/app_name</string>
     <string name="title_activity_login">Sign in</string>
@@ -20,6 +20,8 @@
 
     <string name="em_user_remove">此用户已被移除</string>
     <string name="user_forbidden">用户被服务器限制连接</string>
+    <string name="connect_conflict">同一帐号已在其他设备登录</string>
+    <string name="Network_error">网络出错</string>
 
     <string name="login">登录</string>
     <string name="login_start">开始登录</string>
@@ -162,10 +164,12 @@
     <string name="account_withdrawal">账户提现</string>
 
     <!--账户信息 二级界面-->
-    <string name="name">姓名</string>a
+    <string name="name">开户名</string>
+    <string name="phone">预留手机号</string>
     <string name="id_card">身份证</string>
     <string name="alipay_account">支付宝账号</string>
-    <string name="wechatpay_account">银行开户行</string>
+    <string name="wechatpay_account">银行类别</string>
+    <string name="wechatpay_type">开户行支行</string>
     <string name="wechatpay_card">银行卡号</string>
 
     <string name="forget_password">找回密码</string>

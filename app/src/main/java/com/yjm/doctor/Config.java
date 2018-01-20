@@ -52,6 +52,10 @@ public class Config {
 
     public static String BC_EVENTTYPE = "bc";
 
+    public static String PUSH_TYPE = "stauts_push";
+
+    public static String MESSAGE_NUM = "message_num";
+
 
 
     public static int userId = 0;

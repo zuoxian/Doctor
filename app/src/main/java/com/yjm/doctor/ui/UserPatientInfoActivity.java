@@ -15,6 +15,7 @@ import com.yjm.doctor.Config;
 import com.yjm.doctor.R;
 import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.model.Customer;
+import com.yjm.doctor.model.Patient;
 import com.yjm.doctor.model.User;
 import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.model.UserPatientInfo;
@@ -80,7 +81,7 @@ public class UserPatientInfoActivity extends BaseActivity implements Callback<Us
         if(user!= null) {
             if (null != mUsericon && !TextUtils.isEmpty(user.getPicUrl()))
                 mUsericon.setImageURI(Uri.parse(user.getPicUrl()));
-            Customer customer = user.getCustomer();
+            Patient customer = user.getPatient();
             if(null != mUserName && null != customer) {
                 if (!TextUtils.isEmpty(customer.getRealName())) {
                     mUserName.setText(customer.getRealName());
@@ -91,7 +92,7 @@ public class UserPatientInfoActivity extends BaseActivity implements Callback<Us
                 if(1==customer.getSex()){
                     sex =  "男";
                 }
-                mUserInfo.setText("性别："+sex+"  年龄："+customer.getAge()+"岁  电话："+customer.getPhone() );
+                mUserInfo.setText("性别："+sex+"  年龄："+customer.getAge()+"岁  电话："+user.getMobile() );
             }
             if(0 < user.getId()) {
                 userAPI.getUserPatientInfo(user.getId(),this);

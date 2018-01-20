@@ -3,12 +3,14 @@ package com.yjm.doctor.ui;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.yjm.doctor.R;
 import com.yjm.doctor.model.User;
 import com.yjm.doctor.ui.base.BaseActivity;
+import com.yjm.doctor.util.SharedPreferencesUtil;
 import com.yjm.doctor.util.auth.UserService;
 
 import butterknife.BindView;
@@ -27,10 +29,19 @@ public class AccountBalanceActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        SharedPreferencesUtil sharedPreferencesUtil = SharedPreferencesUtil.instance(this);
+        User u = null;
+        try {
+            u = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
+//        Log.d("serial", "share2   ="+mUser.toString());
 
-        User u = UserService.getInstance(this).getActiveAccountInfo();
-        if(null != u && null != mTvBalance) {
-            mTvBalance.setText(u.getAmount()+"");
+        }catch (Exception e){
+            Log.e("error",e.getMessage());
+        }
+        if(null != u && null != mTvBalance && null != u.getCustomer()) {
+            mTvBalance.setText(u.getCustomer().getBalance()+"");
+        }else{
+            mTvBalance.setText("0");
         }
 
 

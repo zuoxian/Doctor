@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Pair;
@@ -21,6 +22,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMConversationListener;
@@ -29,6 +31,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.widget.EaseConversationList;
+import com.hyphenate.util.NetUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -150,7 +153,30 @@ public class EaseConversationListFragment extends EaseBaseFragment{
     protected EMConnectionListener connectionListener = new EMConnectionListener() {
         
         @Override
-        public void onDisconnected(int error) {
+        public void onDisconnected(final int error) {
+            if(null != getActivity()) {
+                getActivity().runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        if (error == EMError.USER_REMOVED) {
+                            // 显示帐号已经被移除
+                            Toast.makeText(getContext(),"账号异常，请重新登录~",Toast.LENGTH_SHORT);
+                        } else if (error == EMError.USER_LOGIN_ANOTHER_DEVICE) {
+                            // 显示帐号在其他设备登录
+                            Toast.makeText(getContext(),"您的账号在其他设备上使用~",Toast.LENGTH_SHORT);
+                        } else {
+                            if (NetUtils.hasNetwork(getActivity())) {
+                                Toast.makeText(getContext(), "连接不到聊天服务器~", Toast.LENGTH_SHORT);
+                                //连接不到聊天服务器
+                            }else {
+                                //当前网络不可用，请检查网络设置
+                                Toast.makeText(getContext(), "网络不可用~", Toast.LENGTH_SHORT);
+                            }
+                        }
+                    }
+                });
+            }
             if (error == EMError.USER_REMOVED || error == EMError.USER_LOGIN_ANOTHER_DEVICE || error == EMError.SERVER_SERVICE_RESTRICTED
                     || error == EMError.USER_KICKED_BY_CHANGE_PASSWORD || error == EMError.USER_KICKED_BY_OTHER_DEVICE) {
                 isConflict = true;
@@ -201,6 +227,7 @@ public class EaseConversationListFragment extends EaseBaseFragment{
      */
     protected void onConnectionDisconnected(){
         errorItemContainer.setVisibility(View.VISIBLE);
+
     }
     
 

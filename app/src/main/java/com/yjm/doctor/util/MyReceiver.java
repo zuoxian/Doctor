@@ -8,6 +8,9 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.yjm.doctor.Config;
+import com.yjm.doctor.model.EventType;
+import com.yjm.doctor.ui.LoginActivity;
 import com.yjm.doctor.ui.MainActivity;
 import com.yjm.doctor.ui.MessageActivity;
 
@@ -17,6 +20,7 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 import cn.jpush.android.api.JPushInterface;
+import de.greenrobot.event.EventBus;
 
 /**
  * 自定义接收器
@@ -33,6 +37,16 @@ public class MyReceiver extends BroadcastReceiver {
 		try {
 			Bundle bundle = intent.getExtras();
 			Log.d(TAG, "[MyReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
+			boolean isM001 = false;
+			String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
+			String content = bundle.getString(JPushInterface.EXTRA_ALERT);
+			String type = bundle.getString(JPushInterface.EXTRA_EXTRA);
+			Log.e("======","title= "+title +",content="+content+",type="+type);
+			if(!TextUtils.isEmpty(type) && type.contains("M001")){
+				isM001 = true;
+			}else{
+				EventBus.getDefault().post(new EventType(Config.PUSH_TYPE,type));
+			}
 
 			if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
 				String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
@@ -52,11 +66,15 @@ public class MyReceiver extends BroadcastReceiver {
 				Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
 
 				//打开自定义的Activity
-				Intent i = new Intent(context, MessageActivity.class);
-				i.putExtras(bundle);
-				//i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
-				context.startActivity(i);
+				if(!isM001) {
+					Intent i = new Intent(context, MessageActivity.class);
+					i.putExtras(bundle);
+					//i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					context.startActivity(i);
+				}else{
+					ActivityJumper.getInstance().buttonJumpTo(context, LoginActivity.class);
+				}
 
 			} else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
 				Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
@@ -69,7 +87,7 @@ public class MyReceiver extends BroadcastReceiver {
 				Log.d(TAG, "[MyReceiver] Unhandled intent - " + intent.getAction());
 			}
 		} catch (Exception e){
-
+			Log.e("error",e.getMessage());
 		}
 
 	}

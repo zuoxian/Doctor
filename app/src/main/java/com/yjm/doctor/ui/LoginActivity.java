@@ -136,6 +136,7 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Callb
                 finishLogin(user);
                 jumpMainActivity();
             }else if(Config.AUTH_STATUS_FAIL == user.getStatus()) {
+                finishLogin(user);
                 ActivityJumper.getInstance().buttonJumpTo(this, LoginFailureActivity.class);
                 finish();
             }else{

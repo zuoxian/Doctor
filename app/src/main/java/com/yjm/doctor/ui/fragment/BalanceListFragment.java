@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yjm.doctor.Config;
 import com.yjm.doctor.R;
@@ -34,7 +35,7 @@ import retrofit.client.Response;
  * Created by zs on 2017/12/16.
  */
 
-public class BalanceListFragment extends BaseLoadFragment<BalanceListBean> {
+public class BalanceListFragment extends BaseLoadFragment<BalanceListBean> implements BalanceListAdapter.ListAdapterListener{
 
     private static final String TAG = "BalanceListFragment";
 
@@ -64,6 +65,7 @@ public class BalanceListFragment extends BaseLoadFragment<BalanceListBean> {
     private UserAPI mUserAPI;
     private User mUser;
     private String tokenID;
+    private boolean max = false;
 
     private SharedPreferencesUtil sharedPreferencesUtil;
 
@@ -88,8 +90,23 @@ public class BalanceListFragment extends BaseLoadFragment<BalanceListBean> {
         mRecyclerView.setAdapter(mListAdapter);
         //这句就是添加我们自定义的分隔线
         mRecyclerView.addItemDecoration(new MyItemDecoration());
+
+        mListAdapter.setListener(this);
     }
 
+    @Override
+    public void onListEnded() {
+
+        if (mPage > 1) {
+            if(max && null != getActivity()) {
+                Toast.makeText(getActivity(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            onLoadData();
+        } else {
+//            Toast.makeText(getActivity(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     protected void onLoadData() {
@@ -106,6 +123,7 @@ public class BalanceListFragment extends BaseLoadFragment<BalanceListBean> {
 
     @Override
     public void onRefresh() {
+        max =false;
         mPage=1;
         onLoadData();
     }
@@ -144,6 +162,9 @@ public class BalanceListFragment extends BaseLoadFragment<BalanceListBean> {
             }
             if(!(0 < bean.getObj().getTotal() && bean.getObj().getTotal()<=10) && (mPage * 10)<bean.getObj().getTotal())
                 mPage = mPage + 1;
+            if((mPage * 10) >= bean.getObj().getTotal()){
+                max = true;
+            }
         } else {
             showConnectionRetry("请求异常，请重试");
         }

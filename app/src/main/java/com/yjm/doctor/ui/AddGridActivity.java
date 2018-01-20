@@ -124,7 +124,7 @@ public class AddGridActivity extends BaseActivity implements View.OnClickListene
             public void handle(String time) { // 回调接口，获得选中的时间
                 currentDate.setText(time.split(" ")[0]);
             }
-        }, "2010-01-01 00:00", now); // 初始化日期格式请用：yyyy-MM-dd HH:mm，否则不能正常运行
+        }, now, "2210-01-01 00:00"); // 初始化日期格式请用：yyyy-MM-dd HH:mm，否则不能正常运行
         customDatePicker1.showSpecificTime(false); // 不显示时和分
         customDatePicker1.setIsLoop(false); // 不允许循环滚动
 
@@ -135,7 +135,11 @@ public class AddGridActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void success(Message message, Response response) {
 
-        if(null != message && !TextUtils.isEmpty(message.getMsg())){
+        if(null != message && !TextUtils.isEmpty(message.getMsg())) {
+            if (true == message.getSuccess()) {
+
+                finish();
+            }
             SystemTools.show_msg(AddGridActivity.this, message.getMsg());
         }
 

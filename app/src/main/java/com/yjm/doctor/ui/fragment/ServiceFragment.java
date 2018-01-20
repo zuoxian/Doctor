@@ -2,6 +2,7 @@ package com.yjm.doctor.ui.fragment;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.yjm.doctor.Config;
 import com.yjm.doctor.R;
 import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.application.YjmApplication;
+import com.yjm.doctor.model.EventType;
 import com.yjm.doctor.model.SMessage;
 import com.yjm.doctor.model.SMessageBean;
 import com.yjm.doctor.model.User;
@@ -36,6 +38,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -100,12 +103,22 @@ public class ServiceFragment extends BaseFragment<UserBean> {
     }
 
     @Override
-    protected int getLayoutRes() { return R.layout.fragment_service; }
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
 
+    @Override
+    protected int getLayoutRes() {
+
+        return R.layout.fragment_service; }
+
+    int readnum = 0;
     @Override
     public void onResume() {
         super.onResume();
         if(null != getActivity()) {
+            readnum = 0;
             userAPI = RestAdapterUtils.getRestAPI(Config.MESSAGE, UserAPI.class, getActivity());
             userAPI.getMessage(1, 50, new Callback<SMessageBean>() {
                 @Override
@@ -113,7 +126,7 @@ public class ServiceFragment extends BaseFragment<UserBean> {
                     if (null != sMessageBean && sMessageBean.getSuccess()) {
                         if(null == sMessageBean.getObj())return ;
                         List<SMessage> list = sMessageBean.getObj().getRows();
-                        int readnum = 0;
+
                         for(SMessage sMessage : list){
                             if(!sMessage.isRead()){
                                 readnum = readnum + 1;
@@ -222,15 +235,35 @@ public class ServiceFragment extends BaseFragment<UserBean> {
             userLogo.setImageURI(Uri.parse(user.getPicUrl()));
         }
         if (null != mUserName && null != user.getCustomer() && !TextUtils.isEmpty(user.getCustomer().getRealName())) {
-            mUserName.setText(user.getCustomer().getRealName());
+            mUserName.setText(TextUtils.isEmpty(user.getCustomer().getRealName())?"":user.getCustomer().getRealName());
         }
-        if (null != mPositional && null != user.getMemberDoctor() && (!TextUtils.isEmpty(user.getMemberDoctor().getLevelName()) || !TextUtils.isEmpty(user.getMemberDoctor().getEducationName()))) {
-            String info=user.getMemberDoctor().getLevelName()+"\t\t"+user.getMemberDoctor().getEducationName();
+        if (null != mPositional && null != user.getMemberDoctor()) {
+            String info=(TextUtils.isEmpty(user.getMemberDoctor().getLevelName())?"":user.getMemberDoctor().getLevelName())+"\t\t"+(TextUtils.isEmpty(user.getMemberDoctor().getEducationName())?"":user.getMemberDoctor().getEducationName());
             mPositional.setText(info);
         }
-        if (null != mHospital && null != user.getMemberDoctor() && (!TextUtils.isEmpty(user.getMemberDoctor().getHospitalName()) || !TextUtils.isEmpty(user.getMemberDoctor().getDepartmentName()))) {
-            String info=user.getMemberDoctor().getHospitalName()+"\t\t"+user.getMemberDoctor().getDepartmentName();
+        if (null != mHospital && null != user.getMemberDoctor()) {
+            String info=(TextUtils.isEmpty(user.getMemberDoctor().getHospitalName())?"":user.getMemberDoctor().getHospitalName())+"\t\t"+(TextUtils.isEmpty(user.getMemberDoctor().getDepartmentName())?"":user.getMemberDoctor().getDepartmentName());
             mHospital.setText(info);
         }
+    }
+
+    public void onEventMainThread(EventType type){
+
+        if(Config.PUSH_TYPE.equals(type.getType()) && !TextUtils.isEmpty(type.getObject()+"")){
+            Log.e("error===1",readnum+"");
+                readnum = readnum + 1;
+            Log.e("error===2",readnum+"");
+                if(null != barNum1){
+                    barNum1.setText(String.valueOf(readnum));
+                    barNum1.setVisibility(View.VISIBLE);
+                }
+        }
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

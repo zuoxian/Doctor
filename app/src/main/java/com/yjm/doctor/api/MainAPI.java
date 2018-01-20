@@ -2,6 +2,7 @@ package com.yjm.doctor.api;
 
 import com.yjm.doctor.model.Appointment;
 import com.yjm.doctor.model.AppointmentBean;
+import com.yjm.doctor.model.AppointmentDetailInfo;
 import com.yjm.doctor.model.BannerBean;
 import com.yjm.doctor.model.ConsultationBean;
 import com.yjm.doctor.model.DataTypeBean;
@@ -36,4 +37,7 @@ public interface MainAPI {
 
     @POST("/basedata")
     void baseData(@Query("dataType") String dataType, Callback<DataTypeBean> callback);
+
+    @POST("/getAppointmentDetail")
+    void getAppointmentDetail(@Query("id") int id, Callback<AppointmentDetailInfo> callback);
 }

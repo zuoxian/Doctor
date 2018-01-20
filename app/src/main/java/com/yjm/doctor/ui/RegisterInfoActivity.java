@@ -274,6 +274,7 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
     void register(){
         if(null == mName || null == mHospitalName || null == mDepartmentName) {
             SystemTools.show_msg(this,R.string.register_fail);
+
             return;
         }
 //        if(TextUtils.isEmpty(mName.getText())) {
@@ -291,7 +292,13 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
 //            mDepartment.findFocus();
 //            return;
 //        }
+
+
         userBasicInfo = (User) this.getIntent().getSerializableExtra("object");
+        if(null == userBasicInfo){
+            userBasicInfo = UserService.getInstance(this).getActiveAccountInfo();
+        }
+
         userAPI.addDoctorInfo(userBasicInfo.getId(),mName.getText().toString(),mHospitalName.getText().toString(),mDepartmentName.getText().toString(),level.getId(),this);
         showDialog("正在注册中~");
     }

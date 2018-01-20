@@ -103,6 +103,7 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
 
         sharedPreferencesUtil = SharedPreferencesUtil.instance(this);
 
+
         tabNames = new String[]{"首页", "服务", "个人中心"};
 
         fragmentClss = new Class<?>[]{MainFragment.class, ServiceFragment.class,UserFragment.class};
@@ -141,6 +142,7 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
             Log.i("main", "mainactivity " + isGetUserInfo);
             if (isGetUserInfo) {
                 userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this,"");
+                showDialog("加载中~");
                 userAPI.getUserInfo(this);
             }
         }catch (Exception e){
@@ -209,6 +211,7 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
 
     @Override
     public void success(UserBean userBean, Response response) {
+        closeDialog();
         Log.i("serial","share1   ="+userBean);
 
         if(null != userBean && true == userBean.getSuccess() && null != userBean.getObj()){
@@ -219,6 +222,7 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
 
 
     private void finishLogin(User user) {
+        closeDialog();
         Log.i("main","mainactivity   user");
         status = user.getStatus();
 
@@ -226,8 +230,8 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
 
             sharedPreferencesUtil.saveObject("user",sharedPreferencesUtil.serialize(user));
 
-            User user1 = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
-            Log.d("serial", "share2   ="+user1.toString());
+            mUser = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
+            Log.d("serial", "share2   ="+mUser.toString());
 
             UserService.getInstance(this).signIn(user.getMobile(), user.getHxPassword(), user);
 

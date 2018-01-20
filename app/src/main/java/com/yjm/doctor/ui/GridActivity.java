@@ -185,16 +185,23 @@ public class GridActivity extends BaseActivity implements GridAdapter.OnListItem
 
     @Override
     public void OnItemClick(int position, final GridInfo model) {
-        if(null == model) return;
 
+    }
+
+    @Override
+    public void del(int position, final GridInfo model) {
+        if(null == model) return;
+        showDialog("正在删除");
         serviceAPI.delGrid(model.getId(), new Callback<GridBean>(){
 
             @Override
             public void success(GridBean message, Response response) {
+                closeDialog();
                 if(null != message){
                     SystemTools.show_msg(GridActivity.this,message.getMsg());
                     if(true == message.getSuccess()){
                         modelList.remove(model);
+                        SystemTools.show_msg(GridActivity.this,"删除成功~");
                         mLayoutAdapter.setData(modelList);
                         mLayoutAdapter.notifyDataSetChanged();
                     }
@@ -203,6 +210,7 @@ public class GridActivity extends BaseActivity implements GridAdapter.OnListItem
 
             @Override
             public void failure(RetrofitError error) {
+                closeDialog();
                 SystemTools.show_msg(GridActivity.this,"删除失败，请重试~");
             }
         } );

@@ -161,9 +161,13 @@ public class UpateUserActivity extends BaseActivity implements Callback<Message>
             }
 
             if(null != user.getMemberDoctor()) {
-                if (null != level) level.setText(user.getMemberDoctor().getLevelName());
-                if (null != hospital) hospital.setText(user.getMemberDoctor().getHospitalName());
-                if(null != department) department.setText(user.getMemberDoctor().getDepartmentName());
+                if (null != level) level.setText(TextUtils.isEmpty(user.getMemberDoctor().getLevelName())?"职称":user.getMemberDoctor().getLevelName());
+                if (null != hospital) hospital.setText(TextUtils.isEmpty(user.getMemberDoctor().getHospitalName())?"医院":user.getMemberDoctor().getHospitalName());
+                if(null != department) department.setText(TextUtils.isEmpty(user.getMemberDoctor().getDepartmentName())?"科室":user.getMemberDoctor().getDepartmentName());
+            }else{
+                if (null != level) level.setText("职称");
+                if (null != hospital) hospital.setText("医院");
+                if(null != department) department.setText("科室");
             }
 
         }
@@ -295,22 +299,22 @@ public class UpateUserActivity extends BaseActivity implements Callback<Message>
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == MainActivity.RESULT_OK) {
-            switch (requestCode) {
-                case TAKE_PICTURE:
-                    cutImage(tempUri); // 对图片进行裁剪处理
-                    break;
-                case CHOOSE_PICTURE:
-                    cutImage(data.getData()); // 对图片进行裁剪处理
-                    break;
-                case CROP_SMALL_PICTURE:
-                    if (data != null) {
-                        setImageToView(data); // 让刚才选择裁剪得到的图片显示在界面上
-                    }
-
-                    break;
-            }
-        }
+//        if (resultCode == MainActivity.RESULT_OK) {
+//            switch (requestCode) {
+//                case TAKE_PICTURE:
+//                    cutImage(tempUri); // 对图片进行裁剪处理
+//                    break;
+//                case CHOOSE_PICTURE:
+//                    cutImage(data.getData()); // 对图片进行裁剪处理
+//                    break;
+//                case CROP_SMALL_PICTURE:
+//                    if (data != null) {
+//                        setImageToView(data); // 让刚才选择裁剪得到的图片显示在界面上
+//                    }
+//
+//                    break;
+//            }
+//        }
 
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
@@ -383,7 +387,11 @@ public class UpateUserActivity extends BaseActivity implements Callback<Message>
                                     if(null != user){
                                         user.setHeadImage(userBean.getObj().getPics());
                                         user.setPicUrl(userBean.getObj().getPics());
+
                                     }
+                                    SystemTools.show_msg(UpateUserActivity.this,"头像修改成功~");
+                                }else {
+                                    SystemTools.show_msg(UpateUserActivity.this, "图片上传失败，请重传~");
                                 }
                             }else{
                                 SystemTools.show_msg(UpateUserActivity.this,"图片上传失败，请重传~");

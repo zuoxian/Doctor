@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -93,6 +94,12 @@ public class GridAdapter extends BaseAdapter {
 
             if(!TextUtils.isEmpty(time2))
                 holder.mTvTitle.setText(time2 + " "+week+time);
+            holder.mImgIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mClickListener.del(position,model);
+                }
+            });
         }
 
 
@@ -110,14 +117,15 @@ public class GridAdapter extends BaseAdapter {
     class ViewHolder {
         @BindView(R.id.tv_title)
         TextView mTvTitle;
-        @BindView(R.id.img_operation)
-        ImageView mImgIcon;
+        @BindView(R.id.del)
+        LinearLayout mImgIcon;
 
         ViewHolder(View view) { ButterKnife.bind(this, view);}
     }
 
     public interface OnListItemOnClickListener{
         void OnItemClick(int position, GridInfo model);
+        void del(int position, GridInfo model);
     }
 
     private OnListItemOnClickListener mClickListener;

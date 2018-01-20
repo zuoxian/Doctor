@@ -91,7 +91,7 @@ public class BusinessSettingActivity extends BaseActivity {
         mLayoutAdapter=new ListLayoutAdapter(this,modelList);
         mListviewLayout.setAdapter(mLayoutAdapter);
 
-        showDialog("加载中");
+
 
         mUserAPI= RestAdapterUtils.getRestAPI(Config.USER_BUSINESSSETTING,UserAPI.class,this,"");
         tokenID=UserService.getInstance(this).getTokenId(mUser.getId());
@@ -125,6 +125,7 @@ public class BusinessSettingActivity extends BaseActivity {
     }
 
     private void getSettingInfo(){
+        showDialog("加载中");
         if(tokenID != null && NetworkUtils.isNetworkAvaliable(this)) {
             mUserAPI.getBusinessSetting(tokenID, new Callback<BusinessSettingBean>() {
                 @Override
@@ -133,7 +134,7 @@ public class BusinessSettingActivity extends BaseActivity {
                     if (bean != null) {
                         mSettingBean=bean;
                         if (null != bean.getObj() && bean.getObj().isAcceptAppointment()){
-                            modelList.set(0,new ListLayoutModel(R.string.business_accept_appointments,"",0,R.drawable.receiveicon_sel));
+                            modelList.set(0, new ListLayoutModel(R.string.business_accept_appointments, "", 0, R.drawable.receiveicon_sel));
                         }else {
                             modelList.set(0,new ListLayoutModel(R.string.business_accept_appointments,"",0,R.drawable.receiveicon));
                         }
