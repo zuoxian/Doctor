@@ -19,6 +19,7 @@ import com.yjm.doctor.model.DataTypeBean;
 import com.yjm.doctor.model.EventType;
 import com.yjm.doctor.model.Message;
 import com.yjm.doctor.ui.base.BaseActivity;
+import com.yjm.doctor.ui.view.layout.ListLayoutModel;
 import com.yjm.doctor.util.ActivityJumper;
 import com.yjm.doctor.util.RestAdapterUtils;
 import com.yjm.doctor.util.SystemTools;
@@ -31,6 +32,7 @@ import de.greenrobot.event.EventBus;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.http.Query;
 
 /**
  * Created by zx on 2017/12/24.
@@ -62,6 +64,9 @@ public class UpateAccountActivity extends BaseActivity implements Callback<Messa
 
     private List<DataType> dataTypes;
 
+    private String dateTypesId = "";
+    private String dateTypeName = "";
+
     private void getBCs(){
         mainAPI.baseData("BC",new Callback<DataTypeBean>() {
             @Override
@@ -74,6 +79,10 @@ public class UpateAccountActivity extends BaseActivity implements Callback<Messa
                         return;
                     }
                     dataTypes = levelBean.getObj();
+                    if(null != dataTypes && dataTypes.size()>0){
+                        dateTypesId = dataTypes.get(0).getId();
+                        dateTypeName = dataTypes.get(0).getName();
+                    }
                 }
 
             }
@@ -99,9 +108,17 @@ public class UpateAccountActivity extends BaseActivity implements Callback<Messa
         return R.layout.activity_update_account;
     }
 
+//    @Query("bankAccount") String bankAccount,
+//    @Query("bankPhone") String bankPhone,
+//    @Query("bankIdNo") String bankIdNo,
+//    @Query("bankCode") String bankCode,
+//    @Query("bankName") String bankName,
+//    @Query("bankCard") String bankCard,
+//    @Query("alipay") String alipay,
+
     @Override
     public void finishButton() {
-        userAPI.updateAccount(account.getBankAccount(), account.getBankPhone(), account.getBankIdNo(), account.getBankCode(),account.getBankName(),account.getBankCard(), account.getAlipay(), new Callback<Message>() {
+        userAPI.updateAccount(account.getBankAccount(), account.getBankPhone(),account.getBankIdNo() , dateTypesId,account.getBankName(),account.getBankCard(), account.getAlipay(), new Callback<Message>() {
             @Override
             public void success(Message message, Response response) {
                 if(null != message && !TextUtils.isEmpty(message.getMsg())){
@@ -123,11 +140,13 @@ public class UpateAccountActivity extends BaseActivity implements Callback<Messa
         if(Config.BC_EVENTTYPE.equals(event.getType()) && null != event && null != event.getObject()){
 
             if (null != bankCode) bankCode.setText(((DataType) event.getObject()).getName());
+            dateTypesId = ((DataType) event.getObject()).getId();
 
 
         }
 
     }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -139,7 +158,8 @@ public class UpateAccountActivity extends BaseActivity implements Callback<Messa
         if(null != account) {
             if (null != bankAccount) bankAccount.setText(account.getBankAccount());
             if (null != bankIdNo) bankIdNo.setText(account.getBankIdNo());
-            if (null != bankCode) bankCode.setText(account.getBankCode());
+
+            if (null != bankCode) bankCode.setText(TextUtils.isEmpty(account.getBankCode())?dateTypeName:account.getBankCode());
             if (null != bankPhone) bankPhone.setText(account.getBankPhone());
             if (null != bankName) bankName.setText(account.getBankName());
             if (null != bankCard) bankCard.setText(account.getBankCard());
@@ -172,7 +192,7 @@ public class UpateAccountActivity extends BaseActivity implements Callback<Messa
                 (null != bankAccount && null != bankAccount.getText())?bankAccount.getText().toString():null,
                 (null != bankIdNo && null != bankIdNo.getText())?bankIdNo.getText().toString():null,
                 (null != bankPhone && null != bankPhone.getText())?bankPhone.getText().toString():null,
-                (null != bankCode && null != bankCode.getText())?bankCode.getText().toString():null,
+                (null != bankCode && null != bankCode.getText())?dateTypesId:null,
                 (null != bankName && null != bankName.getText())?bankName.getText().toString():null,
                 (null != bankCard && null != bankCard.getText())?bankCard.getText().toString():null,
                 (null != alipay && null != alipay.getText())?alipay.getText().toString():null,

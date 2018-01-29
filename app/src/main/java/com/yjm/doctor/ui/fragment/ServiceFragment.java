@@ -57,6 +57,7 @@ public class ServiceFragment extends BaseFragment<UserBean> {
     @BindView(R.id.username)
     TextView mUserName;
 
+
     @BindView(R.id.positional)
     TextView mPositional;
 
@@ -83,7 +84,7 @@ public class ServiceFragment extends BaseFragment<UserBean> {
     private UserAPI userAPI;
 
 
-    @OnClick(R.id.mail)
+    @OnClick(R.id.service_message)
     void mail(){
         if(null != getActivity()){
             ActivityJumper.getInstance().buttonJumpTo(getActivity(), MessageActivity.class);

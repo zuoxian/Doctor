@@ -21,8 +21,8 @@ public class EaseChatRowBigExpression extends EaseChatRowText{
     private ImageView imageView;
 
 
-    public EaseChatRowBigExpression(Context context, EMMessage message, int position, BaseAdapter adapter) {
-        super(context, message, position, adapter);
+    public EaseChatRowBigExpression(Context context, EMMessage message, int position, BaseAdapter adapter,String headerUrl,String myHeaderUrl) {
+        super(context, message, position, adapter,headerUrl,myHeaderUrl);
     }
     
     @Override

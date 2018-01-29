@@ -135,11 +135,11 @@ public class RegisterActivity extends BaseActivity implements Callback<UserBean>
                 mUserName.findFocus();
                 return;
             }
-            if(!(ObjectCheck.getInstance().checkPhoneNum(mUserName.getText().toString()))){
-                mUserName.setError("请输入正确的账号");
-                mUserName.findFocus();
-                return;
-            }
+//            if(!(ObjectCheck.getInstance().checkPhoneNum(mUserName.getText().toString()))){
+//                mUserName.setError("请输入正确的账号");
+//                mUserName.findFocus();
+//                return;
+//            }
         }
     }
 

@@ -3,6 +3,7 @@ package com.yjm.doctor.ui.adapter;
 import android.content.Context;
 import android.net.ParseException;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.yjm.doctor.ui.base.BaseLoadRecyclerAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 
 /**
@@ -78,12 +80,35 @@ public class MessagesAdapter extends BaseLoadRecyclerAdapter<SMessage> {
         }else {
             unread_msg_number.setVisibility(View.VISIBLE);
         }
+        String timeStr = longToString(item.getCreateTime(), "MM-dd HH:mm");
+        String createTime = longToString(item.getCreateTime(), "yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+        String now = sdf.format(new Date());
+
+        if(createTime == now){
+            timeStr = longToString(item.getCreateTime(), "HH:mm");
+        }
+        String createTimeH = longToString(item.getCreateTime(), "yyyy-MM-dd HH");
+        SimpleDateFormat sdfH = new SimpleDateFormat("yyyy-MM-dd HH", Locale.CHINA);
+        String nowH = sdfH.format(new Date());
+
+        SimpleDateFormat sdfm = new SimpleDateFormat("mm", Locale.CHINA);
+        String nowm = sdfm.format(new Date());
+        String createm = longToString(item.getCreateTime(), "mm");
+
+        if(nowH.equals(createTimeH)){
+            timeStr = (Integer.parseInt(nowm) - Integer.parseInt(createm))+"分钟前";
+        }
 
         if(item.getCreateTime()>0) {
-            time.setText(longToString(item.getCreateTime(), "MM-dd HH:mm"));
+            time.setText(timeStr);
+        }
+        String title1 = item.getPushContent();
+        if(title1.length()>17){
+            title1 = title1.substring(0,17)+"...";
         }
         title.setText(item.getTitle());
-        content.setText(item.getPushContent());
+        content.setText(title1);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

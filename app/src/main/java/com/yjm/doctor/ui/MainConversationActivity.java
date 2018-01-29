@@ -24,11 +24,13 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -44,26 +46,44 @@ import com.hyphenate.EMMessageListener;
 import com.hyphenate.EMMultiDeviceListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;
+import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
+import com.hyphenate.easeui.model.SerializableMap;
 import com.hyphenate.easeui.ui.EaseBaseActivity;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.util.EMLog;
 import com.yjm.doctor.Config;
 import com.yjm.doctor.Constant;
 import com.yjm.doctor.R;
+import com.yjm.doctor.api.MainAPI;
+import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.model.EventType;
+import com.yjm.doctor.model.User;
+import com.yjm.doctor.model.UserBean;
+import com.yjm.doctor.model.UserChar;
 import com.yjm.doctor.runtimepermissions.PermissionsManager;
 import com.yjm.doctor.runtimepermissions.PermissionsResultAction;
 import com.yjm.doctor.ui.base.BaseActivity;
 import com.yjm.doctor.ui.fragment.ConversationListFragment;
+import com.yjm.doctor.util.ActivityJumper;
 import com.yjm.doctor.util.Helper;
+import com.yjm.doctor.util.NetworkUtils;
+import com.yjm.doctor.util.RestAdapterUtils;
+import com.yjm.doctor.util.SystemTools;
+import com.yjm.doctor.util.auth.UserService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.greenrobot.event.EventBus;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 @SuppressLint("NewApi")
-public class MainConversationActivity extends EaseBaseActivity {
+public class MainConversationActivity extends EaseBaseActivity{
+
 
 	protected static final String TAG = "MainActivity";
 	// textview for unread message count
@@ -79,6 +99,13 @@ public class MainConversationActivity extends EaseBaseActivity {
 	public boolean isConflict = false;
 	// user account was removed
 	private boolean isCurrentAccountRemoved = false;
+	MainAPI mainAPI1;
+	Map<String, EMConversation> newConversations = new HashMap<String, EMConversation>();
+	Map<String, EMConversation> conversations;
+	Bundle bundle = new Bundle();
+	SerializableMap map = new SerializableMap();
+	static String useraccount;
+	private UserAPI userAPI;
 	
 
 	/**
@@ -91,6 +118,7 @@ public class MainConversationActivity extends EaseBaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this,"");
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 		    String packageName = getPackageName();
 		    PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -135,19 +163,104 @@ public class MainConversationActivity extends EaseBaseActivity {
 		conversationListFragment = new ConversationListFragment();
 		fragments = new Fragment[] { conversationListFragment};
 
-		getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, conversationListFragment)
+		conversations = EMClient.getInstance().chatManager().getAllConversations();
+		initData();
+		String lastKey ;
+		int i =0;
+		for(String useraccount : conversations.keySet()){
 
-				.commit();
+			mainAPI1 = RestAdapterUtils.getRestAPI(Config.USER_API,MainAPI.class,this);
+			this.useraccount = useraccount;
+			if(NetworkUtils.isNetworkAvaliable(this)) {
+				mainAPI1.getByHx(useraccount, new Callback<UserChar>() {
+					@Override
+					public void success(UserChar userChar, Response response) {
+						if(null != userChar && true == userChar.getSuccess() && null != userChar.getObj()){
+							List<User> user = userChar.getObj();
+							if(null != user && user.size()>0){
+
+//				if(!TextUtils.isEmpty(user.get(0).getPicUrl())){
+//					map.setHeaderUrl(user.get(0).getPicUrl());
+//				}
+								if(null != user.get(0).getCustomer() && !TextUtils.isEmpty(user.get(0).getCustomer().getRealName())){
+									String realName = user.get(0).getCustomer().getRealName();
+									EMConversation value = conversations.get("0-"+user.get(0).getMobile());
+									Log.e("newConversations",realName +"==="+value);
+									newConversations.put(realName,value);
+								}
+							}else{
+
+							}
+						}
+
+					}
+
+					@Override
+					public void failure(RetrofitError error) {
+						if(null != error && error.getMessage().contains("path $.obj")){
+
+							final UserService userService = UserService.getInstance(MainConversationActivity.this);
+							final User user = userService.getActiveAccountInfo();
+							userAPI.login(user.getMobile(),userService.getPwd(user.getId()),2,new Callback<UserBean>(){
+
+								@Override
+								public void success(UserBean userBean, Response response) {
+									if(null != userBean && null != userBean.getObj() && !TextUtils.isEmpty(userBean.getObj().getTokenId())){
+										userService.setTokenId(user.getId(),userBean.getObj().getTokenId());
+										ActivityJumper.getInstance().buttonJumpTo(MainConversationActivity.this,MainConversationActivity.class);
+										finish();
+									}
+								}
+
+								@Override
+								public void failure(RetrofitError error) {
+
+								}
+							});
+
+						}
+					}
+				});
+			}else{
+				SystemTools.show_msg(this, R.string.toast_msg_no_network);
+			}
+			i++;
+		}
+
+
+	}
+
+	private void initData(){
+		map.setConversations(conversations);
+		Log.e("newConversations",newConversations.size()+"  ==newConversations.size()");
+		if(newConversations.size()==0){
+
+			Log.e("newConversations",conversations.size()+"  ==conversations.size()");
+		}else {
+			map.setConversations(newConversations);
+			Log.e("newConversations",newConversations.size()+"  ==newConversations.size()");
+		}
+		bundle.putSerializable("object",map);
+		conversationListFragment.setArguments(bundle);
+
+		getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, conversationListFragment).commit();
 
 		//register broadcast receiver to receive the change of group from DemoHelper
 		registerBroadcastReceiver();
-		
-		
+
+
 		EMClient.getInstance().contactManager().setContactListener(new MyContactListener());
 		EMClient.getInstance().addClientListener(clientListener);
 		EMClient.getInstance().addMultiDeviceListener(new MyMultiDeviceListener());
 		//debug purpose only
-        registerInternalDebugReceiver();
+		registerInternalDebugReceiver();
+	}
+
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+
 	}
 
 
@@ -304,7 +417,9 @@ public class MainConversationActivity extends EaseBaseActivity {
 	         };
         broadcastManager.registerReceiver(broadcastReceiver, intentFilter);
     }
-	
+
+
+
 	public class MyContactListener implements EMContactListener {
         @Override
         public void onContactAdded(String username) {}
@@ -464,6 +579,7 @@ public class MainConversationActivity extends EaseBaseActivity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			moveTaskToBack(false);
+			onBackPressed();
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
@@ -580,4 +696,6 @@ public class MainConversationActivity extends EaseBaseActivity {
 			@NonNull int[] grantResults) {
 		PermissionsManager.getInstance().notifyPermissionsChange(permissions, grantResults);
 	}
+
+
 }

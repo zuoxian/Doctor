@@ -1,6 +1,7 @@
 package com.yjm.doctor.ui;
 
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.yjm.doctor.Config;
+import com.yjm.doctor.Constant;
 import com.yjm.doctor.R;
 import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.application.YjmApplication;
@@ -48,9 +50,15 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Callb
     TextView forgetPassword;
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
     public int initView() {
         if(1 == getIntent().getIntExtra("id",0)){
             YjmApplication.toolBackIcon = false;
+            Constant.islogin = true;
         }
         return R.layout.activity_login;
     }
@@ -77,6 +85,8 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Callb
         finish();
     }
 
+
+
     @OnClick(R.id.login)
     void login(){
         if(null != mUserName) {
@@ -85,11 +95,11 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Callb
                 mUserName.findFocus();
                 return;
             }
-            if(!(ObjectCheck.getInstance().checkPhoneNum(mUserName.getText().toString()))){
-                mUserName.setError("请输入正确的账号");
-                mUserName.findFocus();
-                return;
-            }
+//            if(!(ObjectCheck.getInstance().checkPhoneNum(mUserName.getText().toString()))){
+//                mUserName.setError("请输入正确的账号");
+//                mUserName.findFocus();
+//                return;
+//            }
 
         }
 
@@ -134,6 +144,7 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Callb
 
                 Log.i("main",user.toString());
                 finishLogin(user);
+                Constant.islogin = false;
                 jumpMainActivity();
             }else if(Config.AUTH_STATUS_FAIL == user.getStatus()) {
                 finishLogin(user);

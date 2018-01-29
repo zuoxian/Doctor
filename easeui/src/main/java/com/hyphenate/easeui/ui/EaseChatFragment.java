@@ -41,6 +41,7 @@ import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.domain.EaseEmojicon;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
+import com.hyphenate.easeui.model.EventType;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
@@ -60,6 +61,8 @@ import java.io.File;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * you can new an EaseChatFragment to use or you can inherit it to expand.
@@ -114,6 +117,9 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     protected MyItemClickListener extendMenuItemClickListener;
     protected boolean isRoaming = false;
     private ExecutorService fetchQueue;
+    private String headerUrl;
+    private String myHeaderUrl;
+    private String charName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -130,10 +136,13 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
 
         fragmentArgs = getArguments();
         // check if single chat or group chat
-        chatType = fragmentArgs.getInt(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
+        Bundle bundle = fragmentArgs.getBundle("content");
+        chatType = bundle.getInt(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
         // userId you are chat with or group id
-        toChatUsername = fragmentArgs.getString(EaseConstant.EXTRA_USER_ID);
-
+        toChatUsername = bundle.getString(EaseConstant.EXTRA_USER_ID);
+        headerUrl = fragmentArgs.getString("headerurl");
+        myHeaderUrl = fragmentArgs.getString("myheaderurl");
+        charName = fragmentArgs.getString("charname");
         super.onActivityCreated(savedInstanceState);
     }
 
@@ -161,6 +170,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
 
             @Override
             public void onSendMessage(String content) {
+                EventBus.getDefault().post(new EventType("EASE_CHAT",content));
                 sendTextMessage(content);
             }
 
@@ -195,16 +205,16 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     }
 
     protected void setUpView() {
-        titleBar.setTitle(toChatUsername);
+        titleBar.setTitle(charName);//设置标题
         if (chatType == EaseConstant.CHATTYPE_SINGLE) {
             // set title
             if(EaseUserUtils.getUserInfo(toChatUsername) != null){
                 EaseUser user = EaseUserUtils.getUserInfo(toChatUsername);
                 if (user != null) {
-                    titleBar.setTitle(user.getNick());
+                    titleBar.setTitle(charName);
                 }
             }
-            titleBar.setRightImageResource(R.drawable.ease_mm_title_remove);
+//            titleBar.setRightImageResource(R.drawable.ease_mm_title_remove);
         } else {
         	titleBar.setRightImageResource(R.drawable.ease_to_group_details_normal);
             if (chatType == EaseConstant.CHATTYPE_GROUP) {
@@ -307,8 +317,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     }
     
     protected void onMessageListInit(){
-        messageList.init(toChatUsername, chatType, chatFragmentHelper != null ? 
-                chatFragmentHelper.onSetCustomChatRowProvider() : null);
+        messageList.init(toChatUsername, headerUrl,myHeaderUrl,chatType, chatFragmentHelper != null ?
+                chatFragmentHelper.onSetCustomChatRowProvider() : null);//--
         setListItemClickListener();
         
         messageList.getListView().setOnTouchListener(new OnTouchListener() {

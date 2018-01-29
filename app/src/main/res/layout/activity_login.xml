@@ -34,7 +34,7 @@
             android:inputType="phone"
             android:background="@null"
             android:textCursorDrawable="@null"
-            android:text="18964025491"/>
+            android:text=""/>
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
@@ -55,7 +55,7 @@
             android:textColorHint="@color/login_font_color"
             android:hint="@string/login_password"
             android:background="@null"
-            android:text="123456"/>
+            android:text=""/>
     </LinearLayout>
     <Button
         android:id="@+id/login"

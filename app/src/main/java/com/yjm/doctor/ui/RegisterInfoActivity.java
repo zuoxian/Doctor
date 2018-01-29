@@ -77,6 +77,10 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
 
     private List<DepartMent> departMentList;
 
+    private int hospitalId = 0;
+    private int departmentId = 0;
+    private int levelId = 0;
+
 
     @Override
     public int initView() {
@@ -119,6 +123,7 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
                         Collections.sort(hospitalList);
                         if(null != mHospitalName && !TextUtils.isEmpty(hospitalList.get(0).getHospitalName())){
                             mHospitalName.setText(hospitalList.get(0).getHospitalName());
+                            hospitalId = hospitalList.get(0).getId();
                         }
                     }
 
@@ -152,6 +157,7 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
                         Collections.sort(departMentList);
                         if(null != mDepartmentName && !TextUtils.isEmpty(departMentList.get(0).getName())){
                             mDepartmentName.setText(departMentList.get(0).getName());
+                            departmentId = departMentList.get(0).getId();
                         }
                     }
 
@@ -171,6 +177,10 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
 
     }
 
+    private Hospital hospital;
+    private DepartMent departMent ;
+
+
     public void onEventMainThread(EventType event) {
         if(Config.LEVEL_EVENTTYPE.equals(event.getType())){
             if(null == mPositionalName){
@@ -188,7 +198,7 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
             }
             if(null == event.getObject())
                 return;
-            Hospital hospital =(Hospital) event.getObject();
+            hospital =(Hospital) event.getObject();
 
             mHospitalName.setText(hospital.getHospitalName());
         }
@@ -198,7 +208,7 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
             }
             if(null == event.getObject())
                 return;
-            DepartMent departMent =(DepartMent) event.getObject();
+            departMent =(DepartMent) event.getObject();
 
             mDepartmentName.setText(departMent.getName());
         }
@@ -299,7 +309,19 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
             userBasicInfo = UserService.getInstance(this).getActiveAccountInfo();
         }
 
-        userAPI.addDoctorInfo(userBasicInfo.getId(),mName.getText().toString(),mHospitalName.getText().toString(),mDepartmentName.getText().toString(),level.getId(),this);
+
+        if(null !=hospital){
+            hospitalId = hospital.getId();
+        }
+
+        if(null != departMent){
+            departmentId = departMent.getId();
+        }
+
+        if(null != level){
+            levelId = level.getId();
+        }
+        userAPI.addDoctorInfo(userBasicInfo.getId(),mName.getText().toString(),hospitalId,departmentId,levelId,this);
         showDialog("正在注册中~");
     }
 //    finishLogin(user);
@@ -336,8 +358,8 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
         Config.mobile = user.getMobile();
         setResult(11);
 
-        if(!(EMClient.getInstance().isLoggedInBefore())) {
-            EMClient.getInstance().login("2-" + user.getUsername(), userBasicInfo.getPwd(), new EMCallBack() {
+        if (!(EMClient.getInstance().isLoggedInBefore())){
+            EMClient.getInstance().login("2-" + user.getMobile(), user.getHxPassword(), new EMCallBack() {
                 @Override
                 public void onSuccess() {
 

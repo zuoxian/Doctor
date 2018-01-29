@@ -24,7 +24,7 @@ public class EaseChatRowFile extends EaseChatRow{
     private EMNormalFileMessageBody fileMessageBody;
 
     public EaseChatRowFile(Context context, EMMessage message, int position, BaseAdapter adapter) {
-        super(context, message, position, adapter);
+        super(context, message, position, adapter,"","");//---
     }
 
     @Override

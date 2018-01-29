@@ -13,10 +13,12 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import com.yjm.doctor.Config;
+import com.yjm.doctor.Constant;
 import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.application.baseInterface.IActivity;
 import com.yjm.doctor.model.User;
 import com.yjm.doctor.model.UserBean;
+import com.yjm.doctor.ui.LoginActivity;
 import com.yjm.doctor.util.auth.UserService;
 
 import butterknife.ButterKnife;
@@ -40,6 +42,21 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(Constant.isClose){
+            finish();
+        }
+        if(Constant.islogin){
+            if(this instanceof LoginActivity){
+                Log.e("islogin","islogin");
+            }else{
+                finish();
+            }
+
+        }
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

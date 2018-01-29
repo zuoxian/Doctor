@@ -1,6 +1,13 @@
 package com.yjm.doctor.ui;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -13,7 +20,9 @@ import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.ui.base.BaseActivity;
 import com.yjm.doctor.ui.view.layout.ListLayoutAdapter;
 import com.yjm.doctor.ui.view.layout.ListLayoutModel;
+import com.yjm.doctor.ui.view.layout.UserInfoListLayoutAdapter;
 import com.yjm.doctor.util.ActivityJumper;
+import com.yjm.doctor.util.Helper;
 import com.yjm.doctor.util.NetworkUtils;
 import com.yjm.doctor.util.RestAdapterUtils;
 import com.yjm.doctor.util.SharedPreferencesUtil;
@@ -30,30 +39,24 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class UserInfoActivity extends BaseActivity implements ListLayoutAdapter.OnListItemOnClickListener,Callback<UserBean>{
+public class UserInfoActivity extends BaseActivity implements UserInfoListLayoutAdapter.OnListItemOnClickListener,Callback<UserBean>{
 
     private static final String TAG = "UserInfoActivity";
 
     @BindView(R.id.listview_layout)
     ListView mListviewLayout;
 
-    @BindView(R.id.exit_button)
-    TextView exitButton;
+
 
     private List<ListLayoutModel> modelList=null;
-    private ListLayoutAdapter mLayoutAdapter;
+    private UserInfoListLayoutAdapter mLayoutAdapter;
     private UserAPI mUserAPI=null;
     private User mUser;
     private String tokenID;
     private SharedPreferencesUtil sharedPreferencesUtil;
 
 
-    @OnClick(R.id.exit_button)
-    void exitButton(){
-        UserService.getInstance(this).logout();
-        sharedPreferencesUtil.del("user");
-        ActivityJumper.getInstance().buttonIntJumpTo(this,LoginActivity.class, 1);
-    }
+
 
     @Override
     public int initView() {
@@ -65,32 +68,46 @@ public class UserInfoActivity extends BaseActivity implements ListLayoutAdapter.
         this.finish();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         modelList=new ArrayList<ListLayoutModel>();
         modelList.add(new ListLayoutModel(R.string.user_logo," "));
         modelList.add(new ListLayoutModel(R.string.user_name," ",0));
+        modelList.add(new ListLayoutModel(R.string.bir_date," ",0));
         modelList.add(new ListLayoutModel(R.string.user_sex," ",0));
         modelList.add(new ListLayoutModel(R.string.user_phone_number," ",0));
-        modelList.add(new ListLayoutModel(R.string.user_qr_code,0));
+
         modelList.add(new ListLayoutModel(R.string.user_email," ",0));
         modelList.add(new ListLayoutModel(R.string.user_hospital_name," ",0));
         modelList.add(new ListLayoutModel(R.string.user_department_name," ",0));
         modelList.add(new ListLayoutModel(R.string.user_level_name," ",0));
         modelList.add(new ListLayoutModel(R.string.user_speciality," ",0));
+        modelList.add(new ListLayoutModel(R.string.user_des," ",0));
+        modelList.add(new ListLayoutModel(R.string.user_pwd," ",0));
+        modelList.add(new ListLayoutModel(0,"0",0));
 
-        mLayoutAdapter=new ListLayoutAdapter(this,modelList);
+
+        mLayoutAdapter=new UserInfoListLayoutAdapter(this,modelList);
         mListviewLayout.setAdapter(mLayoutAdapter);
 
         mLayoutAdapter.setOnListItemOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
 
         showDialog("加载中");
 
         try {
             sharedPreferencesUtil = SharedPreferencesUtil.instance(this);
-            mUser = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
+            String obj = sharedPreferencesUtil.getObject("user");
+            if(null != obj)
+                mUser = (User) sharedPreferencesUtil.deSerialization(obj);
             if(null != mUser) {
                 tokenID = UserService.getInstance(this).getTokenId(mUser.getId());
             }
@@ -138,20 +155,41 @@ public class UserInfoActivity extends BaseActivity implements ListLayoutAdapter.
         modelList.set(0,new ListLayoutModel(R.string.user_logo,user.getPicUrl()));
         if(null != user && null !=user.getCustomer() )
             modelList.set(1,new ListLayoutModel(R.string.user_name,user.getCustomer().getRealName(),0));
+        if(null != user && null != user.getCustomer())
+            modelList.set(2,new ListLayoutModel(R.string.bir_date,user.getCustomer().getBirthdayStr(),0));
         if (null != user.getCustomer() && user.getCustomer().getSex() == 1 ) {
-            modelList.set(2, new ListLayoutModel(R.string.user_sex, "男", 0));
+            modelList.set(3, new ListLayoutModel(R.string.user_sex, "男", 0));
         }else if (null != user.getCustomer() && user.getCustomer().getSex() == 2 ) {
-            modelList.set(2, new ListLayoutModel(R.string.user_sex, "女", 0));
+            modelList.set(3, new ListLayoutModel(R.string.user_sex, "女", 0));
         }
-        modelList.set(3,new ListLayoutModel(R.string.user_phone_number,user.getMobile(),0));
+        modelList.set(4,new ListLayoutModel(R.string.user_phone_number,user.getMobile(),0));
         modelList.set(5,new ListLayoutModel(R.string.user_email,user.getEmail(),0));
         if(null != user.getMemberDoctor()) {
-            modelList.set(6, new ListLayoutModel(R.string.user_hospital_name, user.getMemberDoctor().getHospitalName(), 0));
+            modelList.set(6, new ListLayoutModel(R.string.user_hospital_name, TextUtils.isEmpty(user.getMemberDoctor().getHospitalName())?"":user.getMemberDoctor().getHospitalName(), 0));
 
-            modelList.set(7, new ListLayoutModel(R.string.user_department_name, user.getMemberDoctor().getDepartmentName(), 0));
-            modelList.set(8, new ListLayoutModel(R.string.user_level_name, user.getMemberDoctor().getLevelName(), 0));
-            modelList.set(9, new ListLayoutModel(R.string.user_speciality, user.getMemberDoctor().getSpeciality(), 0));
+            modelList.set(7, new ListLayoutModel(R.string.user_department_name, TextUtils.isEmpty(user.getMemberDoctor().getDepartmentName())?"":user.getMemberDoctor().getDepartmentName(), 0));
+            modelList.set(8, new ListLayoutModel(R.string.user_level_name, TextUtils.isEmpty(user.getMemberDoctor().getLevelName())?"无职称":user.getMemberDoctor().getLevelName(), 0));
+//            Log.e("speciality",user.getMemberDoctor().getSpeciality());
+            String spec = user.getMemberDoctor().getSpeciality();
+
+            if(!TextUtils.isEmpty(spec)){
+                if(spec.length()>14){
+                    spec = spec.substring(0,14)+"...";
+                }
+            }
+            String des = user.getMemberDoctor().getIntroduce();
+
+            if(!TextUtils.isEmpty(des)){
+                if(des.length()>14){
+                    des = des.substring(0,14)+"....";
+                }
+            }
+
+            modelList.set(9, new ListLayoutModel(R.string.user_speciality, spec, 0));
+            modelList.set(10, new ListLayoutModel(R.string.user_des, des, 0));
         }
+        modelList.set(11, new ListLayoutModel(R.string.user_pwd, "", R.drawable.comein));
+        modelList.set(12,new ListLayoutModel(0,"0",0));
         mLayoutAdapter.notifyDataSetChanged();
         closeDialog();
     }
@@ -184,13 +222,30 @@ public class UserInfoActivity extends BaseActivity implements ListLayoutAdapter.
 
     @Override
     public void finishButton() {
+
         if(null == userObject) return;
-        ActivityJumper.getInstance().buttonObjectJumpTo(this,UpateUserActivity.class,userObject);
+
+        if(1 == userObject.getStatus()){
+            ActivityJumper.getInstance().buttonObjectJumpTo(this,UpateUserActivity.class,userObject);
+        }else{
+            SystemTools.show_msg(this,"您的资料正在审核中，请等待审核结果");
+        }
+
     }
 
     @Override
     public void OnItemClick(int position, ListLayoutModel model) {
+        if(model!= null && model.getTitle()>0 && R.string.user_pwd == model.getTitle()){
+            ActivityJumper.getInstance().buttonJumpTo(this,PasswordActivity.class);
+        }
+    }
 
+    @Override
+    public void exitButton() {
+        UserService.getInstance(this).logout();
+        Helper.getInstance().logout(false,null);
+        sharedPreferencesUtil.del("user");
+        ActivityJumper.getInstance().buttonIntJumpTo(this,LoginActivity.class, 1);
     }
 
 

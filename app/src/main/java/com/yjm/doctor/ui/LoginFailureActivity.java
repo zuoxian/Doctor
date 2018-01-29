@@ -45,6 +45,13 @@ public class LoginFailureActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        ActivityJumper.getInstance().buttonIntJumpTo(this,LoginActivity.class,1);
+        finish();
+    }
+
     @OnClick(R.id.login_fail_button)
     void buttonClick(){
         ActivityJumper.getInstance().buttonJumpTo(this,RegisterInfoActivity.class);

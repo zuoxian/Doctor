@@ -1,6 +1,7 @@
 package com.hyphenate.easeui.utils;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,20 +34,27 @@ public class EaseUserUtils {
     
     /**
      * set user avatar
-     * @param username
+     * @param username//--
      */
-    public static void setUserAvatar(Context context, String username, ImageView imageView){
+    public static void setUserAvatar(Context context, String username, ImageView imageView,String headerUrl){
     	EaseUser user = getUserInfo(username);
         if(user != null && user.getAvatar() != null){
             try {
                 int avatarResId = Integer.parseInt(user.getAvatar());
                 Glide.with(context).load(avatarResId).into(imageView);
             } catch (Exception e) {
-                //use default avatar
+                //use default avatar  http://img.qrun360.com/ethealth/mmopen/2018/1/9/1515458340817.png
                 Glide.with(context).load(user.getAvatar()).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.ease_default_avatar).into(imageView);
+//                Glide.with(context).load("http://img.qrun360.com/ethealth/mmopen/2018/1/9/1515458340817.png").diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.ease_default_avatar).into(imageView);
+
             }
         }else{
-            Glide.with(context).load(R.drawable.ease_default_avatar).into(imageView);
+//
+            if(TextUtils.isEmpty(headerUrl)){
+                Glide.with(context).load(R.drawable.ease_default_avatar).into(imageView);
+            }else {
+                Glide.with(context).load(headerUrl).into(imageView);
+            }
         }
     }
     

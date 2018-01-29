@@ -18,7 +18,7 @@ public class EaseChatRowLocation extends EaseChatRow{
     private EMLocationMessageBody locBody;
 
     public EaseChatRowLocation(Context context, EMMessage message, int position, BaseAdapter adapter) {
-        super(context, message, position, adapter);
+        super(context, message, position, adapter,"","");//---
     }
 
     @Override

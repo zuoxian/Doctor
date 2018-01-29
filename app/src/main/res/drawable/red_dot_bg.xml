@@ -4,5 +4,6 @@
     <solid android:color="#FF0000" />
     <padding
         android:left="4dip"
-        android:right="4dip" />
+        android:right="4dip"
+        />
 </shape>

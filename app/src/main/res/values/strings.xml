@@ -97,6 +97,7 @@
     <string name="message">消息</string>
     <string name="message_info">预约提醒</string>
 
+
     <string name="string_loading">Loading&#8230;</string>
     <string name="string_retry">点击重新加载</string>
     <string name="string_fail">加载失败</string>
@@ -121,7 +122,7 @@
     <string name="appointment_info_time">时间</string>
     <string name="appointment_info_address">地点</string>
 
-    <string name="appointment_info_status">预约状态</string>
+    <string name="appointment_info_status">加号状态</string>
     <string name="appointment_info_detail">拒绝详情:</string>
 
     <string name="agreen">同意</string>
@@ -142,6 +143,7 @@
     <string name="user_logo">头像</string>
     <string name="user_name">姓名</string>
     <string name="user_sex">性别</string>
+    <string name="bir_date">出生日期</string>
     <string name="user_phone_number">手机号</string>
     <string name="user_qr_code">二维码</string>
     <string name="user_email">电子邮箱</string>
@@ -149,6 +151,8 @@
     <string name="user_department_name">专科</string>
     <string name="user_level_name">职称</string>
     <string name="user_speciality">特长介绍</string>
+    <string name="user_des">个人简介</string>
+    <string name="user_pwd">密码修改</string>
 
 
     <!--业务设置 二级界面-->

@@ -63,7 +63,7 @@ public class ContactUsActivity extends BaseActivity implements Callback<DataType
         if(null != dataTypeBean && true == dataTypeBean.getSuccess()){
             if(null != dataTypeBean.getObj() && dataTypeBean.getObj().size()>0){
                 for(DataType type : dataTypeBean.getObj()){
-                    if((!TextUtils.isEmpty(type.getName())) && "CU04".equals(type.getId()) && null != mUserAddressImage && !TextUtils.isEmpty(type.getIcon())){
+                    if("CU04".equals(type.getId()) && null != mUserAddressImage && !TextUtils.isEmpty(type.getIcon())){
                         mUserAddressImage.setImageURI(Uri.parse(type.getIcon()));
                     }
 

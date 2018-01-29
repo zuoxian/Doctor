@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.yjm.doctor.Config;
 import com.yjm.doctor.R;
@@ -52,6 +53,8 @@ public class MyCommentsActivity extends BaseLoadActivity<CommentBean> implements
 
     private LinearLayoutManager mLayoutManager;
 
+    private boolean max = false;
+
     @Override
     public int initView() {
         userAPI = RestAdapterUtils.getRestAPI(Config.USER_BUSINESSSETTING,UserAPI.class,this);
@@ -92,7 +95,15 @@ public class MyCommentsActivity extends BaseLoadActivity<CommentBean> implements
 
     @Override
     public void onListEnded() {
-
+        if (mPage > 1) {
+            if(max) {
+                Toast.makeText(this, "没有更多数据了", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            onLoadData();
+        } else {
+//
+        }
     }
 
     @Override
@@ -124,6 +135,7 @@ public class MyCommentsActivity extends BaseLoadActivity<CommentBean> implements
 
     @Override
     public void onRefresh() {
+        max =false;
         mPage = 1;
         onLoadData();
     }
@@ -141,6 +153,11 @@ public class MyCommentsActivity extends BaseLoadActivity<CommentBean> implements
                 setPageData(commentBean);
             } else {
                 onInitLoadData(commentBean);
+            }
+
+            if((mPage * 10) >= commentBean.getObj().getTotal()){
+
+                max = true;
             }
             if(!(0 < commentBean.getObj().getTotal() && commentBean.getObj().getTotal()<=10) && (mPage * 10)<commentBean.getObj().getTotal())
                 mPage = mPage + 1;

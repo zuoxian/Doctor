@@ -241,7 +241,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
         buttonSetModeVoice.setVisibility(View.GONE);
         buttonSetModeKeyboard.setVisibility(View.VISIBLE);
         buttonSend.setVisibility(View.GONE);
-        buttonMore.setVisibility(View.VISIBLE);
+//        buttonMore.setVisibility(View.VISIBLE);
         buttonPressToSpeak.setVisibility(View.VISIBLE);
         faceNormal.setVisibility(View.VISIBLE);
         faceChecked.setVisibility(View.INVISIBLE);
@@ -260,11 +260,11 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
         // buttonSend.setVisibility(View.VISIBLE);
         buttonPressToSpeak.setVisibility(View.GONE);
         if (TextUtils.isEmpty(editText.getText())) {
-            buttonMore.setVisibility(View.VISIBLE);
+//            buttonMore.setVisibility(View.VISIBLE);
             buttonSend.setVisibility(View.GONE);
         } else {
             buttonMore.setVisibility(View.GONE);
-            buttonSend.setVisibility(View.VISIBLE);
+//            buttonSend.setVisibility(View.VISIBLE);
         }
 
     }

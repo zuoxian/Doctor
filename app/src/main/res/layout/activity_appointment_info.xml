@@ -181,6 +181,7 @@
         android:orientation="horizontal"
         android:background="@drawable/bordersquarestyle"
         android:visibility="gone"
+        android:layout_marginTop="10dp"
         >
         <TextView
             android:layout_width="match_parent"
@@ -212,17 +213,17 @@
         android:background="@drawable/bordersquarestyle"
         android:visibility="gone"
         android:layout_gravity="center_vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         >
         <TextView
             android:layout_width="match_parent"
             android:layout_height="42dp"
-            android:textColor="@color/login_font_color"
+            android:textColor="@color/content"
             android:text="@string/appointment_info_detail"
             android:paddingLeft="20dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:drawablePadding="20dp"
-            android:drawableLeft="@drawable/address"
             />
         <TextView
             android:id="@+id/detail"
@@ -231,6 +232,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/login_font_color"
             android:paddingRight="20dp"
+            android:paddingBottom="10dp"
             android:gravity="center_vertical"
             android:layout_gravity="center"
             />

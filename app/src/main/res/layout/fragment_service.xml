@@ -70,6 +70,7 @@
 
 
     <LinearLayout
+        android:id="@+id/service_message"
         android:layout_width="match_parent"
         android:background="@drawable/bordersquarestyle"
         android:layout_height="wrap_content"

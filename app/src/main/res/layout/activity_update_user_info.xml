@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/whitecolor"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     >
@@ -23,11 +23,13 @@
         fresco:roundAsCircle="true"
         android:background="@drawable/business_setting"/>
 
+
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:id="@+id/realName"
-        android:hint="请输入用户名"
+        android:hint="请输入姓名"
         android:textColorHint="@color/login_font_color"
         android:textColor="@color/content"
         android:paddingLeft="20dp"
@@ -35,7 +37,29 @@
         android:background="@drawable/bordersquarestyle"
         android:layout_gravity="center"
         />
+    <RelativeLayout
+        android:id="@+id/selectDate"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@drawable/bordersquarestyle"
+        >
+        <TextView
+            android:id="@+id/currentDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:textColor="@color/content"
+            android:paddingLeft="20dp"
+            android:gravity="center_vertical"
+            android:textSize="15sp"
+            android:drawableRight="@drawable/calendar"
+            android:drawablePadding="10dp"
 
+            />
+
+    </RelativeLayout>
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="42dp"
@@ -120,6 +144,20 @@
         android:layout_height="wrap_content"
         android:id="@+id/speciality"
         android:hint="请输入您擅长内容"
+        android:textColorHint="@color/login_font_color"
+        android:textColor="@color/content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/bordersquarestyle"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/des"
+        android:hint="请输入您的个人简介"
         android:textColorHint="@color/login_font_color"
         android:textColor="@color/content"
         android:paddingLeft="20dp"

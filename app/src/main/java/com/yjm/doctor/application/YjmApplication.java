@@ -59,6 +59,7 @@ public class YjmApplication extends Application {
     }
 
 
+
     private void initEMClient(){
 
         EMOptions options = new EMOptions();

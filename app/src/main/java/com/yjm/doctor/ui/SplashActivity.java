@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 
 import com.yjm.doctor.Config;
+import com.yjm.doctor.Constant;
 import com.yjm.doctor.R;
 import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.application.YjmApplication;
@@ -32,6 +33,7 @@ import retrofit.client.Response;
 public class SplashActivity extends BaseActivity{
 
     private User mUser;
+    private UserAPI userAPI;
 
     private Handler handler = new Handler(){
         @Override
@@ -39,11 +41,29 @@ public class SplashActivity extends BaseActivity{
             super.handleMessage(msg);
 //            Log.e("userlogin","判断是否登录  "+ Config.userId+",tokenid="+UserService.getInstance(SplashActivity.this).getTokenId(mUser.getId())+"");
 
-            if((null != mUser && 0 != mUser.getId())){
+            if((null != mUser && 0 != mUser.getId()) && (Config.AUTH_STATUS_SUCCESS == mUser.getStatus() || Config.AUTH_STATUS_AUTH == mUser.getStatus())){
                 Log.e("userlogin","已经登录过了"+mUser.toString());
                 Config.userId = mUser.getId();
                 Config.mobile = mUser.getMobile();
+
                 jumper(MainActivity.class);
+                final UserService userService = UserService.getInstance(SplashActivity.this);
+                final User user = userService.getActiveAccountInfo();
+                userAPI.login(user.getMobile(),userService.getPwd(user.getId()),2,new retrofit.Callback<UserBean>(){
+
+                    @Override
+                    public void success(UserBean userBean, Response response) {
+                        if(null != userBean && null != userBean.getObj() && !TextUtils.isEmpty(userBean.getObj().getTokenId())){
+                            userService.setTokenId(user.getId(),userBean.getObj().getTokenId());
+                            userAPI.getUserInfo(this);
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                });
             }else{
                 Log.e("userlogin","没有登录过");
                 jumper(LaunchActivity.class);
@@ -60,6 +80,8 @@ public class SplashActivity extends BaseActivity{
 
     @Override
     public int initView() {
+        Constant.isClose = false;
+        Constant.islogin = false;
         return R.layout.activity_splash;
     }
 
@@ -72,7 +94,7 @@ public class SplashActivity extends BaseActivity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mUser = UserService.getInstance(this).getActiveAccountInfo();
-//
+      userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this,"");
         handler.sendEmptyMessageDelayed(0, 2000);
     }
 

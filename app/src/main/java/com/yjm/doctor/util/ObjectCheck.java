@@ -19,11 +19,11 @@ public class ObjectCheck {
         return objectCheck;
     }
 
-    public boolean checkPhoneNum(CharSequence num) {
-        if (TextUtils.isEmpty(num)) return false;
-        Pattern pattern = Pattern.compile("^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$");
-        return pattern.matcher(num).matches();
-    }
+//    public boolean checkPhoneNum(CharSequence num) {
+//        if (TextUtils.isEmpty(num)) return false;
+//        Pattern pattern = Pattern.compile("^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}$");
+//        return pattern.matcher(num).matches();
+//    }
 
 
     public boolean checkPwd(CharSequence pwd){

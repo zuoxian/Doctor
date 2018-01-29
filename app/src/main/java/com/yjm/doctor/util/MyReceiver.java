@@ -13,6 +13,7 @@ import com.yjm.doctor.model.EventType;
 import com.yjm.doctor.ui.LoginActivity;
 import com.yjm.doctor.ui.MainActivity;
 import com.yjm.doctor.ui.MessageActivity;
+import com.yjm.doctor.util.auth.UserService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,6 +32,7 @@ import de.greenrobot.event.EventBus;
  */
 public class MyReceiver extends BroadcastReceiver {
 	private static final String TAG = "JIGUANG-Example";
+	private SharedPreferencesUtil sharedPreferencesUtil;
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -38,14 +40,21 @@ public class MyReceiver extends BroadcastReceiver {
 			Bundle bundle = intent.getExtras();
 			Log.d(TAG, "[MyReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
 			boolean isM001 = false;
-			String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
-			String content = bundle.getString(JPushInterface.EXTRA_ALERT);
-			String type = bundle.getString(JPushInterface.EXTRA_EXTRA);
-			Log.e("======","title= "+title +",content="+content+",type="+type);
-			if(!TextUtils.isEmpty(type) && type.contains("M001")){
-				isM001 = true;
-			}else{
-				EventBus.getDefault().post(new EventType(Config.PUSH_TYPE,type));
+			if(null !=bundle) {
+				String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
+				String content = bundle.getString(JPushInterface.EXTRA_ALERT);
+				String type = bundle.getString(JPushInterface.EXTRA_EXTRA);
+				Log.e("======", "title= " + title + ",content=" + content + ",type=" + type);
+				if (!TextUtils.isEmpty(type) && type.contains("M001") ) {
+					isM001 = true;
+					EventBus.getDefault().post(new EventType(Config.REGISTER_STATUS, 1));
+
+				} else {
+					if(!TextUtils.isEmpty(type) && type.contains("M002")&& type.contains("\"status\":\"2\"")){//编辑审核通过
+						EventBus.getDefault().post(new EventType(Config.UPDATE_USER_STATUS, 2));
+					}
+					EventBus.getDefault().post(new EventType(Config.PUSH_TYPE, type));
+				}
 			}
 
 			if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
@@ -73,7 +82,7 @@ public class MyReceiver extends BroadcastReceiver {
 					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					context.startActivity(i);
 				}else{
-					ActivityJumper.getInstance().buttonJumpTo(context, LoginActivity.class);
+//					ActivityJumper.getInstance().buttonJumpTo(context, LoginActivity.class);
 				}
 
 			} else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {

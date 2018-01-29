@@ -2,8 +2,10 @@ package com.yjm.doctor.ui;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -26,6 +28,8 @@ import com.yjm.doctor.ui.base.BaseActivity;
 import com.yjm.doctor.util.RestAdapterUtils;
 import com.yjm.doctor.util.SystemTools;
 import com.yjm.doctor.util.auth.UserService;
+
+import java.math.BigDecimal;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -142,6 +146,16 @@ public class MainAppointmentsInfoActivity extends BaseActivity implements Callba
         return R.layout.activity_appointment_info;
     }
 
+    private double d(double v1,double v2,int scale){
+        if(scale<0){
+            throw new IllegalArgumentException(
+                    "The scale must be a positive integer or zero");
+        }
+        BigDecimal b1 = new BigDecimal(Double.toString(v1));
+        BigDecimal b2 = new BigDecimal(Double.toString(v2));
+        return b1.divide(b2,scale,BigDecimal.ROUND_HALF_UP).doubleValue();
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -182,9 +196,13 @@ public class MainAppointmentsInfoActivity extends BaseActivity implements Callba
              }
         }
 
+
+
         if(null != mMoney){
-            mMoney.setText("¥ "+user.getAmount());
+            mMoney.setText("¥ "+d(item.getAmount(),100,2));
         }
+
+
 
         if(null != mTime){
             if(!TextUtils.isEmpty(item.getAppointTime())){
@@ -194,7 +212,7 @@ public class MainAppointmentsInfoActivity extends BaseActivity implements Callba
 
         if(null != mAddress){
             if(!TextUtils.isEmpty(item.getAppointAddress())){
-                mTime.setText(item.getAppointAddress());
+                mAddress.setText(item.getAppointAddress());
             }
         }
         String status = "待确认";

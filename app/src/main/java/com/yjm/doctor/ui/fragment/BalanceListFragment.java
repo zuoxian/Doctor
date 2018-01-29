@@ -160,11 +160,12 @@ public class BalanceListFragment extends BaseLoadFragment<BalanceListBean> imple
             } else {
                 onInitLoadData(bean);
             }
-            if(!(0 < bean.getObj().getTotal() && bean.getObj().getTotal()<=10) && (mPage * 10)<bean.getObj().getTotal())
-                mPage = mPage + 1;
+
             if((mPage * 10) >= bean.getObj().getTotal()){
                 max = true;
             }
+            if(!(0 < bean.getObj().getTotal() && bean.getObj().getTotal()<=10) && (mPage * 10)<bean.getObj().getTotal())
+                mPage = mPage + 1;
         } else {
             showConnectionRetry("请求异常，请重试");
         }

@@ -99,7 +99,7 @@ public class EaseContactListFragment extends EaseBaseFragment {
     protected void setUpView() {
         EMClient.getInstance().addConnectionListener(connectionListener);
         
-        contactList = new ArrayList<EaseUser>();
+        contactList = new ArrayList<EaseUser>();//---
         getContactList();
         //init list
         contactListLayout.init(contactList);

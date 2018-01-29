@@ -11,9 +11,11 @@ import com.yjm.doctor.model.Message;
 import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.ui.base.BaseActivity;
 import com.yjm.doctor.util.ActivityJumper;
+import com.yjm.doctor.util.Helper;
 import com.yjm.doctor.util.NetworkUtils;
 import com.yjm.doctor.util.ObjectCheck;
 import com.yjm.doctor.util.RestAdapterUtils;
+import com.yjm.doctor.util.SharedPreferencesUtil;
 import com.yjm.doctor.util.SystemTools;
 import com.yjm.doctor.util.auth.UserService;
 
@@ -42,11 +44,13 @@ public class ForgetPwdActivity extends BaseActivity implements Callback<UserBean
     private UserAPI userAPI;
 
     private int vRequest = 0;
+    private SharedPreferencesUtil sharedPreferencesUtil;
 
     @Override
     public int initView() {
         YjmApplication.toolFinish = false;
         userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class,this);
+        sharedPreferencesUtil = SharedPreferencesUtil.instance(this);
         return R.layout.activity_forget;
     }
 
@@ -87,11 +91,11 @@ public class ForgetPwdActivity extends BaseActivity implements Callback<UserBean
                 mUserName.findFocus();
                 return;
             }
-            if(!(ObjectCheck.getInstance().checkPhoneNum(mUserName.getText().toString()))){
-                mUserName.setError("请输入正确的账号");
-                mUserName.findFocus();
-                return;
-            }
+//            if(!(ObjectCheck.getInstance().checkPhoneNum(mUserName.getText().toString()))){
+//                mUserName.setError("请输入正确的账号");
+//                mUserName.findFocus();
+//                return;
+//            }
         }
     }
 
@@ -134,8 +138,11 @@ public class ForgetPwdActivity extends BaseActivity implements Callback<UserBean
             SystemTools.show_msg(this, userBean.getMsg());
             if(2 == vRequest) {
                 if(null != userBean.getObj() && null != mPassword)
-                UserService.getInstance(this).setPwd(userBean.getObj().getId(), mPassword.getText().toString());
-                ActivityJumper.getInstance().buttonJumpTo(this,LoginActivity.class);
+//                UserService.getInstance(this).setPwd(userBean.getObj().getId(), mPassword.getText().toString());
+                UserService.getInstance(this).logout();
+                sharedPreferencesUtil.del("user");
+                Helper.getInstance().logout(false,null);
+                ActivityJumper.getInstance().buttonIntJumpTo(this, LoginActivity.class, 1);
                 finish();
             }
 

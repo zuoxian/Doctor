@@ -15,9 +15,17 @@ import com.hyphenate.exceptions.HyphenateException;
 
 public class EaseChatTextPresenter extends EaseChatRowPresenter {
 
+    private String headerUrl;
+    private String myHeaderUrl;
+
+    public EaseChatTextPresenter(String headerUrl,String myHeaderUrl){
+        this.headerUrl = headerUrl;
+        this.myHeaderUrl = myHeaderUrl;
+    }
+
     @Override
     protected EaseChatRow onCreateChatRow(Context cxt, EMMessage message, int position, BaseAdapter adapter) {
-        return new EaseChatRowText(cxt, message, position, adapter);
+        return new EaseChatRowText(cxt, message, position, adapter,headerUrl,myHeaderUrl);
     }
 
     @Override

@@ -28,12 +28,13 @@ public class CustomerDao extends AbstractDao<Customer, Long> {
         public final static Property Age = new Property(1, int.class, "age", false, "AGE");
         public final static Property Balance = new Property(2, float.class, "balance", false, "BALANCE");
         public final static Property Birthday = new Property(3, long.class, "birthday", false, "BIRTHDAY");
-        public final static Property GroupId = new Property(4, int.class, "groupId", false, "GROUP_ID");
-        public final static Property Phone = new Property(5, String.class, "phone", false, "PHONE");
-        public final static Property Point = new Property(6, int.class, "point", false, "POINT");
-        public final static Property RealName = new Property(7, String.class, "realName", false, "REAL_NAME");
-        public final static Property Sex = new Property(8, int.class, "sex", false, "SEX");
-        public final static Property UserId = new Property(9, int.class, "userId", false, "USER_ID");
+        public final static Property BirthdayStr = new Property(4, String.class, "birthdayStr", false, "BIRTHDAY_STR");
+        public final static Property GroupId = new Property(5, int.class, "groupId", false, "GROUP_ID");
+        public final static Property Phone = new Property(6, String.class, "phone", false, "PHONE");
+        public final static Property Point = new Property(7, int.class, "point", false, "POINT");
+        public final static Property RealName = new Property(8, String.class, "realName", false, "REAL_NAME");
+        public final static Property Sex = new Property(9, int.class, "sex", false, "SEX");
+        public final static Property UserId = new Property(10, int.class, "userId", false, "USER_ID");
     }
 
 
@@ -53,12 +54,13 @@ public class CustomerDao extends AbstractDao<Customer, Long> {
                 "\"AGE\" INTEGER NOT NULL ," + // 1: age
                 "\"BALANCE\" REAL NOT NULL ," + // 2: balance
                 "\"BIRTHDAY\" INTEGER NOT NULL ," + // 3: birthday
-                "\"GROUP_ID\" INTEGER NOT NULL ," + // 4: groupId
-                "\"PHONE\" TEXT," + // 5: phone
-                "\"POINT\" INTEGER NOT NULL ," + // 6: point
-                "\"REAL_NAME\" TEXT," + // 7: realName
-                "\"SEX\" INTEGER NOT NULL ," + // 8: sex
-                "\"USER_ID\" INTEGER NOT NULL );"); // 9: userId
+                "\"BIRTHDAY_STR\" TEXT," + // 4: birthdayStr
+                "\"GROUP_ID\" INTEGER NOT NULL ," + // 5: groupId
+                "\"PHONE\" TEXT," + // 6: phone
+                "\"POINT\" INTEGER NOT NULL ," + // 7: point
+                "\"REAL_NAME\" TEXT," + // 8: realName
+                "\"SEX\" INTEGER NOT NULL ," + // 9: sex
+                "\"USER_ID\" INTEGER NOT NULL );"); // 10: userId
     }
 
     /** Drops the underlying database table. */
@@ -78,20 +80,25 @@ public class CustomerDao extends AbstractDao<Customer, Long> {
         stmt.bindLong(2, entity.getAge());
         stmt.bindDouble(3, entity.getBalance());
         stmt.bindLong(4, entity.getBirthday());
-        stmt.bindLong(5, entity.getGroupId());
+ 
+        String birthdayStr = entity.getBirthdayStr();
+        if (birthdayStr != null) {
+            stmt.bindString(5, birthdayStr);
+        }
+        stmt.bindLong(6, entity.getGroupId());
  
         String phone = entity.getPhone();
         if (phone != null) {
-            stmt.bindString(6, phone);
+            stmt.bindString(7, phone);
         }
-        stmt.bindLong(7, entity.getPoint());
+        stmt.bindLong(8, entity.getPoint());
  
         String realName = entity.getRealName();
         if (realName != null) {
-            stmt.bindString(8, realName);
+            stmt.bindString(9, realName);
         }
-        stmt.bindLong(9, entity.getSex());
-        stmt.bindLong(10, entity.getUserId());
+        stmt.bindLong(10, entity.getSex());
+        stmt.bindLong(11, entity.getUserId());
     }
 
     @Override
@@ -105,20 +112,25 @@ public class CustomerDao extends AbstractDao<Customer, Long> {
         stmt.bindLong(2, entity.getAge());
         stmt.bindDouble(3, entity.getBalance());
         stmt.bindLong(4, entity.getBirthday());
-        stmt.bindLong(5, entity.getGroupId());
+ 
+        String birthdayStr = entity.getBirthdayStr();
+        if (birthdayStr != null) {
+            stmt.bindString(5, birthdayStr);
+        }
+        stmt.bindLong(6, entity.getGroupId());
  
         String phone = entity.getPhone();
         if (phone != null) {
-            stmt.bindString(6, phone);
+            stmt.bindString(7, phone);
         }
-        stmt.bindLong(7, entity.getPoint());
+        stmt.bindLong(8, entity.getPoint());
  
         String realName = entity.getRealName();
         if (realName != null) {
-            stmt.bindString(8, realName);
+            stmt.bindString(9, realName);
         }
-        stmt.bindLong(9, entity.getSex());
-        stmt.bindLong(10, entity.getUserId());
+        stmt.bindLong(10, entity.getSex());
+        stmt.bindLong(11, entity.getUserId());
     }
 
     @Override
@@ -133,12 +145,13 @@ public class CustomerDao extends AbstractDao<Customer, Long> {
             cursor.getInt(offset + 1), // age
             cursor.getFloat(offset + 2), // balance
             cursor.getLong(offset + 3), // birthday
-            cursor.getInt(offset + 4), // groupId
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // phone
-            cursor.getInt(offset + 6), // point
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // realName
-            cursor.getInt(offset + 8), // sex
-            cursor.getInt(offset + 9) // userId
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // birthdayStr
+            cursor.getInt(offset + 5), // groupId
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // phone
+            cursor.getInt(offset + 7), // point
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // realName
+            cursor.getInt(offset + 9), // sex
+            cursor.getInt(offset + 10) // userId
         );
         return entity;
     }
@@ -149,12 +162,13 @@ public class CustomerDao extends AbstractDao<Customer, Long> {
         entity.setAge(cursor.getInt(offset + 1));
         entity.setBalance(cursor.getFloat(offset + 2));
         entity.setBirthday(cursor.getLong(offset + 3));
-        entity.setGroupId(cursor.getInt(offset + 4));
-        entity.setPhone(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setPoint(cursor.getInt(offset + 6));
-        entity.setRealName(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setSex(cursor.getInt(offset + 8));
-        entity.setUserId(cursor.getInt(offset + 9));
+        entity.setBirthdayStr(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setGroupId(cursor.getInt(offset + 5));
+        entity.setPhone(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setPoint(cursor.getInt(offset + 7));
+        entity.setRealName(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setSex(cursor.getInt(offset + 9));
+        entity.setUserId(cursor.getInt(offset + 10));
      }
     
     @Override

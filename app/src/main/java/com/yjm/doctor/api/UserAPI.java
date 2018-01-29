@@ -46,7 +46,7 @@ public interface UserAPI {
     void register(@Query("username") String username, @Query("password") String password, @Query("isAdmin") int isAdmin,@Query("vcode") String vcode, Callback<UserBean> callback);
 
     @POST("/addDoctorInfo")
-    void addDoctorInfo(@Query("id") int id, @Query("realName") String realName, @Query("hospitalName") String hospitalName, @Query("departmentName") String departmentName, @Query("level") int level, Callback<UserBean> callback);
+    void addDoctorInfo(@Query("id") int id, @Query("realName") String realName, @Query("hospital") int hospitalName, @Query("department") int departmentName, @Query("level") int level, Callback<UserBean> callback);
 
     @POST("/getLevels")
     void getLevels(Callback<LevelBean> callback);
@@ -113,12 +113,21 @@ public interface UserAPI {
     @POST("/edit")
     void updateUserInfo(
             @Query("realName") String realName,
+            @Query("birthdayStr") String birthdayStr,
             @Query("sex") int sex,
             @Query("email") String email,
             @Query("hospital") int hospital,
             @Query("department") int department,
             @Query("level") int level,
             @Query("speciality") String speciality,
+            @Query("introduce") String introduce,
+            Callback<UserConfigBean> callback
+
+    );
+
+    @POST("/edit")
+    void updateUserInfo(
+            @Query("password") String password,
             Callback<UserConfigBean> callback
 
     );

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +17,16 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yjm.doctor.R;
 import com.yjm.doctor.model.DataType;
+import com.yjm.doctor.ui.LoginActivity;
+import com.yjm.doctor.util.ActivityJumper;
+import com.yjm.doctor.util.auth.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by zs on 2017/12/14.
@@ -94,6 +99,7 @@ public class ListLayoutAdapter extends BaseAdapter {
             if (model.getMsgColor() != 0){
                 holder.mTvMsg.setTextColor(mContext.getResources().getColor(model.getMsgColor()));
             }
+            Log.e("speciality adapter ",model.getMsg());
             holder.mTvMsg.setText(model.getMsg());
         }else {
             holder.mTvMsg.setVisibility(View.GONE);
@@ -110,6 +116,8 @@ public class ListLayoutAdapter extends BaseAdapter {
         }else {
             holder.mImgOperations.setVisibility(View.GONE);
         }
+
+
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,11 +141,15 @@ public class ListLayoutAdapter extends BaseAdapter {
         @BindView(R.id.img_operation)
         ImageView mImgOperations;
 
+
         ViewHolder(View view) { ButterKnife.bind(this, view);}
     }
 
+
+
     public interface OnListItemOnClickListener{
         void OnItemClick(int position,ListLayoutModel model);
+
     }
 
     private OnListItemOnClickListener mClickListener;

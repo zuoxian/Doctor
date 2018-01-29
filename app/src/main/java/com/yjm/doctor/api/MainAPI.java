@@ -6,7 +6,9 @@ import com.yjm.doctor.model.AppointmentDetailInfo;
 import com.yjm.doctor.model.BannerBean;
 import com.yjm.doctor.model.ConsultationBean;
 import com.yjm.doctor.model.DataTypeBean;
+import com.yjm.doctor.model.Message;
 import com.yjm.doctor.model.UserBean;
+import com.yjm.doctor.model.UserChar;
 
 import retrofit.Callback;
 import retrofit.http.GET;
@@ -40,4 +42,12 @@ public interface MainAPI {
 
     @POST("/getAppointmentDetail")
     void getAppointmentDetail(@Query("id") int id, Callback<AppointmentDetailInfo> callback);
+
+
+    @POST("/updateNewestConsultation")
+    void updateNewestConsultation(@Query("senderType") int senderType,@Query("receiverId") int receiverId,@Query("hxAccount") String hxAccount,@Query("lastContent") String lastContent, @Query("mtype") String mtype, Callback<Message> callback);
+
+    @POST("/getByHx")
+    void getByHx(@Query("hxAccounts") String hxAccounts,Callback<UserChar> callback);
+
 }

@@ -1,6 +1,9 @@
 package com.yjm.doctor.ui.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
@@ -21,6 +24,7 @@ import com.hyphenate.chat.EMConversation.EMConversationType;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
+import com.hyphenate.easeui.model.SerializableMap;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.hyphenate.easeui.widget.EaseConversationList.EaseConversationListHelper;
 import com.hyphenate.util.NetUtils;
@@ -29,9 +33,14 @@ import com.yjm.doctor.R;
 import com.yjm.doctor.ui.ChatActivity;
 import com.yjm.doctor.ui.MainActivity;
 
+import java.util.Map;
+
 public class ConversationListFragment extends EaseConversationListFragment {
 
     private TextView errorText;
+
+    private Bundle bundle;
+    private Map<String, EMConversation> conversations;
 
     @Override
     protected void initView() {
@@ -40,7 +49,30 @@ public class ConversationListFragment extends EaseConversationListFragment {
         errorItemContainer.addView(errorView);
         errorText = (TextView) errorView.findViewById(R.id.tv_connect_errormsg);
     }
-    
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        bundle = getArguments();
+
+        SerializableMap map = (SerializableMap)bundle.getSerializable("object");
+        conversations = map.getConversations();
+        Log.e("newConversations","conversations=1="+conversations.toString());
+        if(null != conversations){
+            setConversations(conversations);
+        }
+    }
+
+
+
+
+
+    @Override
+    public void setConversations(Map<String, EMConversation> conversations) {
+        this.conversations = conversations;
+        super.setConversations(conversations);
+    }
+
     @Override
     protected void setUpView() {
         super.setUpView();

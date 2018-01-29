@@ -66,6 +66,7 @@ public class SharedPreferencesUtil {
      */
     public Object deSerialization(String str) throws IOException,
             ClassNotFoundException {
+        if(null == str)return null;
         startTime = System.currentTimeMillis();
         String redStr = java.net.URLDecoder.decode(str, "UTF-8");
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(

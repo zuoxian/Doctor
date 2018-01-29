@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.yjm.doctor.Config;
 import com.yjm.doctor.R;
@@ -66,6 +67,7 @@ public class UserPatientsFragment extends BaseLoadFragment<PatientBean> implemen
     UserAPI userAPI ;
 
     private boolean isSearch = false;
+    private boolean max = false;
 
     public UserPatientsFragment() {
 
@@ -135,6 +137,7 @@ public class UserPatientsFragment extends BaseLoadFragment<PatientBean> implemen
 
     @Override
     public void onRefresh() {
+        max =false;
         mPage = 1;
         onLoadData();
     }
@@ -170,6 +173,10 @@ public class UserPatientsFragment extends BaseLoadFragment<PatientBean> implemen
                 onInitLoadData(subListPage);
             }
             Log.e("all",subListPage.getObj().getRows().size()+"");
+            if((mPage * 10) >= subListPage.getObj().getTotal()){
+
+                max = true;
+            }
             if(!(0 < subListPage.getObj().getTotal() && subListPage.getObj().getTotal()<=10) && (mPage * 10)<subListPage.getObj().getTotal())
                 mPage = mPage + 1;
         } else {
@@ -234,10 +241,15 @@ public class UserPatientsFragment extends BaseLoadFragment<PatientBean> implemen
 
     @Override
     public void onListEnded() {
+
         if (mPage > 1) {
+            if(max && null != getActivity()) {
+                Toast.makeText(getActivity(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+                return;
+            }
             onLoadData();
         } else {
-//            Toast.makeText(getActivity(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+//
         }
     }
 

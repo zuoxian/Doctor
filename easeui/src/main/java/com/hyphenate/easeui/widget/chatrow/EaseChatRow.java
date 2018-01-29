@@ -27,6 +27,12 @@ import com.hyphenate.util.DateUtils;
 import java.util.Date;
 
 public abstract class EaseChatRow extends LinearLayout {
+
+    private String headerUrl;
+    private String myHeaderUrl;
+
+
+
     public interface EaseChatRowActionCallback {
         void onResendClick(EMMessage message);
 
@@ -61,7 +67,7 @@ public abstract class EaseChatRow extends LinearLayout {
 
     private EaseChatRowActionCallback itemActionCallback;
 
-    public EaseChatRow(Context context, EMMessage message, int position, BaseAdapter adapter) {
+    public EaseChatRow(Context context, EMMessage message, int position, BaseAdapter adapter,String headerUrl,String myHeaderUrl) {
         super(context);
         this.context = context;
         this.message = message;
@@ -69,6 +75,8 @@ public abstract class EaseChatRow extends LinearLayout {
         this.adapter = adapter;
         this.activity = (Activity) context;
         inflater = LayoutInflater.from(context);
+        this.headerUrl = headerUrl;
+        this.myHeaderUrl = myHeaderUrl;
 
         initView();
     }
@@ -145,9 +153,9 @@ public abstract class EaseChatRow extends LinearLayout {
         if(userAvatarView != null) {
             //set nickname and avatar
             if (message.direct() == Direct.SEND) {
-                EaseUserUtils.setUserAvatar(context, EMClient.getInstance().getCurrentUser(), userAvatarView);
+                EaseUserUtils.setUserAvatar(context, EMClient.getInstance().getCurrentUser(), userAvatarView,myHeaderUrl);
             } else {
-                EaseUserUtils.setUserAvatar(context, message.getFrom(), userAvatarView);
+                EaseUserUtils.setUserAvatar(context, message.getFrom(), userAvatarView,headerUrl);
                 EaseUserUtils.setUserNick(message.getFrom(), usernickView);
             }
         }

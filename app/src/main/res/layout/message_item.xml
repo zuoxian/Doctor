@@ -5,76 +5,78 @@
     android:layout_height="wrap_content"
     android:id="@+id/item"
     android:background="@drawable/bordersquarestyle"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
     >
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/user_icon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         fresco:actualImageScaleType="fitXY"
         fresco:placeholderImageScaleType="fitXY"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="4dp"
+        android:layout_gravity="center_vertical"
         android:background="@drawable/micon"
         />
 
     <TextView
-        android:layout_centerVertical="true"
         android:id="@+id/unread_msg_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="1dp"
-        android:background="@drawable/ease_unread_dot"
-        android:gravity="center"
-        android:visibility="invisible"
-        android:textSize="12sp" />
+        android:background="@drawable/red_dot_bg1"
+        android:text="0"
+        android:textColor="#FF0000"
+        android:textSize="5dp"
+        android:layout_marginLeft="-8dp"
+        android:layout_marginTop="3dp"
+        android:visibility="visible"
+        android:layout_toRightOf="@id/tooltitle"
+        />
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_weight="1"
+        android:layout_marginLeft="10dp"
         android:layout_height="wrap_content"
         >
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginRight="20dp"
+            >
+
+
             <TextView
                 android:id="@+id/title"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/blackcolor"
                 android:layout_marginRight="15dp"
-
+                android:layout_weight="1"
+                android:layout_marginTop="6dp"
                 />
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/login_font_color"
+                android:drawablePadding="2dp"
+                />
+        </LinearLayout>
             <TextView
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/login_font_color"
+                android:layout_marginTop="10dp"
                 />
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/login_font_color"
-        android:drawablePadding="2dp"
-        />
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_gravity="center_horizontal"
-    android:gravity="center"
-    >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/comein"
-        android:layout_marginRight="20dp"
 
-        />
-</LinearLayout>
+
 
 </LinearLayout>

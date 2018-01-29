@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
     <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"/>
 
     <!-- Required -->
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -254,7 +255,17 @@
             android:label="@string/message"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".ui.PasswordActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/user_pwd"
+            android:screenOrientation="portrait"/>
+
         <activity android:name=".ui.SMessageInfoActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/message_info"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.SMessageContentActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/message_info"
             android:screenOrientation="portrait"/>

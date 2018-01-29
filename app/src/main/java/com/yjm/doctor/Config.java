@@ -16,6 +16,8 @@ public class Config {
 
     public static final String HOME_CONSULATION =  DOMAIN_URL + "/ethealth/api/consultation/doctor";
 
+    public static final String EASE_MESSAGE =  DOMAIN_URL + "/ethealth/api/consultation";
+
     public static final String HOME_APPOINTMENT =  DOMAIN_URL + "/ethealth/api/appointment/doctor";
 
     public static final String USER_BUSINESSSETTING = DOMAIN_URL + "/ethealth/api/doctor";
@@ -32,7 +34,7 @@ public class Config {
 
     public static final String MESSAGE = DOMAIN_URL +"/ethealth/api/message";
 
-
+    public static final String USER = "user_info";
 
     public static String DEFAULT_TOKENID = "1D96DACB84F21890ED9F4928FA8B352B";
 
@@ -85,6 +87,9 @@ public class Config {
 
     public static final String TAB = "tab";
 
+    public static final String REGISTER_STATUS = "register_status";
+
+    public static final String UPDATE_USER_STATUS = "update_user_status";
 
 
 }

@@ -26,6 +26,8 @@ public class EaseChatMessageList extends RelativeLayout{
     protected EMConversation conversation;
     protected int chatType;
     protected String toChatUsername;
+    protected String myHeaderUrl;
+    protected String headerUrl;
     protected EaseMessageAdapter messageAdapter;
 
     protected EaseMessageListItemStyle itemStyle;
@@ -58,12 +60,13 @@ public class EaseChatMessageList extends RelativeLayout{
      * @param chatType
      * @param customChatRowProvider
      */
-    public void init(String toChatUsername, int chatType, EaseCustomChatRowProvider customChatRowProvider) {
+    public void init(String toChatUsername, String headerUrl ,String myHeaderurl,int chatType, EaseCustomChatRowProvider customChatRowProvider) {
         this.chatType = chatType;
-        this.toChatUsername = toChatUsername;
-        
+        this.toChatUsername = toChatUsername;//--
+        this.myHeaderUrl = myHeaderurl;
+        this.headerUrl = headerUrl;
         conversation = EMClient.getInstance().chatManager().getConversation(toChatUsername, EaseCommonUtils.getConversationType(chatType), true);
-        messageAdapter = new EaseMessageAdapter(context, toChatUsername, chatType, listView);
+        messageAdapter = new EaseMessageAdapter(context, toChatUsername, headerUrl, myHeaderurl,chatType, listView);//--
         messageAdapter.setItemStyle(itemStyle);
         messageAdapter.setCustomChatRowProvider(customChatRowProvider);
         // set message adapter

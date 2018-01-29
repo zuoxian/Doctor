@@ -80,6 +80,7 @@
                 android:paddingLeft="1dp"
                 android:paddingRight="1dp"
                 android:paddingTop="3dp"
+                android:textColor="@color/content"
                 android:textSize="18sp"
                 android:imeOptions="actionSend"/>
 
@@ -89,6 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:visibility="gone"
                 >
             <ImageView
                 android:id="@+id/iv_face_normal"
@@ -106,7 +108,7 @@
                 android:layout_margin="1dip"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ease_chatting_biaoqing_btn_enable"
-                android:visibility="invisible" />
+                android:visibility="visible" />
             
             </RelativeLayout>
         </RelativeLayout>
@@ -117,6 +119,7 @@
             android:layout_height="32dip"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="10dp"
+            android:visibility="gone"
             android:background="@drawable/ease_type_select_btn" />
 
         <Button

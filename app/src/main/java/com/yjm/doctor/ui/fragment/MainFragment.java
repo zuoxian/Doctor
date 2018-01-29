@@ -83,6 +83,7 @@ public class MainFragment extends BaseFragment<BannerBean> implements IActivity{
         if(null != getActivity()) {
 
             UserService.getInstance(getActivity()).logout();
+            Helper.getInstance().logout(false,null);
             sharedPreferencesUtil.del("user");
             ActivityJumper.getInstance().buttonIntJumpTo(getActivity(), LoginActivity.class, 1);
         }
@@ -143,6 +144,11 @@ public class MainFragment extends BaseFragment<BannerBean> implements IActivity{
             refreshUIWithMessage();
         }
 
+//        if(Config.USER.equals(type.getType())){
+//            if(null == type.getObject())return;
+//            user = (User) type.getObject();
+//        }
+
     }
 
     @Override
@@ -160,25 +166,33 @@ public class MainFragment extends BaseFragment<BannerBean> implements IActivity{
     @Override
     public void onResume() {
         super.onResume();
+        if(null != mTooltitle)mTooltitle.setText("医家盟");
+        if(null != mToolicon)mToolicon.setVisibility(View.GONE);
+        if(null != mToolFinish)mToolFinish.setText("退出登录");
         EMClient.getInstance().chatManager().addMessageListener(messageListener);
         if(null != getActivity()) {
             sharedPreferencesUtil = SharedPreferencesUtil.instance(getActivity());
         }
         if(null != mIscheck && null != getActivity()){
             try {
-                user = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
+//                user = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
+                user = (User) UserService.getInstance(getActivity()).getActiveAccountInfo();
             }catch (Exception e){
                 Log.d("serial", "share2   ="+e.getMessage());
             }
 
             if(null != user && 2 == user.getStatus())
                 mIscheck.setVisibility(View.VISIBLE);
-            else
+            else {
                 mIscheck.setVisibility(View.GONE);
+            }
+            if(null != user && 1 == user.getStatus()){//登录审核通过后  退出按钮隐藏
+                if(null != mToolFinish)mToolFinish.setVisibility(View.GONE);
+            }else{
+                if(null != mToolFinish)mToolFinish.setVisibility(View.VISIBLE);
+            }
         }
-        if(null != mTooltitle)mTooltitle.setText("医家盟");
-        if(null != mToolicon)mToolicon.setVisibility(View.GONE);
-        if(null != mToolFinish)mToolFinish.setText("退出登录");
+
         updateUnreadLabel();
     }
 
@@ -191,6 +205,12 @@ public class MainFragment extends BaseFragment<BannerBean> implements IActivity{
 
             }
         });
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EMClient.getInstance().chatManager().removeMessageListener(messageListener);
     }
 
     public void updateUnreadLabel() {

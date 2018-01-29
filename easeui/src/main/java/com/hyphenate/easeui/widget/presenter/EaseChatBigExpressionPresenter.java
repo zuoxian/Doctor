@@ -12,9 +12,20 @@ import com.hyphenate.easeui.widget.chatrow.EaseChatRowBigExpression;
  */
 
 public class EaseChatBigExpressionPresenter extends EaseChatTextPresenter {
+
+    private String headerUrl;
+    private String myHeaderUrl;
+
+
+    public EaseChatBigExpressionPresenter(String headerUrl, String myHeaderUrl) {
+        super(headerUrl, myHeaderUrl);
+        this.headerUrl = headerUrl;
+        this.myHeaderUrl = myHeaderUrl;
+    }
+
     @Override
     protected EaseChatRow onCreateChatRow(Context cxt, EMMessage message, int position, BaseAdapter adapter) {
-        return new EaseChatRowBigExpression(cxt, message, position, adapter);
+        return new EaseChatRowBigExpression(cxt, message, position, adapter,headerUrl,myHeaderUrl);
     }
 
     @Override

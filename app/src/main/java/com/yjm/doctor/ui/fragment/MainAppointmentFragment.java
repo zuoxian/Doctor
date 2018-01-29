@@ -139,6 +139,13 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
         isLoading = true;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        max =false;
+        mPage = 1;
+        onLoadData();
+    }
 
     @Override
     public void onRefresh() {
@@ -174,16 +181,17 @@ public class MainAppointmentFragment extends BaseLoadFragment<AppointmentBean> i
                 showConnectionRetry("无新消息");
                 return;
             }
-            if (mPage == 1) {
-                setPageData(subListPage);
-            } else {
+//            if (mPage == 1) {
+//                setPageData(subListPage);
+//            } else {
                 onInitLoadData(subListPage);
-            }
-            if(!(0 < subListPage.getObj().getTotal() && subListPage.getObj().getTotal()<=10) && (mPage * 10)<subListPage.getObj().getTotal())
-                mPage = mPage + 1;
+//            }
+
             if((mPage * 10) >= subListPage.getObj().getTotal()){
                 max = true;
             }
+            if(!(0 < subListPage.getObj().getTotal() && subListPage.getObj().getTotal()<=10) && (mPage * 10)<subListPage.getObj().getTotal())
+                mPage = mPage + 1;
         } else {
             showConnectionRetry("请求异常，请重试");
         }

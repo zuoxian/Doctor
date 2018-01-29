@@ -124,10 +124,10 @@ public class AccountinfoActivity extends BaseActivity implements Callback<Accoun
             account = accountBean.getObj();
             modelListTop.add(new ListLayoutModel(R.string.name,account.getBankAccount(),0));
             modelListTop.add(new ListLayoutModel(R.string.phone,account.getBankPhone(),0));
-            modelListTop.add(new ListLayoutModel(R.string.id_card,account.getBankCard(),0));
-            modelListTop.add(new ListLayoutModel(R.string.wechatpay_account,account.getBankCode(),0));
+            modelListTop.add(new ListLayoutModel(R.string.id_card,account.getBankIdNo(),0));
+            modelListTop.add(new ListLayoutModel(R.string.wechatpay_account,account.getBankCodeZh(),0));
             modelListTop.add(new ListLayoutModel(R.string.wechatpay_type,account.getBankName(),0));
-            modelListTop.add(new ListLayoutModel(R.string.wechatpay_card,account.getBankIdNo(),0));
+            modelListTop.add(new ListLayoutModel(R.string.wechatpay_card,account.getBankCard(),0));
             mLayoutAdapterTop.setData(modelListTop);
             mLayoutAdapterTop.notifyDataSetChanged();
 //            mLayoutAdapterTop.setOnListItemOnClickListener(this);

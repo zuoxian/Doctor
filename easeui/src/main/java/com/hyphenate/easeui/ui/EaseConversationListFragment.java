@@ -53,6 +53,8 @@ public class EaseConversationListFragment extends EaseBaseFragment{
     protected FrameLayout errorItemContainer;
 
     protected boolean isConflict;
+    private Bundle bundle;
+    private Map<String, EMConversation> conversations;
     
     protected EMConversationListener convListener = new EMConversationListener(){
 
@@ -62,7 +64,15 @@ public class EaseConversationListFragment extends EaseBaseFragment{
 		}
     	
     };
-    
+
+    public Map<String, EMConversation> getConversations() {
+        return conversations;
+    }
+
+    public void setConversations(Map<String, EMConversation> conversations) {
+        this.conversations = conversations;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.ease_fragment_conversation_list, container, false);
@@ -99,7 +109,7 @@ public class EaseConversationListFragment extends EaseBaseFragment{
     
     @Override
     protected void setUpView() {
-        conversationList.addAll(loadConversationList());
+        conversationList.addAll(loadConversationList(conversations));
         conversationListView.init(conversationList);
         
         if(listItemClickListener != null){
@@ -154,29 +164,29 @@ public class EaseConversationListFragment extends EaseBaseFragment{
         
         @Override
         public void onDisconnected(final int error) {
-            if(null != getActivity()) {
-                getActivity().runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        if (error == EMError.USER_REMOVED) {
-                            // 显示帐号已经被移除
-                            Toast.makeText(getContext(),"账号异常，请重新登录~",Toast.LENGTH_SHORT);
-                        } else if (error == EMError.USER_LOGIN_ANOTHER_DEVICE) {
-                            // 显示帐号在其他设备登录
-                            Toast.makeText(getContext(),"您的账号在其他设备上使用~",Toast.LENGTH_SHORT);
-                        } else {
-                            if (NetUtils.hasNetwork(getActivity())) {
-                                Toast.makeText(getContext(), "连接不到聊天服务器~", Toast.LENGTH_SHORT);
-                                //连接不到聊天服务器
-                            }else {
-                                //当前网络不可用，请检查网络设置
-                                Toast.makeText(getContext(), "网络不可用~", Toast.LENGTH_SHORT);
-                            }
-                        }
-                    }
-                });
-            }
+//            if(null != getActivity()) {
+//                getActivity().runOnUiThread(new Runnable() {
+//
+//                    @Override
+//                    public void run() {
+//                        if (error == EMError.USER_REMOVED) {
+//                            // 显示帐号已经被移除
+//                            Toast.makeText(getContext(),"账号异常，请重新登录~",Toast.LENGTH_SHORT);
+//                        } else if (error == EMError.USER_LOGIN_ANOTHER_DEVICE) {
+//                            // 显示帐号在其他设备登录
+//                            Toast.makeText(getContext(),"您的账号在其他设备上使用~",Toast.LENGTH_SHORT);
+//                        } else {
+//                            if (NetUtils.hasNetwork(getActivity())) {
+//                                Toast.makeText(getContext(), "连接不到聊天服务器~", Toast.LENGTH_SHORT);
+//                                //连接不到聊天服务器
+//                            }else {
+//                                //当前网络不可用，请检查网络设置
+//                                Toast.makeText(getContext(), "网络不可用~", Toast.LENGTH_SHORT);
+//                            }
+//                        }
+//                    }
+//                });
+//            }
             if (error == EMError.USER_REMOVED || error == EMError.USER_LOGIN_ANOTHER_DEVICE || error == EMError.SERVER_SERVICE_RESTRICTED
                     || error == EMError.USER_KICKED_BY_CHANGE_PASSWORD || error == EMError.USER_KICKED_BY_OTHER_DEVICE) {
                 isConflict = true;
@@ -205,7 +215,7 @@ public class EaseConversationListFragment extends EaseBaseFragment{
             case MSG_REFRESH:
 	            {
 	            	conversationList.clear();
-	                conversationList.addAll(loadConversationList());
+	                conversationList.addAll(loadConversationList(conversations));
 	                conversationListView.refresh();
 	                break;
 	            }
@@ -245,9 +255,9 @@ public class EaseConversationListFragment extends EaseBaseFragment{
      * 
      * @return
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         +    */
-    protected List<EMConversation> loadConversationList(){
+    protected List<EMConversation> loadConversationList(Map<String, EMConversation> conversations){
         // get all conversations
-        Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
+
         Log.i("MEClient","会话内容="+conversations.size());
         List<Pair<Long, EMConversation>> sortList = new ArrayList<Pair<Long, EMConversation>>();
         /**
@@ -265,6 +275,7 @@ public class EaseConversationListFragment extends EaseBaseFragment{
             // Internal is TimSort algorithm, has bug
             sortConversationByLastChatTime(sortList);
         } catch (Exception e) {
+            Log.i("error",e.getMessage());
             e.printStackTrace();
         }
         List<EMConversation> list = new ArrayList<EMConversation>();

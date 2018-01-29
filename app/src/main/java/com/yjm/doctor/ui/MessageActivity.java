@@ -129,8 +129,13 @@ public class MessageActivity extends BaseLoadActivity<SMessageBean> implements M
 
     @Override
     public void onListItemClick(SMessage item) {
-        if(null != item){
-            ActivityJumper.getInstance().buttonIntJumpTo(this,SMessageInfoActivity.class,item.getId());
+
+        if(null != item ) {
+            if (("MT01".equals(item.getMtype()) || "MT03".equals(item.getMtype()))) {
+                ActivityJumper.getInstance().buttonIntJumpTo(this, SMessageContentActivity.class, item.getId());
+            } else {
+                ActivityJumper.getInstance().buttonIntJumpTo(this, SMessageInfoActivity.class, item.getId());
+            }
         }
     }
 
@@ -152,7 +157,7 @@ public class MessageActivity extends BaseLoadActivity<SMessageBean> implements M
     protected void onLoadData() {
 
         showLoad();
-;        if (mPage != 1) {
+       if (mPage != 1) {
             if(mProgressbar!=null)mProgressbar.setVisibility(View.VISIBLE);
         }
         userAPI.getMessage(mPage,10,this);
@@ -240,10 +245,14 @@ public class MessageActivity extends BaseLoadActivity<SMessageBean> implements M
 //            } else {
 //
 //            }
-            if(!(0 < commentBean.getObj().getTotal() && commentBean.getObj().getTotal()<=10) && (mPage * 10)<commentBean.getObj().getTotal())
-                mPage = mPage + 1;
+
+
             if((mPage * 10) >= commentBean.getObj().getTotal()){
+
                 max = true;
+            }
+            if(!(0 < commentBean.getObj().getTotal() && commentBean.getObj().getTotal()<=10) && (mPage * 10)<commentBean.getObj().getTotal()) {
+                mPage = mPage + 1;
             }
         } else {
             showConnectionRetry("请求异常，请重试");

@@ -15,10 +15,12 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -40,6 +42,7 @@ import com.yjm.doctor.model.User;
 import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.model.UserConfigBean;
 import com.yjm.doctor.ui.base.BaseActivity;
+import com.yjm.doctor.ui.view.CustomDatePicker;
 import com.yjm.doctor.util.ActivityJumper;
 import com.yjm.doctor.util.NetworkUtils;
 import com.yjm.doctor.util.RestAdapterUtils;
@@ -54,8 +57,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -72,7 +77,7 @@ import retrofit.mime.TypedFile;
  * Created by zx on 2017/12/24.
  */
 
-public class UpateUserActivity extends BaseActivity implements Callback<Message>,IAdd{
+public class UpateUserActivity extends BaseActivity implements Callback<Message>,IAdd, View.OnClickListener{
 
     @BindView(R.id.iv_image)
     SimpleDraweeView headImageFile;
@@ -84,6 +89,9 @@ public class UpateUserActivity extends BaseActivity implements Callback<Message>
     TextView hospital;
     @BindView(R.id.department)
     TextView department;
+
+    @BindView(R.id.des)
+    EditText des;
 
     @BindView(R.id.level)
     TextView level;
@@ -110,7 +118,9 @@ public class UpateUserActivity extends BaseActivity implements Callback<Message>
     private DepartMent departMent;
     private Level level2;
 
-
+    private RelativeLayout selectDate;
+    private TextView currentDate;
+    private CustomDatePicker customDatePicker1, customDatePicker2;
 
 
 
@@ -133,6 +143,8 @@ public class UpateUserActivity extends BaseActivity implements Callback<Message>
 
     private UserAPI userAPIHospital;
 
+    private String date;
+
     private SharedPreferencesUtil sharedPreferencesUtil = null;
 
     @Override
@@ -150,8 +162,10 @@ public class UpateUserActivity extends BaseActivity implements Callback<Message>
         if(null != user) {
             if (null != headImageFile) headImageFile.setImageURI(Uri.parse(user.getPicUrl()));;
             if (null != realName) realName.setText(null == user.getCustomer() ? "": user.getCustomer().getRealName());
+            if (null != currentDate) currentDate.setText(null == user.getCustomer() ? "": user.getCustomer().getBirthdayStr());
             if (null != email) email.setText(user.getEmail());
             if (null != speciality) speciality.setText(null == user.getMemberDoctor()? "":user.getMemberDoctor().getSpeciality());
+            if (null != des) des.setText(null == user.getMemberDoctor()? "":user.getMemberDoctor().getIntroduce());
             if(null != user.getCustomer()){
                 if(1 == user.getCustomer().getSex()){
                     male.setChecked(true);
@@ -184,6 +198,11 @@ public class UpateUserActivity extends BaseActivity implements Callback<Message>
                 }
             });
         }
+
+        selectDate = (RelativeLayout) findViewById(R.id.selectDate);
+        selectDate.setOnClickListener(this);
+        currentDate = (TextView) findViewById(R.id.currentDate);
+        initDatePicker();
     }
 
     @OnClick(R.id.hospital)
@@ -245,9 +264,37 @@ public class UpateUserActivity extends BaseActivity implements Callback<Message>
     }
 
     private int sex;
+
     @Override
-    protected void onResume() {
-        super.onResume();
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.selectDate:
+                // 日期格式为yyyy-MM-dd
+                customDatePicker1.show(currentDate.getText().toString());
+                date = currentDate.getText().toString();
+                break;
+
+        }
+    }
+
+    private void initDatePicker() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
+        String now = sdf.format(new Date());
+        if(null != user && null != user.getCustomer()&& !TextUtils.isEmpty(user.getCustomer().getBirthdayStr())){
+            currentDate.setText(user.getCustomer().getBirthdayStr());
+        }else {
+            currentDate.setText(now.split(" ")[0]);
+        }
+        date = now.split(" ")[0];
+
+        customDatePicker1 = new CustomDatePicker(this, new CustomDatePicker.ResultHandler() {
+            @Override
+            public void handle(String time) { // 回调接口，获得选中的时间
+                currentDate.setText(time.split(" ")[0]);
+            }
+        },"1400-01-01 00:00" , now); // 初始化日期格式请用：yyyy-MM-dd HH:mm，否则不能正常运行
+        customDatePicker1.showSpecificTime(false); // 不显示时和分
+        customDatePicker1.setIsLoop(false); // 不允许循环滚动
 
 
     }
@@ -299,22 +346,7 @@ public class UpateUserActivity extends BaseActivity implements Callback<Message>
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == MainActivity.RESULT_OK) {
-//            switch (requestCode) {
-//                case TAKE_PICTURE:
-//                    cutImage(tempUri); // 对图片进行裁剪处理
-//                    break;
-//                case CHOOSE_PICTURE:
-//                    cutImage(data.getData()); // 对图片进行裁剪处理
-//                    break;
-//                case CROP_SMALL_PICTURE:
-//                    if (data != null) {
-//                        setImageToView(data); // 让刚才选择裁剪得到的图片显示在界面上
-//                    }
-//
-//                    break;
-//            }
-//        }
+
 
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
@@ -385,8 +417,16 @@ public class UpateUserActivity extends BaseActivity implements Callback<Message>
                                 if (null != headImageFile && !TextUtils.isEmpty(userBean.getObj().getPics())) {
                                     headImageFile.setImageURI(Uri.parse(userBean.getObj().getPics()));
                                     if(null != user){
+                                        if(null != headImageFile)headImageFile.setImageURI(Uri.parse(userBean.getObj().getPics()));//显示图片
                                         user.setHeadImage(userBean.getObj().getPics());
                                         user.setPicUrl(userBean.getObj().getPics());
+                                        user.setStatus(2);
+                                        try {
+                                            sharedPreferencesUtil.saveObject("user",sharedPreferencesUtil.serialize(user));
+                                        }catch (Exception e){
+                                            Log.e("error",e.getMessage());
+                                        }
+
 
                                     }
                                     SystemTools.show_msg(UpateUserActivity.this,"头像修改成功~");
@@ -577,14 +617,18 @@ public class UpateUserActivity extends BaseActivity implements Callback<Message>
 
     @Override
     public void add() {
+//        Log.e("date  --", currentDate.getText().toString());
             userAPI1.updateUserInfo(
-                    (null != realName && null != realName.getText()) ? realName.getText().toString() : null,
+                    (null != realName && null != realName.getText()) ? realName.getText().toString() : "",
+                    (null != currentDate && null != currentDate.getText()) ? currentDate.getText().toString() : "",
                     sex,
-                    (null != email && null != email.getText()) ? email.getText().toString() : null,
+                    (null != email && null != email.getText()) ? email.getText().toString() : "",
                     (null != hospital1) ? hospital1.getId() : (null != user.getMemberDoctor())?user.getMemberDoctor().getHospital():0,
+
                     (null != departMent) ? departMent.getId() : (null != user.getMemberDoctor())?user.getMemberDoctor().getDepartment():0,
                     (null != level2) ? level2.getId() : (null != user.getMemberDoctor())?user.getMemberDoctor().getLevel():0,
-                    (null != speciality && null != speciality.getText()) ? speciality.getText().toString() : null,
+                    (null != speciality && null != speciality.getText()) ? speciality.getText().toString() : "",
+                    (null != des && null != des.getText()) ? des.getText().toString() : "",
                     new Callback<UserConfigBean>() {
                         @Override
                         public void success(UserConfigBean user1, Response response) {
@@ -592,15 +636,19 @@ public class UpateUserActivity extends BaseActivity implements Callback<Message>
                             try {
                                 if(null != user1 && true == user1.getSuccess() && null != user1.getObj()){
                                     if(null != user) {
+                                        user.setStatus(2);
                                         if (null != user.getCustomer()){
                                             user.getCustomer().setRealName(user1.getObj().getRealName());
                                             user.getCustomer().setSex(sex);
+                                            Log.e("eerrr",user1.getObj().getBirthdayStr());
+                                            user.getCustomer().setBirthdayStr(user1.getObj().getBirthdayStr());
                                         }
                                         user.setEmail(user1.getObj().getEmail());
                                         if(null != user.getMemberDoctor()) {
                                             if(null != hospital1) {
                                                 user.getMemberDoctor().setHospital(hospital1.getId());
                                                 user.getMemberDoctor().setHospitalName(hospital1.getHospitalName());
+
                                             }
                                             if(null != departMent) {
                                                 user.getMemberDoctor().setDepartment(departMent.getId());
@@ -608,13 +656,16 @@ public class UpateUserActivity extends BaseActivity implements Callback<Message>
                                             }
                                             if(null != level2) {
                                                 user.getMemberDoctor().setLevel(level2.getId());
-                                                user.getMemberDoctor().setLevelName(level2.getName());
+                                                user.getMemberDoctor().setLevelName(TextUtils.isEmpty(level2.getName())?"无职称":level2.getName());
                                                 user.getMemberDoctor().setSpeciality(user1.getObj().getSpeciality());
+                                            }
+                                            if(!TextUtils.isEmpty(user1.getObj().getIntroduce())){
+                                                user.getMemberDoctor().setIntroduce(user1.getObj().getIntroduce());
                                             }
                                         }
                                     }
                                     sharedPreferencesUtil.saveObject("user",sharedPreferencesUtil.serialize(user));
-                                    SystemTools.show_msg(UpateUserActivity.this,"添加成功");
+                                    SystemTools.show_msg(UpateUserActivity.this,"添加成功，等待审核~");
                                     finish();
                                 }else{
                                     SystemTools.show_msg(UpateUserActivity.this,"添加失败，请重试");
@@ -631,6 +682,7 @@ public class UpateUserActivity extends BaseActivity implements Callback<Message>
                         public void failure(RetrofitError error) {
                             Log.e("log1","update fail");
                             SystemTools.show_msg(UpateUserActivity.this,"添加失败，请重试");
+
                         }
                     }
             );

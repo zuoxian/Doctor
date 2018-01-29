@@ -22,6 +22,7 @@ public class Customer implements Serializable {
     private int age;
     private float balance;
     private long birthday;
+    private String birthdayStr;
     private int groupId;
     private String phone;
     private int point;
@@ -32,13 +33,15 @@ public class Customer implements Serializable {
 
 
 
-    @Generated(hash = 962974678)
-    public Customer(Long id, int age, float balance, long birthday, int groupId,
-            String phone, int point, String realName, int sex, int userId) {
+    @Generated(hash = 5824821)
+    public Customer(Long id, int age, float balance, long birthday,
+            String birthdayStr, int groupId, String phone, int point,
+            String realName, int sex, int userId) {
         this.id = id;
         this.age = age;
         this.balance = balance;
         this.birthday = birthday;
+        this.birthdayStr = birthdayStr;
         this.groupId = groupId;
         this.phone = phone;
         this.point = point;
@@ -189,5 +192,17 @@ public class Customer implements Serializable {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+
+
+    public String getBirthdayStr() {
+        return this.birthdayStr;
+    }
+
+
+
+    public void setBirthdayStr(String birthdayStr) {
+        this.birthdayStr = birthdayStr;
     }
 }

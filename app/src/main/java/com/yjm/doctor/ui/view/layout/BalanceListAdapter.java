@@ -1,6 +1,7 @@
 package com.yjm.doctor.ui.view.layout;
 
 import android.content.Context;
+import android.net.ParseException;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,7 +17,9 @@ import com.yjm.doctor.ui.base.BaseLoadRecyclerAdapter;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -59,7 +62,7 @@ public class BalanceListAdapter extends BaseLoadRecyclerAdapter<BalanceListBean.
         String amount="+"+String.valueOf(bean.getAmount());
         viewHolder.mTvAmount.setText(amount);
 
-        viewHolder.mTvCreateTime.setText(String.valueOf(bean.getCreateTime()));
+        viewHolder.mTvCreateTime.setText(longToString(bean.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
 
 //        if (bean.isStatus()){
             viewHolder.mTvStatus.setText("成功");
@@ -69,6 +72,17 @@ public class BalanceListAdapter extends BaseLoadRecyclerAdapter<BalanceListBean.
         if (position == mItems.size()- 1) {
             mListener.onListEnded();
         }
+    }
+
+    public static String longToString(long currentTime, String formatType)
+            throws ParseException {
+        Date dateOld = new Date(currentTime); // 根据long类型的毫秒数生命一个date类型的时间
+        String sDateTime = dateToString(dateOld, formatType); // 把date类型的时间转换为string
+        return sDateTime;
+    }
+
+    public static String dateToString(Date data, String formatType) {
+        return new SimpleDateFormat(formatType).format(data);
     }
 
 

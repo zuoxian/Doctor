@@ -308,7 +308,7 @@
     <string name="update_groups">更新群聊</string>
     <string name="update_groups_failed">更新群聊失败</string>
     <string name="user_card">名片</string>
-    <string name="user_name">用户名</string>
+    <string name="user_name">姓名</string>
     <string name="video">[视频]</string>
     <string name="video_call">[视频通话]</string>
     <string name="voice">声音</string>

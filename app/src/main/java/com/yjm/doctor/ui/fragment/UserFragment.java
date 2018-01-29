@@ -165,7 +165,7 @@ public class UserFragment extends BaseFragment<UserBean> {
             mUsername.setText(user.getCustomer().getRealName());
         }
         if (null != mPositionalHospital && null != user.getMemberDoctor() && !TextUtils.isEmpty(user.getMemberDoctor().getHospitalName())) {
-            String info = user.getMemberDoctor().getLevelName() + "\t\t" + user.getMemberDoctor().getHospitalName();
+            String info = (TextUtils.isEmpty(user.getMemberDoctor().getLevelName())?"":user.getMemberDoctor().getLevelName()) + "\t\t" + (TextUtils.isEmpty(user.getMemberDoctor().getHospitalName())?"":user.getMemberDoctor().getHospitalName());
             mPositionalHospital.setText(info);
         }
     }

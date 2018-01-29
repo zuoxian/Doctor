@@ -73,6 +73,9 @@ public class EaseMessageAdapter extends BaseAdapter{
 	
     private String toChatUsername;
 
+    private String headerUrl;
+    private String myHeaderUrl;
+
     private MessageListItemClickListener itemClickListener;
     private EaseCustomChatRowProvider customRowProvider;
     
@@ -84,10 +87,12 @@ public class EaseMessageAdapter extends BaseAdapter{
     private ListView listView;
 	private EaseMessageListItemStyle itemStyle;
 
-	public EaseMessageAdapter(Context context, String username, int chatType, ListView listView) {
+	public EaseMessageAdapter(Context context, String username, String headerUrl,String myHeaderUrl,int chatType, ListView listView) {
 		this.context = context;
 		this.listView = listView;
 		toChatUsername = username;
+		this.headerUrl = headerUrl;
+		this.myHeaderUrl = myHeaderUrl;
 		this.conversation = EMClient.getInstance().chatManager().getConversation(username, EaseCommonUtils.getConversationType(chatType), true);
 	}
 
@@ -226,9 +231,9 @@ public class EaseMessageAdapter extends BaseAdapter{
         switch (message.getType()) {
         case TXT:
             if(message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_IS_BIG_EXPRESSION, false)){
-				presenter = new EaseChatBigExpressionPresenter();
+				presenter = new EaseChatBigExpressionPresenter(headerUrl,myHeaderUrl);
             }else{
-				presenter = new EaseChatTextPresenter();
+				presenter = new EaseChatTextPresenter(headerUrl,myHeaderUrl);//---
             }
             break;
         case LOCATION:
@@ -241,7 +246,7 @@ public class EaseMessageAdapter extends BaseAdapter{
         	presenter = new EaseChatImagePresenter();
             break;
         case VOICE:
-        	presenter = new EaseChatVoicePresenter();
+        	presenter = new EaseChatVoicePresenter();//---
             break;
         case VIDEO:
         	presenter = new EaseChatVideoPresenter();
