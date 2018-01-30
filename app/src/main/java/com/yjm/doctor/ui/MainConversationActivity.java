@@ -24,13 +24,11 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -46,44 +44,26 @@ import com.hyphenate.EMMessageListener;
 import com.hyphenate.EMMultiDeviceListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;
-import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
-import com.hyphenate.easeui.model.SerializableMap;
 import com.hyphenate.easeui.ui.EaseBaseActivity;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.util.EMLog;
 import com.yjm.doctor.Config;
 import com.yjm.doctor.Constant;
 import com.yjm.doctor.R;
-import com.yjm.doctor.api.MainAPI;
-import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.model.EventType;
-import com.yjm.doctor.model.User;
-import com.yjm.doctor.model.UserBean;
-import com.yjm.doctor.model.UserChar;
 import com.yjm.doctor.runtimepermissions.PermissionsManager;
 import com.yjm.doctor.runtimepermissions.PermissionsResultAction;
 import com.yjm.doctor.ui.base.BaseActivity;
 import com.yjm.doctor.ui.fragment.ConversationListFragment;
-import com.yjm.doctor.util.ActivityJumper;
 import com.yjm.doctor.util.Helper;
-import com.yjm.doctor.util.NetworkUtils;
-import com.yjm.doctor.util.RestAdapterUtils;
-import com.yjm.doctor.util.SystemTools;
-import com.yjm.doctor.util.auth.UserService;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import de.greenrobot.event.EventBus;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 @SuppressLint("NewApi")
-public class MainConversationActivity extends EaseBaseActivity{
-
+public class MainConversationActivity extends EaseBaseActivity {
 
 	protected static final String TAG = "MainActivity";
 	// textview for unread message count
@@ -99,14 +79,7 @@ public class MainConversationActivity extends EaseBaseActivity{
 	public boolean isConflict = false;
 	// user account was removed
 	private boolean isCurrentAccountRemoved = false;
-	MainAPI mainAPI1;
-	Map<String, EMConversation> newConversations = new HashMap<String, EMConversation>();
-	Map<String, EMConversation> conversations;
-	Bundle bundle = new Bundle();
-	SerializableMap map = new SerializableMap();
-	static String useraccount;
-	private UserAPI userAPI;
-	
+
 
 	/**
 	 * check if current user account was remove
@@ -118,11 +91,10 @@ public class MainConversationActivity extends EaseBaseActivity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this,"");
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-		    String packageName = getPackageName();
-		    PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-		    if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+			String packageName = getPackageName();
+			PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+			if (!pm.isIgnoringBatteryOptimizations(packageName)) {
 				try {
 					//some device doesn't has activity to handle this intent
 					//so add try catch
@@ -163,87 +135,9 @@ public class MainConversationActivity extends EaseBaseActivity{
 		conversationListFragment = new ConversationListFragment();
 		fragments = new Fragment[] { conversationListFragment};
 
-		conversations = EMClient.getInstance().chatManager().getAllConversations();
-		initData();
-		String lastKey ;
-		int i =0;
-		for(String useraccount : conversations.keySet()){
+		getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, conversationListFragment)
 
-			mainAPI1 = RestAdapterUtils.getRestAPI(Config.USER_API,MainAPI.class,this);
-			this.useraccount = useraccount;
-			if(NetworkUtils.isNetworkAvaliable(this)) {
-				mainAPI1.getByHx(useraccount, new Callback<UserChar>() {
-					@Override
-					public void success(UserChar userChar, Response response) {
-						if(null != userChar && true == userChar.getSuccess() && null != userChar.getObj()){
-							List<User> user = userChar.getObj();
-							if(null != user && user.size()>0){
-
-//				if(!TextUtils.isEmpty(user.get(0).getPicUrl())){
-//					map.setHeaderUrl(user.get(0).getPicUrl());
-//				}
-								if(null != user.get(0).getCustomer() && !TextUtils.isEmpty(user.get(0).getCustomer().getRealName())){
-									String realName = user.get(0).getCustomer().getRealName();
-									EMConversation value = conversations.get("0-"+user.get(0).getMobile());
-									Log.e("newConversations",realName +"==="+value);
-									newConversations.put(realName,value);
-								}
-							}else{
-
-							}
-						}
-
-					}
-
-					@Override
-					public void failure(RetrofitError error) {
-						if(null != error && error.getMessage().contains("path $.obj")){
-
-							final UserService userService = UserService.getInstance(MainConversationActivity.this);
-							final User user = userService.getActiveAccountInfo();
-							userAPI.login(user.getMobile(),userService.getPwd(user.getId()),2,new Callback<UserBean>(){
-
-								@Override
-								public void success(UserBean userBean, Response response) {
-									if(null != userBean && null != userBean.getObj() && !TextUtils.isEmpty(userBean.getObj().getTokenId())){
-										userService.setTokenId(user.getId(),userBean.getObj().getTokenId());
-										ActivityJumper.getInstance().buttonJumpTo(MainConversationActivity.this,MainConversationActivity.class);
-										finish();
-									}
-								}
-
-								@Override
-								public void failure(RetrofitError error) {
-
-								}
-							});
-
-						}
-					}
-				});
-			}else{
-				SystemTools.show_msg(this, R.string.toast_msg_no_network);
-			}
-			i++;
-		}
-
-
-	}
-
-	private void initData(){
-		map.setConversations(conversations);
-		Log.e("newConversations",newConversations.size()+"  ==newConversations.size()");
-		if(newConversations.size()==0){
-
-			Log.e("newConversations",conversations.size()+"  ==conversations.size()");
-		}else {
-			map.setConversations(newConversations);
-			Log.e("newConversations",newConversations.size()+"  ==newConversations.size()");
-		}
-		bundle.putSerializable("object",map);
-		conversationListFragment.setArguments(bundle);
-
-		getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, conversationListFragment).commit();
+				.commit();
 
 		//register broadcast receiver to receive the change of group from DemoHelper
 		registerBroadcastReceiver();
@@ -254,13 +148,6 @@ public class MainConversationActivity extends EaseBaseActivity{
 		EMClient.getInstance().addMultiDeviceListener(new MyMultiDeviceListener());
 		//debug purpose only
 		registerInternalDebugReceiver();
-	}
-
-
-	@Override
-	public void onBackPressed() {
-		super.onBackPressed();
-
 	}
 
 
@@ -307,14 +194,14 @@ public class MainConversationActivity extends EaseBaseActivity{
 
 	/**
 	 * on tab clicked
-	 * 
+	 *
 	 * @param view
 	 */
 	public void onTabClicked(View view) {
 		switch (view.getId()) {
-		case R.id.btn_conversation:
-			index = 0;
-			break;
+			case R.id.btn_conversation:
+				index = 0;
+				break;
 		}
 		if (currentTabIndex != index) {
 			FragmentTransaction trx = getSupportFragmentManager().beginTransaction();
@@ -331,16 +218,16 @@ public class MainConversationActivity extends EaseBaseActivity{
 	}
 
 	EMMessageListener messageListener = new EMMessageListener() {
-		
+
 		@Override
 		public void onMessageReceived(List<EMMessage> messages) {
 			// notify new message
-		    for (EMMessage message : messages) {
-		        Helper.getInstance().getNotifier().onNewMsg(message);
-		    }
+			for (EMMessage message : messages) {
+				Helper.getInstance().getNotifier().onNewMsg(message);
+			}
 			refreshUIWithMessage();
 		}
-		
+
 		@Override
 		public void onCmdMessageReceived(List<EMMessage> messages) {
 			//red packet code : 处理红包回执透传消息
@@ -354,11 +241,11 @@ public class MainConversationActivity extends EaseBaseActivity{
 			//end of red packet code
 			refreshUIWithMessage();
 		}
-		
+
 		@Override
 		public void onMessageRead(List<EMMessage> messages) {
 		}
-		
+
 		@Override
 		public void onMessageDelivered(List<EMMessage> message) {
 		}
@@ -392,58 +279,56 @@ public class MainConversationActivity extends EaseBaseActivity{
 	public void back(View view) {
 		super.back(view);
 	}
-	
+
 	private void registerBroadcastReceiver() {
-        broadcastManager = LocalBroadcastManager.getInstance(this);
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(Constant.ACTION_CONTACT_CHANAGED);
-        intentFilter.addAction(Constant.ACTION_GROUP_CHANAGED);
+		broadcastManager = LocalBroadcastManager.getInstance(this);
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction(Constant.ACTION_CONTACT_CHANAGED);
+		intentFilter.addAction(Constant.ACTION_GROUP_CHANAGED);
 //		intentFilter.addAction(RPConstant.REFRESH_GROUP_RED_PACKET_ACTION);
-        broadcastReceiver = new BroadcastReceiver() {
-            
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                updateUnreadLabel();
+		broadcastReceiver = new BroadcastReceiver() {
+
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				updateUnreadLabel();
 				EventBus.getDefault().post(new EventType(Config.MESSAGE_NUM,""));
-                updateUnreadAddressLable();
-                if (currentTabIndex == 0) {
-                    // refresh conversation list
-                    if (conversationListFragment != null) {
-                        conversationListFragment.refresh();
-                    }
-                }
+				updateUnreadAddressLable();
+				if (currentTabIndex == 0) {
+					// refresh conversation list
+					if (conversationListFragment != null) {
+						conversationListFragment.refresh();
+					}
+				}
 
 			}
-	         };
-        broadcastManager.registerReceiver(broadcastReceiver, intentFilter);
-    }
-
-
+		};
+		broadcastManager.registerReceiver(broadcastReceiver, intentFilter);
+	}
 
 	public class MyContactListener implements EMContactListener {
-        @Override
-        public void onContactAdded(String username) {}
-        @Override
-        public void onContactDeleted(final String username) {
-            runOnUiThread(new Runnable() {
-                public void run() {
+		@Override
+		public void onContactAdded(String username) {}
+		@Override
+		public void onContactDeleted(final String username) {
+			runOnUiThread(new Runnable() {
+				public void run() {
 					if (ChatActivity.activityInstance != null && ChatActivity.activityInstance.toChatUsername != null &&
 							username.equals(ChatActivity.activityInstance.toChatUsername)) {
-					    String st10 = getResources().getString(R.string.have_you_removed);
-					    Toast.makeText(MainConversationActivity.this, ChatActivity.activityInstance.getToChatUsername() + st10, Toast.LENGTH_LONG)
-					    .show();
-					    ChatActivity.activityInstance.finish();
+						String st10 = getResources().getString(R.string.have_you_removed);
+						Toast.makeText(MainConversationActivity.this, ChatActivity.activityInstance.getToChatUsername() + st10, Toast.LENGTH_LONG)
+								.show();
+						ChatActivity.activityInstance.finish();
 					}
-                }
-            });
-	        updateUnreadAddressLable();
-        }
-        @Override
-        public void onContactInvited(String username, String reason) {}
-        @Override
-        public void onFriendRequestAccepted(String username) {}
-        @Override
-        public void onFriendRequestDeclined(String username) {}
+				}
+			});
+			updateUnreadAddressLable();
+		}
+		@Override
+		public void onContactInvited(String username, String reason) {}
+		@Override
+		public void onFriendRequestAccepted(String username) {}
+		@Override
+		public void onFriendRequestDeclined(String username) {}
 	}
 
 	public class MyMultiDeviceListener implements EMMultiDeviceListener {
@@ -456,35 +341,35 @@ public class MainConversationActivity extends EaseBaseActivity{
 		@Override
 		public void onGroupEvent(int event, String target, final List<String> username) {
 			switch (event) {
-			case EMMultiDeviceListener.GROUP_LEAVE:
-				ChatActivity.activityInstance.finish();
-				break;
-			default:
-				break;
+				case EMMultiDeviceListener.GROUP_LEAVE:
+					ChatActivity.activityInstance.finish();
+					break;
+				default:
+					break;
 			}
 		}
 	}
-	
+
 	private void unregisterBroadcastReceiver(){
-	    broadcastManager.unregisterReceiver(broadcastReceiver);
+		broadcastManager.unregisterReceiver(broadcastReceiver);
 	}
 
 	@Override
 	protected void onDestroy() {
-		super.onDestroy();		
-		
+		super.onDestroy();
+
 		if (exceptionBuilder != null) {
-		    exceptionBuilder.create().dismiss();
-		    exceptionBuilder = null;
-		    isExceptionDialogShow = false;
+			exceptionBuilder.create().dismiss();
+			exceptionBuilder = null;
+			isExceptionDialogShow = false;
 		}
 		unregisterBroadcastReceiver();
 
 		try {
-            unregisterReceiver(internalDebugReceiver);
-        } catch (Exception e) {
-        }
-		
+			unregisterReceiver(internalDebugReceiver);
+		} catch (Exception e) {
+		}
+
 	}
 
 	/**
@@ -519,7 +404,7 @@ public class MainConversationActivity extends EaseBaseActivity{
 
 	/**
 	 * get unread event notification count, including application, accepted, etc
-	 * 
+	 *
 	 * @return
 	 */
 //	public int getUnreadAddressCountTotal() {
@@ -530,7 +415,7 @@ public class MainConversationActivity extends EaseBaseActivity{
 
 	/**
 	 * get unread message count
-	 * 
+	 *
 	 * @return
 	 */
 	public int getUnreadMsgCountTotal() {
@@ -542,7 +427,7 @@ public class MainConversationActivity extends EaseBaseActivity{
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+
 		if (!isConflict && !isCurrentAccountRemoved) {
 			updateUnreadLabel();
 			updateUnreadAddressLable();
@@ -587,36 +472,36 @@ public class MainConversationActivity extends EaseBaseActivity{
 
 	private android.app.AlertDialog.Builder exceptionBuilder;
 	private boolean isExceptionDialogShow =  false;
-    private BroadcastReceiver internalDebugReceiver;
-    private ConversationListFragment conversationListFragment;
-    private BroadcastReceiver broadcastReceiver;
-    private LocalBroadcastManager broadcastManager;
+	private BroadcastReceiver internalDebugReceiver;
+	private ConversationListFragment conversationListFragment;
+	private BroadcastReceiver broadcastReceiver;
+	private LocalBroadcastManager broadcastManager;
 
-    private int getExceptionMessageId(String exceptionType) {
-         if(exceptionType.equals(Constant.ACCOUNT_CONFLICT)) {
-             return R.string.connect_conflict;
-         } else if (exceptionType.equals(Constant.ACCOUNT_REMOVED)) {
-             return R.string.em_user_remove;
-         } else if (exceptionType.equals(Constant.ACCOUNT_FORBIDDEN)) {
-             return R.string.user_forbidden;
-         }
-         return R.string.Network_error;
-    }
+	private int getExceptionMessageId(String exceptionType) {
+		if(exceptionType.equals(Constant.ACCOUNT_CONFLICT)) {
+			return R.string.connect_conflict;
+		} else if (exceptionType.equals(Constant.ACCOUNT_REMOVED)) {
+			return R.string.em_user_remove;
+		} else if (exceptionType.equals(Constant.ACCOUNT_FORBIDDEN)) {
+			return R.string.user_forbidden;
+		}
+		return R.string.Network_error;
+	}
 	/**
 	 * show the dialog when user met some exception: such as login on another device, user removed or user forbidden
 	 */
 	private void showExceptionDialog(String exceptionType) {
-	    isExceptionDialogShow = true;
+		isExceptionDialogShow = true;
 		Helper.getInstance().logout(false,null);
 		String st = getResources().getString(R.string.Logoff_notification);
 		if (!MainConversationActivity.this.isFinishing()) {
 			// clear up global variables
 			try {
 				if (exceptionBuilder == null)
-				    exceptionBuilder = new android.app.AlertDialog.Builder(MainConversationActivity.this);
-				    exceptionBuilder.setTitle(st);
-				    exceptionBuilder.setMessage(getExceptionMessageId(exceptionType));	
-				    exceptionBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+					exceptionBuilder = new android.app.AlertDialog.Builder(MainConversationActivity.this);
+				exceptionBuilder.setTitle(st);
+				exceptionBuilder.setMessage(getExceptionMessageId(exceptionType));
+				exceptionBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -639,18 +524,18 @@ public class MainConversationActivity extends EaseBaseActivity{
 	}
 
 	private void showExceptionDialogFromIntent(Intent intent) {
-	    EMLog.e(TAG, "showExceptionDialogFromIntent");
-	    if (!isExceptionDialogShow && intent.getBooleanExtra(Constant.ACCOUNT_CONFLICT, false)) {
-            showExceptionDialog(Constant.ACCOUNT_CONFLICT);
-        } else if (!isExceptionDialogShow && intent.getBooleanExtra(Constant.ACCOUNT_REMOVED, false)) {
-            showExceptionDialog(Constant.ACCOUNT_REMOVED);
-        } else if (!isExceptionDialogShow && intent.getBooleanExtra(Constant.ACCOUNT_FORBIDDEN, false)) {
-            showExceptionDialog(Constant.ACCOUNT_FORBIDDEN);
-        } else if (intent.getBooleanExtra(Constant.ACCOUNT_KICKED_BY_CHANGE_PASSWORD, false) ||
-                intent.getBooleanExtra(Constant.ACCOUNT_KICKED_BY_OTHER_DEVICE, false)) {
-            this.finish();
-            startActivity(new Intent(this, LoginActivity.class));
-        }
+		EMLog.e(TAG, "showExceptionDialogFromIntent");
+		if (!isExceptionDialogShow && intent.getBooleanExtra(Constant.ACCOUNT_CONFLICT, false)) {
+			showExceptionDialog(Constant.ACCOUNT_CONFLICT);
+		} else if (!isExceptionDialogShow && intent.getBooleanExtra(Constant.ACCOUNT_REMOVED, false)) {
+			showExceptionDialog(Constant.ACCOUNT_REMOVED);
+		} else if (!isExceptionDialogShow && intent.getBooleanExtra(Constant.ACCOUNT_FORBIDDEN, false)) {
+			showExceptionDialog(Constant.ACCOUNT_FORBIDDEN);
+		} else if (intent.getBooleanExtra(Constant.ACCOUNT_KICKED_BY_CHANGE_PASSWORD, false) ||
+				intent.getBooleanExtra(Constant.ACCOUNT_KICKED_BY_OTHER_DEVICE, false)) {
+			this.finish();
+			startActivity(new Intent(this, LoginActivity.class));
+		}
 	}
 
 	@Override
@@ -658,44 +543,48 @@ public class MainConversationActivity extends EaseBaseActivity{
 		super.onNewIntent(intent);
 		showExceptionDialogFromIntent(intent);
 	}
-	
+
 	/**
 	 * debug purpose only, you can ignore this
 	 */
 	private void registerInternalDebugReceiver() {
-	    internalDebugReceiver = new BroadcastReceiver() {
-            
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Helper.getInstance().logout(false,new EMCallBack() {
-                    
-                    @Override
-                    public void onSuccess() {
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                finish();
-                                startActivity(new Intent(MainConversationActivity.this, LoginActivity.class));
-                            }
-                        });
-                    }
-                    
-                    @Override
-                    public void onProgress(int progress, String status) {}
-                    
-                    @Override
-                    public void onError(int code, String message) {}
-                });
-            }
-        };
-        IntentFilter filter = new IntentFilter(getPackageName() + ".em_internal_debug");
-        registerReceiver(internalDebugReceiver, filter);
-    }
+		internalDebugReceiver = new BroadcastReceiver() {
+
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				Helper.getInstance().logout(false,new EMCallBack() {
+
+					@Override
+					public void onSuccess() {
+						runOnUiThread(new Runnable() {
+							public void run() {
+								finish();
+								startActivity(new Intent(MainConversationActivity.this, LoginActivity.class));
+							}
+						});
+					}
+
+					@Override
+					public void onProgress(int progress, String status) {}
+
+					@Override
+					public void onError(int code, String message) {}
+				});
+			}
+		};
+		IntentFilter filter = new IntentFilter(getPackageName() + ".em_internal_debug");
+		registerReceiver(internalDebugReceiver, filter);
+	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+
+	}
 
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-			@NonNull int[] grantResults) {
+										   @NonNull int[] grantResults) {
 		PermissionsManager.getInstance().notifyPermissionsChange(permissions, grantResults);
 	}
-
-
 }

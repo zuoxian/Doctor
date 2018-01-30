@@ -2,6 +2,7 @@ package com.yjm.doctor.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -30,34 +31,32 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class ChatActivity extends EaseBaseActivity implements Callback<UserChar> {
+public class ChatActivity extends EaseBaseActivity {
 
     public static ChatActivity activityInstance;
     private EaseChatFragment chatFragment;
     String toChatUsername;
-    private SharedPreferencesUtil sharedPreferencesUtil = null;
 
     User user;
 
-    MainAPI mainAPI1;
 
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         setContentView(R.layout.activity_chat);
         activityInstance = this;
-        sharedPreferencesUtil = SharedPreferencesUtil.instance(this);
         EventBus.getDefault().register(this);
         //user or group id
         toChatUsername = getIntent().getExtras().getString(EaseConstant.EXTRA_USER_ID);
         chatFragment = new EaseChatFragment();
-        //set arguments
-        Log.e("chat---",getIntent().getExtras().toString());
+        chatFragment.setArguments(getIntent().getExtras());
 
-        mainAPI1 = RestAdapterUtils.getRestAPI(Config.USER_API,MainAPI.class,this);
-        mainAPI1.getByHx(toChatUsername, this);
+        getSupportFragmentManager().beginTransaction().add(R.id.container, chatFragment).commit();
 
     }
+
+
+
 
     public void onEventMainThread(EventType type){
         if("EASE_CHAT".equals(type.getType())){
@@ -126,59 +125,5 @@ public class ChatActivity extends EaseBaseActivity implements Callback<UserChar>
         }
     }
 
-    private User my ;
-    @Override
-    public void success(UserChar userBean, Response response) {
-        try {
-            my = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
-        }catch (Exception e){
-            Log.e("ChaActivity",e.getMessage());
-        }
 
-        if(null != userBean && true == userBean.getSuccess() && null != userBean.getObj()){
-            List<User> user = userBean.getObj();
-            if(null != user && user.size()>0){
-                Bundle bundle = new Bundle();
-                bundle.putBundle("content",getIntent().getExtras());
-                if(!TextUtils.isEmpty(user.get(0).getPicUrl())){
-                    bundle.putString("headerurl",user.get(0).getPicUrl());
-                }
-                if(null != user.get(0).getCustomer() && !TextUtils.isEmpty(user.get(0).getCustomer().getRealName())){
-                    bundle.putString("charname",user.get(0).getCustomer().getRealName());
-                }
-                if(null != my && !TextUtils.isEmpty(my.getPicUrl())){
-                    bundle.putString("myheaderurl",my.getPicUrl());
-                }
-                chatFragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction().add(R.id.container, chatFragment).commit();
-            }
-
-        }
-    }
-
-    @Override
-    public void failure(RetrofitError error) {
-        if(null != error && error.getMessage().contains("path $.obj")){
-            UserAPI userAPI = RestAdapterUtils.getRestAPI(Config.USER_API, UserAPI.class, this,"");
-
-            final UserService userService = UserService.getInstance(this);
-            final User user = userService.getActiveAccountInfo();
-            userAPI.login(user.getMobile(),userService.getPwd(user.getId()),2,new Callback<UserBean>(){
-
-                @Override
-                public void success(UserBean userBean, Response response) {
-                    if(null != userBean && null != userBean.getObj() && !TextUtils.isEmpty(userBean.getObj().getTokenId())){
-                        userService.setTokenId(user.getId(),userBean.getObj().getTokenId());
-                        mainAPI1.getByHx(toChatUsername, ChatActivity.this);
-                    }
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    Log.e("error",error.getMessage());
-                }
-            });
-
-        }
-    }
 }

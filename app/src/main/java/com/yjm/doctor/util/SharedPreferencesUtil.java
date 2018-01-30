@@ -88,6 +88,20 @@ public class SharedPreferencesUtil {
         edit.commit();
     }
 
+    public void saveObject(String account,String obj1,String obj2) {
+        SharedPreferences sp = mContext.getSharedPreferences(account, 0);
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putString("real_name", obj1);
+        edit.putString("header_url", obj2);
+        edit.commit();
+    }
+
+    public SharedPreferences getSp(String objName) {
+        SharedPreferences sp = mContext.getSharedPreferences(objName, 0);
+        return sp;
+    }
+
+
     public String getObject(String objName) {
         SharedPreferences sp = mContext.getSharedPreferences(objName, 0);
         return sp.getString(objName, null);
