@@ -205,7 +205,7 @@ public class UserService {
         user.setModelid(Integer.parseInt(mAccountManager.getUserData(account, KEY_USER_MODELID)));
         user.setMobile(mAccountManager.getUserData(account, KEY_USER_MOBILE));
         user.setLogin(Integer.parseInt(mAccountManager.getUserData(account, KEY_USER_LOGIN)));
-        user.setLastLoginTime(Integer.parseInt(mAccountManager.getUserData(account, KEY_USER_LASTLOGINTIME)));
+        user.setLastLoginTime(Long.parseLong(mAccountManager.getUserData(account, KEY_USER_LASTLOGINTIME)));
         user.setLastLoginIp(Integer.parseInt(mAccountManager.getUserData(account, KEY_USER_LASTLOGINIP)));
         user.setIsAdmin(Integer.parseInt(mAccountManager.getUserData(account, KEY_USER_ISADMIN)));
         user.setId(Integer.parseInt(mAccountManager.getUserData(account, KEY_USER_ID)));

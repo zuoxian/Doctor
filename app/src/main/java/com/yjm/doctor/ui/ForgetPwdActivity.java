@@ -1,16 +1,20 @@
 package com.yjm.doctor.ui;
 
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.yjm.doctor.Config;
+import com.yjm.doctor.Constant;
 import com.yjm.doctor.R;
 import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.application.YjmApplication;
-import com.yjm.doctor.model.Message;
 import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.ui.base.BaseActivity;
 import com.yjm.doctor.util.ActivityJumper;
+import com.yjm.doctor.util.CountDownUtil;
 import com.yjm.doctor.util.Helper;
 import com.yjm.doctor.util.NetworkUtils;
 import com.yjm.doctor.util.ObjectCheck;
@@ -24,7 +28,6 @@ import butterknife.OnClick;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.http.Query;
 
 /**
  * Created by zx on 2017/12/19.
@@ -40,6 +43,9 @@ public class ForgetPwdActivity extends BaseActivity implements Callback<UserBean
 
     @BindView(R.id.password)
     EditText mPassword;
+
+    @BindView(R.id.getverification)
+    TextView textView;
 
     private UserAPI userAPI;
 
@@ -57,6 +63,12 @@ public class ForgetPwdActivity extends BaseActivity implements Callback<UserBean
     @Override
     public void finishButton() {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Constant.islogin = true;
     }
 
     @OnClick(R.id.getverification)
@@ -146,6 +158,20 @@ public class ForgetPwdActivity extends BaseActivity implements Callback<UserBean
                 finish();
             }
 
+            if(1 == vRequest){
+                if(null == textView) return;
+                new CountDownUtil(textView)
+                        .setCountDownMillis(60_000L)//倒计时60000ms
+                        .setCountDownColor(android.R.color.holo_blue_light,android.R.color.darker_gray)//不同状态字体颜色
+                        .setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Log.e("MainActivity","发送成功");
+                                userAPI.getVCode(mUserName.getText().toString(),Config.DEFAULT_TOKENID,ForgetPwdActivity.this);
+                            }
+                        })
+                        .start();
+            }
         }else {
             SystemTools.show_msg(this,userBean.getMsg());
         }

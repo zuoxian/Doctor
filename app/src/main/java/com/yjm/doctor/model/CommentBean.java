@@ -4,7 +4,7 @@ package com.yjm.doctor.model;
  * Created by zx on 2017/12/25.
  */
 
-public class CommentBean extends Message{
+public class CommentBean extends ObjectMessage {
 
     private Comments obj;
 

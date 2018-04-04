@@ -1,12 +1,10 @@
 package com.yjm.doctor.model;
 
-import java.io.Serializable;
-
 /**
  * Created by zx on 2017/12/23.
  */
 
-public class UserPatientInfoBean extends Message{
+public class UserPatientInfoBean extends ObjectMessage {
 
     private UserPatientInfos obj;
 

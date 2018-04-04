@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -37,7 +39,7 @@ import com.yjm.doctor.model.Hospital;
 import com.yjm.doctor.model.HospitalBean;
 import com.yjm.doctor.model.Level;
 import com.yjm.doctor.model.LevelBean;
-import com.yjm.doctor.model.Message;
+import com.yjm.doctor.model.ObjectMessage;
 import com.yjm.doctor.model.User;
 import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.model.UserConfigBean;
@@ -77,7 +79,7 @@ import retrofit.mime.TypedFile;
  * Created by zx on 2017/12/24.
  */
 
-public class UpateUserActivity extends BaseActivity implements Callback<Message>,IAdd, View.OnClickListener{
+public class UpateUserActivity extends BaseActivity implements Callback<ObjectMessage>,IAdd, View.OnClickListener{
 
     @BindView(R.id.iv_image)
     SimpleDraweeView headImageFile;
@@ -377,6 +379,7 @@ public class UpateUserActivity extends BaseActivity implements Callback<Message>
         public WriteToSdcardTask(boolean isUri,Uri uri) {
             this.isUri = isUri;
             this.uri = uri;
+            Log.e("headerUrl1=",uri.toString());
 //            showDialog();
         }
 
@@ -389,6 +392,7 @@ public class UpateUserActivity extends BaseActivity implements Callback<Message>
                 }else{
                     path = UploadImageUtils.writeStringToSDcard(UpateUserActivity.this, outputAvatarPath);
                 }
+                Log.e("headerUrl2=",uri.toString());
 
             } catch (IOException e) {
                 SystemTools.show_msg(UpateUserActivity.this, "对不起,无法找到此图片!");
@@ -405,6 +409,13 @@ public class UpateUserActivity extends BaseActivity implements Callback<Message>
                 SystemTools.show_msg(UpateUserActivity.this, "对不起,无法找到此图片!");
             }
         }
+        Handler handler = new Handler(){
+            @Override
+            public void handleMessage(android.os.Message msg) {
+                super.handleMessage(msg);
+                if(null != headImageFile)headImageFile.setImageURI(Uri.parse((String)msg.obj));
+            }
+        };
 
         public void submitUserIcon(final File file){
             typedFile = new TypedFile("application/octet-stream",file);
@@ -413,16 +424,24 @@ public class UpateUserActivity extends BaseActivity implements Callback<Message>
                         @Override
                         public void success(UserConfigBean userBean, Response response) {
                             if(null != userBean && true == userBean.getSuccess() && null != userBean.getObj()) {
-                                Log.e("log1", "update success");
-                                if (null != headImageFile && !TextUtils.isEmpty(userBean.getObj().getPics())) {
-                                    headImageFile.setImageURI(Uri.parse(userBean.getObj().getPics()));
+
+                                if (!TextUtils.isEmpty(userBean.getObj().getPics())) {
+                                    Log.e("headerUrl3=",userBean.getObj().getPics());
+                                    Message msg =new Message();
+                                    msg.obj = userBean.getObj().getPics();
+                                    handler.sendMessage(msg);
+
+                                    Log.e("log1", "update success    url = "+userBean.getObj().getPics());
+//
                                     if(null != user){
-                                        if(null != headImageFile)headImageFile.setImageURI(Uri.parse(userBean.getObj().getPics()));//显示图片
+//                                        if(null != headImageFile)headImageFile.setImageURI(Uri.parse(userBean.getObj().getPics()));//显示图片
                                         user.setHeadImage(userBean.getObj().getPics());
                                         user.setPicUrl(userBean.getObj().getPics());
                                         user.setStatus(2);
                                         try {
                                             sharedPreferencesUtil.saveObject("user",sharedPreferencesUtil.serialize(user));
+//                                            User mUser = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
+//                                            Log.i("sdsdsd",mUser.toString());
                                         }catch (Exception e){
                                             Log.e("error",e.getMessage());
                                         }
@@ -598,7 +617,7 @@ public class UpateUserActivity extends BaseActivity implements Callback<Message>
     }
 
     @Override
-    public void success(Message message, Response response) {
+    public void success(ObjectMessage message, Response response) {
         if(null != message && true == message.getSuccess()){
             SystemTools.show_msg(this,"修改成功");
             ActivityJumper.getInstance().buttonJumpTo(this,AccountinfoActivity.class);

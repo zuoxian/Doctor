@@ -88,11 +88,12 @@ public class SharedPreferencesUtil {
         edit.commit();
     }
 
-    public void saveObject(String account,String obj1,String obj2) {
+    public void saveObject(String account,String obj1,String obj2,int obj3) {
         SharedPreferences sp = mContext.getSharedPreferences(account, 0);
         SharedPreferences.Editor edit = sp.edit();
         edit.putString("real_name", obj1);
         edit.putString("header_url", obj2);
+        edit.putInt("user_id",obj3);
         edit.commit();
     }
 

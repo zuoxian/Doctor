@@ -6,7 +6,7 @@ import java.util.List;
  * Created by zx on 2018/1/28.
  */
 
-public class UserChar extends Message{
+public class UserChar extends ObjectMessage {
 
     private List<User> obj;
 

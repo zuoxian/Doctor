@@ -47,7 +47,7 @@ public class MainAppointmentsActivity extends BaseActivity{
         fragment2.setArguments(bundle1);
         fragments.add((Fragment)(fragment2));
 
-        MainAppointmentAdapter adapter = new MainAppointmentAdapter(getSupportFragmentManager(), fragments, new String[]{"未回复", "已回复"});
+        MainAppointmentAdapter adapter = new MainAppointmentAdapter(getSupportFragmentManager(), fragments, new String[]{"未确认", "已确认"});
         viewpager.setAdapter(adapter);
 
         tabLayout.setupWithViewPager(viewpager);

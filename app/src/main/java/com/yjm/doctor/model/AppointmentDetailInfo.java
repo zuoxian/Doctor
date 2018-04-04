@@ -4,7 +4,7 @@ package com.yjm.doctor.model;
  * Created by zx on 2018/1/17.
  */
 
-public class AppointmentDetailInfo extends Message{
+public class AppointmentDetailInfo extends ObjectMessage {
 
     private AppointmentInfo obj;
 

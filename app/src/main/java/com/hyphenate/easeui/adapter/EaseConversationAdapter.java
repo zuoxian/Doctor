@@ -159,6 +159,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation>{
             SharedPreferences sp = sharedPreferencesUtil.getSp(username);
             if(!TextUtils.isEmpty(sp.getString("real_name","")) && !TextUtils.isEmpty(sp.getString("header_url",""))){
                 EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar,sp.getString("header_url",""));
+
                 EaseUserUtils.setUserNick(sp.getString("real_name",""), holder.name);
 
             }else {
@@ -187,7 +188,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation>{
                                         } else {
                                             EaseUserUtils.setUserNick(username, finalHolder.name);
                                         }
-                                        sharedPreferencesUtil.saveObject(username, realName, userHeaderUrl);
+                                        sharedPreferencesUtil.saveObject(username, realName, userHeaderUrl,user.get(0).getId());
                                         return;
                                     }
                                 }
@@ -370,7 +371,10 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation>{
 //                        if(user != null && user.getNick() != null)
 //                            username = user.getNick();
                     }
-
+                    SharedPreferences sp = sharedPreferencesUtil.getSp(username);
+                    if(null!= sp){
+                        username = sp.getString("real_name","");
+                    }
                     // First match against the whole ,non-splitted value
                     if (username.startsWith(prefixString)) {
                         newValues.add(value);

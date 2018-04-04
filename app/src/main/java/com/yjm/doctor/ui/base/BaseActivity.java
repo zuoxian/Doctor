@@ -18,7 +18,10 @@ import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.application.baseInterface.IActivity;
 import com.yjm.doctor.model.User;
 import com.yjm.doctor.model.UserBean;
+import com.yjm.doctor.ui.LaunchActivity;
 import com.yjm.doctor.ui.LoginActivity;
+import com.yjm.doctor.ui.RegisterActivity;
+import com.yjm.doctor.ui.RegisterInfoActivity;
 import com.yjm.doctor.util.auth.UserService;
 
 import butterknife.ButterKnife;
@@ -45,16 +48,18 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
     @Override
     protected void onResume() {
         super.onResume();
-        if(Constant.isClose){
-            finish();
-        }
+// || this instanceof RegisterActivity || this instanceof RegisterInfoActivity
         if(Constant.islogin){
-            if(this instanceof LoginActivity){
+            if(this instanceof LoginActivity || this instanceof LaunchActivity){
                 Log.e("islogin","islogin");
             }else{
                 finish();
             }
 
+        }else{
+            if(Constant.isClose ){
+                finish();
+            }
         }
     }
 

@@ -6,7 +6,7 @@ import java.util.List;
  * Created by zx on 2017/12/26.
  */
 
-public class DepartMentBean extends Message{
+public class DepartMentBean extends ObjectMessage {
 
     private List<DepartMent> obj;
 

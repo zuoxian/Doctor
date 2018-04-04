@@ -10,7 +10,7 @@ import com.yjm.doctor.Config;
 import com.yjm.doctor.R;
 import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.model.BusinessSettingBean;
-import com.yjm.doctor.model.Message;
+import com.yjm.doctor.model.ObjectMessage;
 import com.yjm.doctor.model.User;
 import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.ui.base.BaseActivity;
@@ -194,13 +194,13 @@ public class BusinessSettingActivity extends BaseActivity {
 
     private void updateInfo(boolean acceptAppointment,boolean acceptConsultation){
         if(tokenID != null && NetworkUtils.isNetworkAvaliable(this)) {
-            mUserAPI.updateBusinessSetting(tokenID, acceptAppointment, acceptConsultation, new Callback<Message>() {
+            mUserAPI.updateBusinessSetting(tokenID, acceptAppointment, acceptConsultation, new Callback<ObjectMessage>() {
                 @Override
-                public void success(Message message, Response response) {
-                    if (message != null){
-                        if (message.getSuccess()){
+                public void success(ObjectMessage objectMessage, Response response) {
+                    if (objectMessage != null){
+                        if (objectMessage.getSuccess()){
                             getSettingInfo();
-                            Log.i(TAG, "success: "+message.getMsg().toLowerCase());
+                            Log.i(TAG, "success: "+ objectMessage.getMsg().toLowerCase());
                         }
                     }
                 }

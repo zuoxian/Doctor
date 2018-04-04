@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -13,6 +14,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -40,7 +42,6 @@ import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.domain.EaseEmojicon;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
-import com.hyphenate.easeui.model.EventType;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
@@ -55,14 +56,21 @@ import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.PathUtil;
+import com.yjm.doctor.Config;
 import com.yjm.doctor.R;
+import com.yjm.doctor.api.MainAPI;
+import com.yjm.doctor.model.ObjectMessage;
+import com.yjm.doctor.util.RestAdapterUtils;
+import com.yjm.doctor.util.SharedPreferencesUtil;
 
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import de.greenrobot.event.EventBus;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * you can new an EaseChatFragment to use or you can inherit it to expand.
@@ -120,6 +128,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     private String headerUrl;
     private String myHeaderUrl;
     private String charName;
+    private int userId = 0;
+    private SharedPreferencesUtil sharedPreferencesUtil;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -143,6 +153,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
 //        headerUrl = fragmentArgs.getString("headerurl");
 //        myHeaderUrl = fragmentArgs.getString("myheaderurl");
 //        charName = fragmentArgs.getString("charname");
+
         super.onActivityCreated(savedInstanceState);
     }
 
@@ -170,8 +181,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
 
             @Override
             public void onSendMessage(String content) {
-//                EventBus.getDefault().post(new EventType("EASE_CHAT",content));
                 sendTextMessage(content);
+                addCharInfo(content,"text");
             }
 
             @Override
@@ -180,7 +191,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                     
                     @Override
                     public void onVoiceRecordComplete(String voiceFilePath, int voiceTimeLength) {
-                        sendVoiceMessage(voiceFilePath, voiceTimeLength);
+                        sendVoiceMessage(voiceFilePath, voiceTimeLength);//语音
+                        addCharInfo("[语音]","audio");
                     }
                 });
             }
@@ -204,7 +216,44 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         }
     }
 
+    private void addCharInfo(String content,String type){
+        if(null != getActivity()) {
+            if(null == sharedPreferencesUtil)sharedPreferencesUtil = SharedPreferencesUtil.instance(getActivity());
+            SharedPreferences sp = sharedPreferencesUtil.getSp(toChatUsername);
+            charName = sp.getString("real_name","");
+            userId = sp.getInt("user_id",0);
+//            Log.i("Userid==",userId+"    charName="+charName);
+
+        }
+        if(null != getActivity()) {
+            MainAPI mainAPI = RestAdapterUtils.getRestAPI(Config.EASE_MESSAGE, MainAPI.class, getActivity());
+            if (userId > 0 ) {
+                mainAPI.updateNewestConsultation(2, userId, toChatUsername, content, type, new Callback<ObjectMessage>() {
+
+                    @Override
+                    public void success(ObjectMessage objectMessage, Response response) {
+                        Log.e("message ---", objectMessage.toString());
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("message ---", error.getMessage());
+
+                    }
+                });
+            }
+        }
+    }
+
     protected void setUpView() {
+        if(null != getActivity()) {
+            if(null == sharedPreferencesUtil)sharedPreferencesUtil = SharedPreferencesUtil.instance(getActivity());
+            SharedPreferences sp = sharedPreferencesUtil.getSp(toChatUsername);
+            charName = sp.getString("real_name","");
+            userId = sp.getInt("user_id",0);
+//            Log.i("Userid==",userId+"    charName="+charName);
+
+        }
         titleBar.setTitle(charName);//设置标题
         if (chatType == EaseConstant.CHATTYPE_SINGLE) {
             // set title
@@ -959,7 +1008,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             }else{
                 // get the content and send it
                 String content = ((EMTextMessageBody) forward_msg.getBody()).getMessage();
-                sendTextMessage(content);
+                sendTextMessage(content);//图片
             }
             break;
         case IMAGE:

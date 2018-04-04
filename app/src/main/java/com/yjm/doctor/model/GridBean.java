@@ -4,7 +4,7 @@ package com.yjm.doctor.model;
  * Created by zx on 2017/12/20.
  */
 
-public class GridBean extends Message{
+public class GridBean extends ObjectMessage {
 
     private Grid obj;
 

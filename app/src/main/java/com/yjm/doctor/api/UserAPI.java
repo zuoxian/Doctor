@@ -1,29 +1,21 @@
 package com.yjm.doctor.api;
 
-import com.yjm.doctor.model.Account;
 import com.yjm.doctor.model.AccountBean;
 import com.yjm.doctor.model.BusinessSettingBean;
-import com.yjm.doctor.model.Comment;
 import com.yjm.doctor.model.CommentBean;
 import com.yjm.doctor.model.DepartMentBean;
 import com.yjm.doctor.model.HospitalBean;
-import com.yjm.doctor.model.Level;
 import com.yjm.doctor.model.LevelBean;
-import com.yjm.doctor.model.Message;
+import com.yjm.doctor.model.ObjectMessage;
 import com.yjm.doctor.model.MessageInfo;
 import com.yjm.doctor.model.PatientBean;
 import com.yjm.doctor.model.SMessageBean;
-import com.yjm.doctor.model.User;
 import com.yjm.doctor.model.UserBean;
-import com.yjm.doctor.model.UserConfig;
 import com.yjm.doctor.model.UserConfigBean;
 import com.yjm.doctor.model.UserPatientInfoBean;
 import com.yjm.doctor.ui.view.layout.BalanceListBean;
 
-import java.io.File;
-
 import retrofit.Callback;
-import retrofit.http.GET;
 import retrofit.http.Multipart;
 import retrofit.http.POST;
 import retrofit.http.Part;
@@ -69,7 +61,7 @@ public interface UserAPI {
             @Query("tokenId") String tokenId ,
             @Query("acceptAppointment") boolean acceptAppointment ,
             @Query("acceptConsultation") boolean acceptConsultation ,
-            Callback<Message> callback);
+            Callback<ObjectMessage> callback);
 
     @POST("/dataGrid")
     void getBalanceList( //@Query("tokenId") String tokenId ,
@@ -107,7 +99,7 @@ public interface UserAPI {
             @Query("bankName") String bankName,
             @Query("bankCard") String bankCard,
             @Query("alipay") String alipay,
-            Callback<Message> callback);
+            Callback<ObjectMessage> callback);
 
 
     @POST("/edit")

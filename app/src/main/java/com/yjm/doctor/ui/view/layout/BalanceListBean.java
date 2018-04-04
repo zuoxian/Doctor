@@ -1,6 +1,6 @@
 package com.yjm.doctor.ui.view.layout;
 
-import com.yjm.doctor.model.Message;
+import com.yjm.doctor.model.ObjectMessage;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import java.util.List;
  * Created by zs on 2017/12/16.
  */
 
-public class BalanceListBean extends Message {
+public class BalanceListBean extends ObjectMessage {
 
 
     private ObjBean obj;

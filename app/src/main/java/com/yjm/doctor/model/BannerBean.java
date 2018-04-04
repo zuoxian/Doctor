@@ -6,7 +6,7 @@ import java.util.List;
  * Created by zx on 2017/12/10.
  */
 
-public class BannerBean extends Message{
+public class BannerBean extends ObjectMessage {
 
     private List<Banner> obj;
 

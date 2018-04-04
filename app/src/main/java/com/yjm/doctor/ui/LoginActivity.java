@@ -75,20 +75,25 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Callb
 
     @OnClick(R.id.forget_password)
     void forgetPassword(){
+        Constant.isClose = false;
+        Constant.islogin = false;
         ActivityJumper.getInstance().buttonJumpTo(this,ForgetPwdActivity.class);
-        finish();
+//        finish();
     }
 
     @OnClick(R.id.register)
     void register(){
+        Constant.isClose = false;
+        Constant.islogin = false;
         ActivityJumper.getInstance().buttonJumpTo(this,RegisterActivity.class);
-        finish();
+//        finish();
     }
 
 
 
     @OnClick(R.id.login)
     void login(){
+
         if(null != mUserName) {
             if(TextUtils.isEmpty(mUserName.getText())) {
                 mUserName.setError("请输入账号");
@@ -131,8 +136,11 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Callb
     @Override
     public void success(UserBean objectBean, Response response) {
         Log.i("main",response.getUrl());
+
         closeDialog();
         if(null != objectBean && true == objectBean.getSuccess()) {
+            Constant.isClose = false;
+            Constant.islogin = false;
             if(null == objectBean.getObj()){
                 SystemTools.show_msg(this, objectBean.getMsg());
                 return;

@@ -1,9 +1,7 @@
 package com.yjm.doctor.api;
 
 import com.yjm.doctor.model.GridBean;
-import com.yjm.doctor.model.GridInfo;
-import com.yjm.doctor.model.Message;
-import com.yjm.doctor.model.UserBean;
+import com.yjm.doctor.model.ObjectMessage;
 
 import retrofit.Callback;
 import retrofit.http.POST;
@@ -25,7 +23,7 @@ public interface ServiceAPI {
 
     @POST("/add")
     void addGrid(@Query("time") int time, @Query("closeDateStr") String closeDateStr,
-                 Callback<Message> callback);
+                 Callback<ObjectMessage> callback);
 
 
 }

@@ -1,12 +1,10 @@
 package com.yjm.doctor.model;
 
-import java.io.Serializable;
-
 /**
  * Created by zs on 2017/12/14.
  */
 
-public class BusinessSettingBean extends Message {
+public class BusinessSettingBean extends ObjectMessage {
 
     private ObjBean obj;
 

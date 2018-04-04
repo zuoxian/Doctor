@@ -44,7 +44,7 @@ public class User implements Serializable {
 
     private int lastLoginIp;
 
-    private int lastLoginTime;
+    private Long lastLoginTime;
 
     private int login;
 
@@ -84,18 +84,10 @@ public class User implements Serializable {
     private Patient patient;
 
 
-    public Patient getPatient() {
-        return patient;
-    }
-
-    public void setPatient(Patient patient) {
-        this.patient = patient;
-    }
-
-    @Generated(hash = 317224063)
+    @Generated(hash = 43509266)
     public User(int id, int amount, String email, String headImage,
             String hxPassword, boolean hxStatus, int groupid, int isAdmin,
-            int lastLoginIp, int lastLoginTime, int login, String mobile,
+            int lastLoginIp, Long lastLoginTime, int login, String mobile,
             int modelid, String password, String pic, String picUrl, int regIp,
             long regTime, int score, int status, String tokenId, int updateTime,
             String username) {
@@ -127,6 +119,17 @@ public class User implements Serializable {
     @Generated(hash = 586692638)
     public User() {
     }
+
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+
 
     public Customer getCustomer() {
         return customer;
@@ -206,12 +209,12 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public int getGroupid() {
-        return this.groupid;
+    public String getHeadImage() {
+        return this.headImage;
     }
 
-    public void setGroupid(int groupid) {
-        this.groupid = groupid;
+    public void setHeadImage(String headImage) {
+        this.headImage = headImage;
     }
 
     public String getHxPassword() {
@@ -230,6 +233,14 @@ public class User implements Serializable {
         this.hxStatus = hxStatus;
     }
 
+    public int getGroupid() {
+        return this.groupid;
+    }
+
+    public void setGroupid(int groupid) {
+        this.groupid = groupid;
+    }
+
     public int getIsAdmin() {
         return this.isAdmin;
     }
@@ -246,11 +257,11 @@ public class User implements Serializable {
         this.lastLoginIp = lastLoginIp;
     }
 
-    public int getLastLoginTime() {
+    public Long getLastLoginTime() {
         return this.lastLoginTime;
     }
 
-    public void setLastLoginTime(int lastLoginTime) {
+    public void setLastLoginTime(Long lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
     }
 
@@ -292,6 +303,14 @@ public class User implements Serializable {
 
     public void setPic(String pic) {
         this.pic = pic;
+    }
+
+    public String getPicUrl() {
+        return this.picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     public int getRegIp() {
@@ -350,19 +369,5 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    public String getPicUrl() {
-        return this.picUrl;
-    }
-
-    public void setPicUrl(String picUrl) {
-        this.picUrl = picUrl;
-    }
-
-    public String getHeadImage() {
-        return this.headImage;
-    }
-
-    public void setHeadImage(String headImage) {
-        this.headImage = headImage;
-    }
+    
 }

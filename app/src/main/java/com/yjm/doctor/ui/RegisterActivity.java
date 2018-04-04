@@ -3,9 +3,12 @@ package com.yjm.doctor.ui;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.yjm.doctor.Config;
+import com.yjm.doctor.Constant;
 import com.yjm.doctor.R;
 import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.application.YjmApplication;
@@ -13,6 +16,7 @@ import com.yjm.doctor.model.User;
 import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.ui.base.BaseActivity;
 import com.yjm.doctor.util.ActivityJumper;
+import com.yjm.doctor.util.CountDownUtil;
 import com.yjm.doctor.util.NetworkUtils;
 import com.yjm.doctor.util.ObjectCheck;
 import com.yjm.doctor.util.RestAdapterUtils;
@@ -40,6 +44,12 @@ public class RegisterActivity extends BaseActivity implements Callback<UserBean>
     @BindView(R.id.password)
     EditText mPassword;
 
+    @BindView(R.id.getverification)
+    TextView textView;
+
+
+
+
     private UserAPI userAPI;
 
     private int vRequest = 0;
@@ -55,6 +65,11 @@ public class RegisterActivity extends BaseActivity implements Callback<UserBean>
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Constant.islogin = true;
+    }
 
     @OnClick(R.id.login)
     void login(){
@@ -91,6 +106,18 @@ public class RegisterActivity extends BaseActivity implements Callback<UserBean>
         if (1 == vRequest) {//验证码响应
             if (null != userBean && true == userBean.getSuccess()) {
                 Log.e("userlogin", "获取验证码成功");
+                if(null == textView) return;
+                new CountDownUtil(textView)
+                        .setCountDownMillis(60_000L)//倒计时60000ms
+                        .setCountDownColor(android.R.color.holo_blue_light,android.R.color.darker_gray)//不同状态字体颜色
+                        .setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Log.e("MainActivity","发送成功");
+                                userAPI.getVCode(mUserName.getText().toString(),Config.DEFAULT_TOKENID,RegisterActivity.this);
+                            }
+                        })
+                        .start();
             }else{
                 SystemTools.show_msg(this, userBean.getMsg());
             }

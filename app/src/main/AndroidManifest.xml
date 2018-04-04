@@ -113,6 +113,12 @@
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/yourpositional"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.WebViewActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/updateapp"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ToExamineActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -235,6 +241,8 @@
             android:label="@string/update_account"
             android:screenOrientation="portrait"/>
 
+
+
         <activity android:name=".ui.UpateUserActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/update_user_info"
@@ -310,10 +318,10 @@
         <!--</service>-->
         <!--&lt;!&ndash; FCM required end &ndash;&gt;-->
 
-        <!-- 设置环信应用的appkey -->
+        <!-- 设置环信应用的appkey 1136171123178598#ethealth -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="xuwenming-1987#ethealth" />
+            android:value="1136171123178598#ethealth" />
         <!-- 声明sdk所需的service -->
         <service
             android:name="com.hyphenate.chat.EMChatService"

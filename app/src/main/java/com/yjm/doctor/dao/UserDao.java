@@ -33,7 +33,7 @@ public class UserDao extends AbstractDao<User, Integer> {
         public final static Property Groupid = new Property(6, int.class, "groupid", false, "GROUPID");
         public final static Property IsAdmin = new Property(7, int.class, "isAdmin", false, "IS_ADMIN");
         public final static Property LastLoginIp = new Property(8, int.class, "lastLoginIp", false, "LAST_LOGIN_IP");
-        public final static Property LastLoginTime = new Property(9, int.class, "lastLoginTime", false, "LAST_LOGIN_TIME");
+        public final static Property LastLoginTime = new Property(9, Long.class, "lastLoginTime", false, "LAST_LOGIN_TIME");
         public final static Property Login = new Property(10, int.class, "login", false, "LOGIN");
         public final static Property Mobile = new Property(11, String.class, "mobile", false, "MOBILE");
         public final static Property Modelid = new Property(12, int.class, "modelid", false, "MODELID");
@@ -71,7 +71,7 @@ public class UserDao extends AbstractDao<User, Integer> {
                 "\"GROUPID\" INTEGER NOT NULL ," + // 6: groupid
                 "\"IS_ADMIN\" INTEGER NOT NULL ," + // 7: isAdmin
                 "\"LAST_LOGIN_IP\" INTEGER NOT NULL ," + // 8: lastLoginIp
-                "\"LAST_LOGIN_TIME\" INTEGER NOT NULL ," + // 9: lastLoginTime
+                "\"LAST_LOGIN_TIME\" INTEGER," + // 9: lastLoginTime
                 "\"LOGIN\" INTEGER NOT NULL ," + // 10: login
                 "\"MOBILE\" TEXT," + // 11: mobile
                 "\"MODELID\" INTEGER NOT NULL ," + // 12: modelid
@@ -117,7 +117,11 @@ public class UserDao extends AbstractDao<User, Integer> {
         stmt.bindLong(7, entity.getGroupid());
         stmt.bindLong(8, entity.getIsAdmin());
         stmt.bindLong(9, entity.getLastLoginIp());
-        stmt.bindLong(10, entity.getLastLoginTime());
+ 
+        Long lastLoginTime = entity.getLastLoginTime();
+        if (lastLoginTime != null) {
+            stmt.bindLong(10, lastLoginTime);
+        }
         stmt.bindLong(11, entity.getLogin());
  
         String mobile = entity.getMobile();
@@ -181,7 +185,11 @@ public class UserDao extends AbstractDao<User, Integer> {
         stmt.bindLong(7, entity.getGroupid());
         stmt.bindLong(8, entity.getIsAdmin());
         stmt.bindLong(9, entity.getLastLoginIp());
-        stmt.bindLong(10, entity.getLastLoginTime());
+ 
+        Long lastLoginTime = entity.getLastLoginTime();
+        if (lastLoginTime != null) {
+            stmt.bindLong(10, lastLoginTime);
+        }
         stmt.bindLong(11, entity.getLogin());
  
         String mobile = entity.getMobile();
@@ -238,7 +246,7 @@ public class UserDao extends AbstractDao<User, Integer> {
             cursor.getInt(offset + 6), // groupid
             cursor.getInt(offset + 7), // isAdmin
             cursor.getInt(offset + 8), // lastLoginIp
-            cursor.getInt(offset + 9), // lastLoginTime
+            cursor.isNull(offset + 9) ? null : cursor.getLong(offset + 9), // lastLoginTime
             cursor.getInt(offset + 10), // login
             cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // mobile
             cursor.getInt(offset + 12), // modelid
@@ -267,7 +275,7 @@ public class UserDao extends AbstractDao<User, Integer> {
         entity.setGroupid(cursor.getInt(offset + 6));
         entity.setIsAdmin(cursor.getInt(offset + 7));
         entity.setLastLoginIp(cursor.getInt(offset + 8));
-        entity.setLastLoginTime(cursor.getInt(offset + 9));
+        entity.setLastLoginTime(cursor.isNull(offset + 9) ? null : cursor.getLong(offset + 9));
         entity.setLogin(cursor.getInt(offset + 10));
         entity.setMobile(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
         entity.setModelid(cursor.getInt(offset + 12));

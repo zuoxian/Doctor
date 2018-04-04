@@ -3,7 +3,6 @@ package com.yjm.doctor.ui;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -17,9 +16,8 @@ import com.yjm.doctor.model.Account;
 import com.yjm.doctor.model.DataType;
 import com.yjm.doctor.model.DataTypeBean;
 import com.yjm.doctor.model.EventType;
-import com.yjm.doctor.model.Message;
+import com.yjm.doctor.model.ObjectMessage;
 import com.yjm.doctor.ui.base.BaseActivity;
-import com.yjm.doctor.ui.view.layout.ListLayoutModel;
 import com.yjm.doctor.util.ActivityJumper;
 import com.yjm.doctor.util.RestAdapterUtils;
 import com.yjm.doctor.util.SystemTools;
@@ -38,7 +36,7 @@ import retrofit.http.Query;
  * Created by zx on 2017/12/24.
  */
 
-public class UpateAccountActivity extends BaseActivity implements Callback<Message>,IAdd{
+public class UpateAccountActivity extends BaseActivity implements Callback<ObjectMessage>,IAdd{
 
     @BindView(R.id.bankAccount)
     EditText bankAccount;
@@ -118,20 +116,20 @@ public class UpateAccountActivity extends BaseActivity implements Callback<Messa
 
     @Override
     public void finishButton() {
-        userAPI.updateAccount(account.getBankAccount(), account.getBankPhone(),account.getBankIdNo() , dateTypesId,account.getBankName(),account.getBankCard(), account.getAlipay(), new Callback<Message>() {
-            @Override
-            public void success(Message message, Response response) {
-                if(null != message && !TextUtils.isEmpty(message.getMsg())){
-                    SystemTools.show_msg(UpateAccountActivity.this,message.getMsg());
-                }
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                SystemTools.show_msg(UpateAccountActivity.this,"更新失败~");
-            }
-        });
+//        userAPI.updateAccount(account.getBankAccount(), account.getBankPhone(),account.getBankIdNo() , dateTypesId,account.getBankName(),account.getBankCard(), account.getAlipay(), new Callback<ObjectMessage>() {
+//            @Override
+//            public void success(ObjectMessage objectMessage, Response response) {
+//                if(null != objectMessage && !TextUtils.isEmpty(objectMessage.getMsg())){
+//                    SystemTools.show_msg(UpateAccountActivity.this, objectMessage.getMsg());
+//                }
+//
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                SystemTools.show_msg(UpateAccountActivity.this,"更新失败~");
+//            }
+//        });
     }
 
 
@@ -159,7 +157,7 @@ public class UpateAccountActivity extends BaseActivity implements Callback<Messa
             if (null != bankAccount) bankAccount.setText(account.getBankAccount());
             if (null != bankIdNo) bankIdNo.setText(account.getBankIdNo());
 
-            if (null != bankCode) bankCode.setText(TextUtils.isEmpty(account.getBankCode())?dateTypeName:account.getBankCode());
+            if (null != bankCode) bankCode.setText(TextUtils.isEmpty(account.getBankCodeZh())?dateTypeName:account.getBankCodeZh());
             if (null != bankPhone) bankPhone.setText(account.getBankPhone());
             if (null != bankName) bankName.setText(account.getBankName());
             if (null != bankCard) bankCard.setText(account.getBankCard());
@@ -171,8 +169,8 @@ public class UpateAccountActivity extends BaseActivity implements Callback<Messa
     }
 
     @Override
-    public void success(Message message, Response response) {
-        if(null != message && true == message.getSuccess()){
+    public void success(ObjectMessage objectMessage, Response response) {
+        if(null != objectMessage && true == objectMessage.getSuccess()){
             SystemTools.show_msg(this,"修改成功");
 //            ActivityJumper.getInstance().buttonJumpTo(this,AccountinfoActivity.class);
             finish();
@@ -186,12 +184,15 @@ public class UpateAccountActivity extends BaseActivity implements Callback<Messa
         SystemTools.show_msg(this,"修改失败");
     }
 
+
+
     @Override
     public void add() {
         userAPI.updateAccount(
                 (null != bankAccount && null != bankAccount.getText())?bankAccount.getText().toString():null,
-                (null != bankIdNo && null != bankIdNo.getText())?bankIdNo.getText().toString():null,
                 (null != bankPhone && null != bankPhone.getText())?bankPhone.getText().toString():null,
+                (null != bankIdNo && null != bankIdNo.getText())?bankIdNo.getText().toString():null,
+
                 (null != bankCode && null != bankCode.getText())?dateTypesId:null,
                 (null != bankName && null != bankName.getText())?bankName.getText().toString():null,
                 (null != bankCard && null != bankCard.getText())?bankCard.getText().toString():null,

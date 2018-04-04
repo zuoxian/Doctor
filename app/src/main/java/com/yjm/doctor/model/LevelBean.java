@@ -6,7 +6,7 @@ import java.util.List;
  * Created by zx on 2017/12/8.
  */
 
-public class LevelBean extends Message {
+public class LevelBean extends ObjectMessage {
 
     private List<Level> obj;
 

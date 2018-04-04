@@ -4,7 +4,7 @@ package com.yjm.doctor.model;
  * Created by zx on 2018/1/11.
  */
 
-public class SMessageBean extends Message{
+public class SMessageBean extends ObjectMessage {
 
     private SMessageRow obj;
 

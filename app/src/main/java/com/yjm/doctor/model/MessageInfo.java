@@ -4,7 +4,7 @@ package com.yjm.doctor.model;
  * Created by cnlive-lsf-doc on 2018/1/11.
  */
 
-public class MessageInfo extends Message {
+public class MessageInfo extends ObjectMessage {
 
     private SMessage obj;
 

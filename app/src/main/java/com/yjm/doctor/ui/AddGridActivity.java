@@ -14,8 +14,7 @@ import com.yjm.doctor.R;
 import com.yjm.doctor.api.ServiceAPI;
 import com.yjm.doctor.api.UserAPI;
 import com.yjm.doctor.application.YjmApplication;
-import com.yjm.doctor.application.baseInterface.IActivity;
-import com.yjm.doctor.model.Message;
+import com.yjm.doctor.model.ObjectMessage;
 import com.yjm.doctor.model.User;
 import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.ui.base.BaseActivity;
@@ -37,7 +36,7 @@ import retrofit.client.Response;
  * Created by zx on 2017/12/20.
  */
 
-public class AddGridActivity extends BaseActivity implements View.OnClickListener , Callback<Message>{
+public class AddGridActivity extends BaseActivity implements View.OnClickListener , Callback<ObjectMessage>{
 
     private RelativeLayout selectDate;
     private TextView currentDate;
@@ -133,14 +132,14 @@ public class AddGridActivity extends BaseActivity implements View.OnClickListene
 
 
     @Override
-    public void success(Message message, Response response) {
+    public void success(ObjectMessage objectMessage, Response response) {
 
-        if(null != message && !TextUtils.isEmpty(message.getMsg())) {
-            if (true == message.getSuccess()) {
+        if(null != objectMessage && !TextUtils.isEmpty(objectMessage.getMsg())) {
+            if (true == objectMessage.getSuccess()) {
 
                 finish();
             }
-            SystemTools.show_msg(AddGridActivity.this, message.getMsg());
+            SystemTools.show_msg(AddGridActivity.this, objectMessage.getMsg());
         }
 
 

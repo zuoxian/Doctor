@@ -1,14 +1,14 @@
 package com.yjm.doctor.api;
 
-import com.yjm.doctor.model.Appointment;
 import com.yjm.doctor.model.AppointmentBean;
 import com.yjm.doctor.model.AppointmentDetailInfo;
 import com.yjm.doctor.model.BannerBean;
 import com.yjm.doctor.model.ConsultationBean;
 import com.yjm.doctor.model.DataTypeBean;
-import com.yjm.doctor.model.Message;
+import com.yjm.doctor.model.ObjectMessage;
 import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.model.UserChar;
+import com.yjm.doctor.model.VersionBean;
 
 import retrofit.Callback;
 import retrofit.http.GET;
@@ -45,9 +45,14 @@ public interface MainAPI {
 
 
     @POST("/updateNewestConsultation")
-    void updateNewestConsultation(@Query("senderType") int senderType,@Query("receiverId") int receiverId,@Query("hxAccount") String hxAccount,@Query("lastContent") String lastContent, @Query("mtype") String mtype, Callback<Message> callback);
+    void updateNewestConsultation(@Query("senderType") int senderType,@Query("receiverId") int receiverId,@Query("hxAccount") String hxAccount,@Query("lastContent") String lastContent, @Query("mtype") String mtype, Callback<ObjectMessage> callback);
 
     @POST("/getByHx")
     void getByHx(@Query("hxAccounts") String hxAccounts,Callback<UserChar> callback);
+
+
+//    tokenId=1D96DACB84F21890ED9F4928FA8B352B&versionNo=1.0.0&isAdmin=0
+    @POST("/checkUpdate")
+    void checkUpdate(@Query("versionNo") String versionNo,@Query("isAdmin") int isAdmin, Callback<VersionBean> callback);
 
 }

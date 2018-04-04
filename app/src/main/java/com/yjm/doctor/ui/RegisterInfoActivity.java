@@ -287,21 +287,21 @@ public class RegisterInfoActivity extends BaseActivity implements Callback<UserB
 
             return;
         }
-//        if(TextUtils.isEmpty(mName.getText())) {
-//            mName.setError("请输入真实姓名");
-//            mName.findFocus();
-//            return;
-//        }
-//        if(TextUtils.isEmpty(mHospital.getText())) {
-//            mHospital.setError("请输入医院名称");
-//            mHospital.findFocus();
-//            return;
-//        }
-//        if(TextUtils.isEmpty(mDepartment.getText())) {
-//            mDepartment.setError("请输入科室名");
-//            mDepartment.findFocus();
-//            return;
-//        }
+        if(TextUtils.isEmpty(mName.getText())) {
+            mName.setError("请输入真实姓名");
+            mName.findFocus();
+            return;
+        }
+        if(TextUtils.isEmpty(mHospitalName.getText())) {
+            mHospitalName.setError("请输入医院名称");
+            mHospitalName.findFocus();
+            return;
+        }
+        if(TextUtils.isEmpty(mDepartmentName.getText())) {
+            mDepartmentName.setError("请输入科室名");
+            mDepartmentName.findFocus();
+            return;
+        }
 
 
         userBasicInfo = (User) this.getIntent().getSerializableExtra("object");

@@ -17,13 +17,10 @@ import com.yjm.doctor.application.baseInterface.IAdd;
 import com.yjm.doctor.model.Grid;
 import com.yjm.doctor.model.GridBean;
 import com.yjm.doctor.model.GridInfo;
-import com.yjm.doctor.model.Message;
 import com.yjm.doctor.model.User;
 import com.yjm.doctor.model.UserBean;
 import com.yjm.doctor.ui.base.BaseActivity;
 import com.yjm.doctor.ui.view.layout.GridAdapter;
-import com.yjm.doctor.ui.view.layout.ListLayoutAdapter;
-import com.yjm.doctor.ui.view.layout.ListLayoutModel;
 import com.yjm.doctor.util.ActivityJumper;
 import com.yjm.doctor.util.NetworkUtils;
 import com.yjm.doctor.util.RestAdapterUtils;
@@ -31,7 +28,6 @@ import com.yjm.doctor.util.SharedPreferencesUtil;
 import com.yjm.doctor.util.SystemTools;
 import com.yjm.doctor.util.auth.UserService;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

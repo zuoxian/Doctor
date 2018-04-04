@@ -4,7 +4,7 @@ package com.yjm.doctor.model;
  * Created by zx on 2017/12/8.
  */
 
-public class UserBean extends Message{
+public class UserBean extends ObjectMessage {
 
     private User obj;
 

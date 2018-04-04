@@ -6,8 +6,9 @@ package com.yjm.doctor;
 
 public class Config {
 
-    private static final String DOMAIN_URL = "https://www.mobiang.com";
+//    private static final String DOMAIN_URL = "https://www.mobiang.com";
 
+    private static final String DOMAIN_URL = "https://www.ethealth.cn";
     public static final String USER_API = DOMAIN_URL + "/ethealth/api/member";
 
     public static final String USER_LEVELS_API = DOMAIN_URL + "/ethealth/api/apiCommon";
@@ -33,6 +34,8 @@ public class Config {
     public static final String DOCTORSERVICE = DOMAIN_URL +"/ethealth/api/doctorService";
 
     public static final String MESSAGE = DOMAIN_URL +"/ethealth/api/message";
+
+    public static final String UPDATE_URL = DOMAIN_URL + "/ethealth/api/apiCommon";
 
     public static final String USER = "user_info";
 

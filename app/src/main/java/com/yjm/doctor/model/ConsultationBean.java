@@ -4,7 +4,7 @@ package com.yjm.doctor.model;
  * Created by zx on 2017/12/11.
  */
 
-public class ConsultationBean extends Message{
+public class ConsultationBean extends ObjectMessage {
 
     ConsultationObject obj;
 

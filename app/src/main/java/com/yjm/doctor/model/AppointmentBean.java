@@ -4,7 +4,7 @@ package com.yjm.doctor.model;
  * Created by zx on 2017/12/10.
  */
 
-public class AppointmentBean extends Message{
+public class AppointmentBean extends ObjectMessage {
 
     private Appointment obj;
 

@@ -36,8 +36,11 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
     private Button buttonMore;
     private boolean ctrlPress = false;
 
+    private Context mContext;
+
     public EaseChatPrimaryMenu(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+
         init(context, attrs);
     }
 
@@ -51,7 +54,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
     }
 
     private void init(final Context context, AttributeSet attrs) {
-        Context context1 = context;
+        mContext = context;
         LayoutInflater.from(context).inflate(R.layout.ease_widget_chat_primary_menu, this);
         editText = (EditText) findViewById(R.id.et_sendmessage);
         buttonSetModeKeyboard = findViewById(R.id.btn_set_mode_keyboard);
@@ -94,7 +97,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
                     buttonMore.setVisibility(View.GONE);
                     buttonSend.setVisibility(View.VISIBLE);
                 } else {
-                    buttonMore.setVisibility(View.VISIBLE);
+                    buttonMore.setVisibility(View.GONE);
                     buttonSend.setVisibility(View.GONE);
                 }
             }
@@ -183,7 +186,8 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
             editText.dispatchKeyEvent(event);
         }
     }
-    
+
+
     /**
      * on clicked event
      * @param view
@@ -196,12 +200,15 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
                 String s = editText.getText().toString();
                 editText.setText("");
                 listener.onSendBtnClicked(s);
+
             }
         } else if (id == R.id.btn_set_mode_voice) {
             setModeVoice();
             showNormalFaceImage();
-            if(listener != null)
+            if(listener != null) {
                 listener.onToggleVoiceBtnClicked();
+            }
+
         } else if (id == R.id.btn_set_mode_keyboard) {
             setModeKeyboard();
             showNormalFaceImage();

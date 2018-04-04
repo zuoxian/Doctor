@@ -6,7 +6,7 @@ import java.util.List;
  * Created by zx on 2017/12/26.
  */
 
-public class HospitalBean extends Message{
+public class HospitalBean extends ObjectMessage {
 
     private List<Hospital> obj;
 

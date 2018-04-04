@@ -3,6 +3,7 @@ package com.yjm.doctor.ui;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTabHost;
 import android.text.TextUtils;
@@ -41,6 +42,7 @@ import com.yjm.doctor.util.RestAdapterUtils;
 import com.yjm.doctor.util.SharedPreferencesUtil;
 import com.yjm.doctor.util.SystemTools;
 import com.yjm.doctor.util.TagAliasOperatorHelper;
+import com.yjm.doctor.util.UpdateManager;
 import com.yjm.doctor.util.auth.UserService;
 
 import org.greenrobot.greendao.query.Query;
@@ -107,12 +109,25 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
             logout();
         }
         if(Config.UPDATE_USER_STATUS .equals(type.getType()) && null != mUser){//编辑审核通过触发
-            mUser.setStatus(1);
-            try {
-                sharedPreferencesUtil.saveObject("user",sharedPreferencesUtil.serialize(mUser));
-            }catch (Exception e){
-                Log.e("error",e.getMessage());
+            String u = sharedPreferencesUtil.getObject("user");
+            if(null != u) {
+                String a = sharedPreferencesUtil.getObject("user");
+                if (TextUtils.isEmpty(a)) return;
+                try {
+                    mUser = (User) sharedPreferencesUtil.deSerialization(a);
+                }catch (Exception e){
+                    Log.e("error",e.getMessage());
+                }
 
+                if (null != mUser) {
+                    mUser.setStatus(1);
+                    try {
+                        sharedPreferencesUtil.saveObject("user", sharedPreferencesUtil.serialize(mUser));
+                    } catch (Exception e) {
+                        Log.e("error", e.getMessage());
+
+                    }
+                }
             }
 
 
@@ -161,6 +176,13 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
 
 
         mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, ""));
+
+        try {
+            new UpdateManager(this).checkUpdate();
+        }catch (Exception e){
+            Log.e("MainActivity",e.getMessage());
+        }
+
 
     }
 
@@ -225,11 +247,11 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
                 if(TextUtils.isEmpty(a))return;
                 mUser = (User) sharedPreferencesUtil.deSerialization(a);
                 if (null != mUser) {
-                    Log.d("serial", "share3   =" + mUser.toString());
+//                    Log.d("serial", "share3   =" + mUser.toString());
                     MemberDoctor doctor = mUser.getMemberDoctor();
 
                     if (null != mUser && null != doctor) {
-                        if (mUser.getId() == doctor.getId()) {
+                        if (mUser.getId() > 0) {
                             isGetUserInfo = false;//用户信息存在 不需要重新请求
                         }
                     }
@@ -331,9 +353,9 @@ public class MainActivity extends BaseActivity implements Callback<UserBean> {
         try {
 
             sharedPreferencesUtil.saveObject("user",sharedPreferencesUtil.serialize(user));
-
-            mUser = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
-            Log.d("serial", "share2   ="+mUser.toString());
+//
+//            mUser = (User) sharedPreferencesUtil.deSerialization(sharedPreferencesUtil.getObject("user"));
+//            Log.d("serial", "share2   ="+mUser.toString());
 
 //            UserService.getInstance(this).signIn(user.getMobile(), user.getHxPassword(), user);
 

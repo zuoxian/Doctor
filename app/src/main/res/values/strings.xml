@@ -1,4 +1,5 @@
-<resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources tools:ignore="MissingTranslation" xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">医家盟医生端</string>
     <string name="ACCOUNT_TYPE">com.yjm.doctor.AccountType</string>
     <string name="ACCOUNT_LABEL">@string/app_name</string>
@@ -70,6 +71,7 @@
     <string name="finish">完成</string>
     <string name="update">修改</string>
     <string name="add">添加</string>
+    <string name="updateapp">更新</string>
 
     <string name="examine">审核认证中</string>
     <string name="examine_title">信息提交成功</string>
@@ -199,6 +201,12 @@
     <string name="tel">电话</string>
     <string name="main_mail">邮箱</string>
     <string name="main_address">地址</string>
+
+
+
+
+
+
 
 
 </resources>

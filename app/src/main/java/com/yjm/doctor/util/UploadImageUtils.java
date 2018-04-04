@@ -22,7 +22,7 @@ import java.io.IOException;
 
 
 public class UploadImageUtils {
-    private static final String AVATAR_PATH = "/com.cnlive.movie/image/";
+    private static final String AVATAR_PATH = "/com.yjm.doctor/image/";
 
     private static Bitmap getimage(Context context,String srcPath) {
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
@@ -58,7 +58,7 @@ public class UploadImageUtils {
         return writhToSDcard(context,bitmap);
     }
 
-    private static String writhToSDcard(Context context,Bitmap bitmap)throws IOException {
+    public static String writhToSDcard(Context context,Bitmap bitmap)throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);//png类型
         String path = getAvatarPath(context);

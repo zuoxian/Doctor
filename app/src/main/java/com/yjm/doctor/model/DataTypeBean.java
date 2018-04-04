@@ -6,7 +6,7 @@ import java.util.List;
  * Created by cnlive-lsf-doc on 2017/12/24.
  */
 
-public class DataTypeBean extends Message{
+public class DataTypeBean extends ObjectMessage {
 
     private List<DataType> obj;
 
