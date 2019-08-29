@@ -18,8 +18,6 @@ import com.yjm.doctor.util.auth.UserService;
 import java.util.Iterator;
 import java.util.List;
 
-import cn.jpush.android.api.JPushInterface;
-
 /**
  * Created by zx on 2017/12/4.
  */
@@ -146,5 +144,6 @@ public class YjmApplication extends Application {
         }
         return processName;
     }
+
 
 }

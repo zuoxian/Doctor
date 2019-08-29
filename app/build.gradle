@@ -11,7 +11,7 @@ greendao {
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+//    buildToolsVersion "26.0.2"
     signingConfigs {
         config {
             keyAlias 'doctor'
@@ -63,33 +63,33 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
-    compile 'com.android.support:design:26.+'
-    compile 'com.squareup.okio:okio:1.7.0'
-    compile 'com.squareup.okhttp:okhttp:2.0.0'
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
-    compile 'org.greenrobot:greendao:3.2.0'
-    compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'com.jakewharton:butterknife:8.5.1'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:26.+'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
+    implementation 'com.android.support:design:26.+'
+    implementation 'com.squareup.okio:okio:1.7.0'
+    implementation 'com.squareup.okhttp:okhttp:2.0.0'
+    implementation 'com.squareup.retrofit:retrofit:1.9.0'
+    implementation 'org.greenrobot:greendao:3.2.0'
+    implementation 'de.greenrobot:eventbus:2.4.0'
+    implementation 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-    compile 'com.facebook.fresco:fresco:0.12.0'
-    compile 'com.android.support:support-v4:26.+'
+    implementation 'com.facebook.fresco:fresco:0.12.0'
+    implementation 'com.android.support:support-v4:26.+'
     //    compile 'com.jakewharton.retrofit:retrofit1-okhttp3-client:1.1.0'
     //    compile 'com.android.support:appcompat-v7:26.4.0'
     //    //Optional compile for GCM (Google Cloud Messaging).
     //    compile 'com.google.android.gms:play-services-gcm:10.2.1'
     //    compile 'com.hyphenate:hyphenate-sdk:3.3.0'
 //    implementation project(':easeui')
-    compile 'cn.jiguang.sdk:jpush:3.1.1'  // 此处以JPush 3.1.1 版本为例。
-    compile 'cn.jiguang.sdk:jcore:1.1.9'  // 此处以JCore 1.1.9 版本为例。
+    implementation 'cn.jiguang.sdk:jpush:3.1.1'  // 此处以JPush 3.1.1 版本为例。
+    implementation 'cn.jiguang.sdk:jcore:1.1.9'  // 此处以JCore 1.1.9 版本为例。
     // Google firebase cloud messaging
 //    compile 'com.google.firebase:firebase-messaging:11.4.0'
 
-    compile 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
 
-    compile 'com.google.android.gms:play-services-base:11.4.0'
-    compile 'de.greenrobot:eventbus:2.4.0'
+    implementation 'com.google.android.gms:play-services-base:11.4.0'
+    implementation 'de.greenrobot:eventbus:2.4.0'
 }
 
